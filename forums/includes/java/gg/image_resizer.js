@@ -1,3 +1,18 @@
+function toggle_image(img) {
+	var elem = $(img);
+	const cls = 'resized';
+
+	if (elem.hasClass(cls)) {
+		elem.removeAttr('width');
+		elem.removeAttr('height');
+	} else {
+		var w = elem.attar('width');
+		elem.attr('width', 800);
+		elem.attr('height', elem.attr('height') / (w / 800));
+	}
+	elem.toggleClass(cls);
+}
+
 function image_resizer() {
   var max_width = 800;
   var images = document.getElementsByTagName('img');
@@ -33,7 +48,8 @@ function image_resizer() {
           image.setAttribute("width", (w / ratio));
           image.style.border = "1px dotted black";
           image.style.margin = "5px 0px 0px 0px";
-		  image.setAttribute("onClick", "removeAttribute('width'); removeAttribute('height');");
+	  image.className += "resized";
+	  image.setAttribute("onClick", "toggle_image(this);");
           //link.appendChild(image);
           //wrapper.appendChild(link);
 		  wrapper.appendChild(image);
