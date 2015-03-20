@@ -1,0 +1,20 @@
+<script type="text/javascript" src="{T_TEMPLATE_PATH}/editor.js"></script>
+<form method="post" action="{U_QR_ACTION}">
+	<table class="tablebg" width="100%" cellspacing="1">
+		<tr><th align="center" colspan="2">{L_QUICKREPLY} {SUBJECT}</th></tr>
+		<tr><td align="center" class="row2" valign="top" align="left" style="width: 100%;">
+			<input class="post" type="hidden" name="subject" maxlength="64" value="{SUBJECT}" /><br />
+			<textarea name="message" rows="7" cols="50" style="width: 98%;" tabindex="3"></textarea>
+		</td></tr>
+		<tr>
+			<td class="cat" colspan="2" align="center">
+				<input type="button" class="btnlite" name="rnq" value="Remove Nested Quotes" onclick="removeNestedQuotes()" />&nbsp;&nbsp;&nbsp;&nbsp;
+				<input class="btnmain" type="submit" accesskey="s" tabindex="6" name="post" value="{L_SUBMIT}" />&nbsp;&nbsp;&nbsp;&nbsp;
+				<input class="btnlite" type="submit" accesskey="f" tabindex="7" name="full_editor" value="{L_FULL_EDITOR}" />
+				{S_FORM_TOKEN}
+				{QR_HIDDEN_FIELDS}
+			</td>
+		</tr>
+	</table>
+</form>
+<br clear="all" />

@@ -1,0 +1,33 @@
+<a name="quickreplyform"></a>
+<form method="post" action="{U_QR_ACTION}">
+
+<!-- need this for "full editor" button functionality -->
+<input class="post" style="width:450px" type="hidden" name="subject" size="45" maxlength="64" tabindex="2" value="{SUBJECT}" />
+
+	<table class="tablebg" width="100%" cellspacing="1">
+		<tr>
+			<th align="center">{L_QUICKREPLY} - {SUBJECT}</th>
+		</tr>
+<!-- IF false -->
+		<tr>
+			<td class="row1" width="22%"><b class="genmed">{L_SUBJECT}:</b></td>
+			<td  class="row2" width="78%">{SUBJECT}<input class="post" style="width:450px" type="hidden" name="subject" size="45" maxlength="64" tabindex="2" value="{SUBJECT}" /></td>
+		</tr>
+<!-- ENDIF -->
+		<tr>
+			<!-- IF false--><td class="row1" width="22%"><b class="genmed">{L_MESSAGE}:</b></td><!-- ENDIF -->
+			<td class="row2" valign="top" align="center"><textarea id="quickreply" name="message" rows="7" cols="76" tabindex="3"  style="width: 75%;"></textarea> </td>
+		</tr>
+		<tr>
+			<td class="cat" align="center">
+				<input class="btnmain" type="submit" accesskey="s" tabindex="6" name="post" value="{L_SUBMIT}" />&nbsp;
+				<input class="btnlite" type="submit" accesskey="f" tabindex="7" name="full_editor" value="{L_FULL_EDITOR}" />
+
+				{S_FORM_TOKEN}
+				{QR_HIDDEN_FIELDS}
+			</td>
+		</tr>
+	</table>
+	
+</form>
+<br clear="all" />

@@ -1,0 +1,994 @@
+/*  phpBB 3.0 Style Sheet
+    --------------------------------------------------------------
+	Style name:		subsilver2
+	Based on style:	subSilver (the default phpBB 2 style)
+	Original author:	subBlue ( http://www.subBlue.com/ )
+	Modified by:		psoTFX and the phpBB team ( http://www.phpbb.com )
+	
+	This is an alternative style for phpBB3 for those wishing to stay with
+	the familiar subSilver style of phpBB version 2.x
+	
+	Copyright 2006 phpBB Group ( http://www.phpbb.com/ )
+    --------------------------------------------------------------
+*/
+
+/* Layout
+ ------------ */
+* {
+	/* Reset browsers default margin, padding and font sizes */
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	font-size: 100%;
+}
+
+body {
+	/* Text-Sizing with ems: http://www.clagnut.com/blog/348/ */
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	/*color: #323D4F;*/
+	color: black;
+	background-color: #f8ffd4;
+	font-size: 62.5%; /* This sets the default font size to be equivalent to 10px */
+	margin: 0;
+}
+
+#wrapheader {
+	height: auto !important;
+	padding: 0;
+}
+
+#wrapcentre {
+	margin: 15px 25px 0 25px;
+}
+
+#wrapfooter {
+	text-align: center;
+	clear: both;
+}
+
+#wrapnav {
+	width: 100%;
+	margin: 0;
+	background-color: #ECECEC;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #ffffac;
+}
+
+#logodesc {
+	background-color: #f8ffd4;
+	/*background-image: url('./images/background.gif');*/
+	background-repeat: repeat-x;
+	background-position: center bottom;
+	padding: 0 25px 15px 25px;
+}
+
+#logodesc table {
+    border-bottom: 2px solid #BBB;
+}
+
+#menubar {
+	margin: 0 25px;
+}
+
+#datebar {
+	margin: 10px 25px 0 25px;
+}
+
+#findbar {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.forumrules {
+	background-color: #F9CC79;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #BB9860;
+	padding: 4px;
+	font-weight: normal;
+	font-size: 1.1em;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.forumrules h3 {
+	color: red;
+}
+
+#pageheader { }
+#pagecontent { }
+#pagefooter { }
+
+#poll { }
+#postrow { }
+#postdata { }
+
+
+/*  Text
+ --------------------- */
+h1 {
+	color: black;
+	font-family: "Trebuchet MS", Verdana, sans-serif;
+	font-weight: bold;
+	font-size: 1.8em;
+	text-decoration: none;
+}
+
+h2 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 1.5em;
+	text-decoration: none;
+	line-height: 120%;
+}
+
+h3 {
+	font-size: 1.3em;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+	line-height: 120%;
+}
+
+h4 {
+	margin: 0;
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+p {
+	font-size: 1.1em;
+}
+
+p.moderators {
+	margin: 0;
+	float: left;
+	color: black;
+	font-weight: bold;
+}
+
+.rtl p.moderators {
+	float: right;
+}
+
+p.linkmcp {
+	margin: 0;
+	float: right;
+	white-space: nowrap;
+}
+
+.rtl p.linkmcp {
+	float: left;
+}
+
+p.breadcrumbs {
+	margin: 0;
+	float: left;
+	color: black;
+	font-weight: bold;
+	white-space: normal;
+	font-size: 1.3em;
+}
+
+.rtl p.breadcrumbs {
+	float: right;
+}
+
+p.datetime {
+	margin: 0;
+	float: right;
+	white-space: nowrap;
+	font-size: 1em;
+}
+
+.rtl p.datetime {
+	float: left;
+}
+
+p.searchbar {
+	padding: 2px 0;
+	white-space: nowrap;
+} 
+
+p.searchbarreg {
+	margin: 0;
+	float: right;
+	white-space: nowrap;
+}
+
+.rtl p.searchbarreg {
+	float: left;
+}
+
+table.forumdesc_container {
+    background-color: #FFF;
+    min-height: 40px;
+    width: 100%;
+
+}
+
+td.forumdesc_icon {
+    width: 40px;
+}
+
+td.forumdesc_text {
+    width: 100%;
+    font-size: 85%;
+}
+
+p.forumdesc {
+	font-size: 10px;
+	padding-bottom: 4px;
+}
+
+p.topicauthor {
+	margin: 1px 0;
+}
+
+p.topicdetails {
+	margin: 1px 0;
+}
+
+.postreported, .postreported a:visited, .postreported a:hover, .postreported a:link, .postreported a:active {
+	margin: 1px 0;
+	color: red;
+	font-weight:bold;
+}
+
+.postapprove, .postapprove a:visited, .postapprove a:hover, .postapprove a:link, .postapprove a:active {
+	color: green;
+	font-weight:bold;
+}
+
+.postapprove img, .postreported img {
+	vertical-align: bottom;
+	padding-top: 5px;
+}
+
+.postauthor {
+	color: #000000;
+}
+
+td.authorbox {
+    padding-left: 1em;
+}
+
+.postdetails {
+	color: #000000;
+}
+
+.postbody {
+	font-size: 1.3em;
+	line-height: 1.4em;
+	font-family: "Verdana", "Tahoma", "Arial", sans-serif;
+}
+
+.postbody li, ol, ul {
+	margin: 0 0 0 1.5em;
+}
+
+.rtl .postbody li, .rtl ol, .rtl ul {
+	margin: 0 1.5em 0 0;
+}
+
+.posthilit {
+	background-color: yellow;
+}
+
+.nav {
+	margin: 0;
+	color: black;
+	font-weight: bold;
+}
+
+.pagination {
+	padding: 4px;
+	color: black;
+	font-size: 1em;
+	font-weight: bold;
+}
+
+.cattitle {
+
+}
+
+.gen {
+	margin: 1px 1px;
+	font-size: 1.2em;
+}
+
+.genmed {
+	margin: 1px 1px;
+	font-size: 1.1em;
+}
+
+.gensmall {
+	margin: 1px 1px;
+	font-size: 1em;
+}
+
+.row3 .gensmall {
+    color: #FFFFFF;
+}
+
+.copyright {
+	color: #444;
+	font-weight: normal;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.titles {
+	font-family: Helvetica, Arial, sans-serif;
+	font-weight: bold;
+	font-size: 1.3em;
+	text-decoration: none;
+}
+
+.error {
+	color: red;
+}
+
+
+/* Tables
+ ------------ */
+th {
+	color: #000;
+	font-size: 1.1em;
+	font-weight: bold;
+	background-color: ##ffffac;
+	white-space: nowrap;
+	padding: 7px 5px;
+}
+
+td {
+	padding: 2px;
+}
+td.profile {
+	padding: 4px;
+}
+
+td.profile table {
+    padding: 0px;
+    margin: 0px;
+    border-spacing: 0px;
+}
+
+.tablebg {
+	background-color: #ffffac;
+}
+
+.catdiv {
+	height: 28px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+.rtl .catdiv {
+}
+
+.cat {
+	height: 28px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background-color: #ffffc0;
+	text-indent: 4px;
+}
+
+.post_top {
+    background-color: #ffffc0;
+	padding: 2px;
+}
+
+.post_bottom {
+    background-color: #ffffac;
+	padding: 2px;
+}
+
+.post_edits {
+    border: none;
+}
+
+.row1 {
+	background-color: #ffffc0;
+	padding: 4px;
+}
+
+.row1_thread {
+	background-color: #FAFBFC;
+	padding: 4px;
+}
+
+.row2 {
+	background-color: #FFF;
+	padding: 4px;
+}
+
+.row2_thread {
+	background-color: #FFFFFF;
+	padding: 4px;
+}
+
+.row3 {
+	background-color: #ffffc0;
+	padding: 4px;
+}
+
+.row3_thread {
+    padding: 2px;
+    font-size: 80%;
+}
+
+.spacer {
+	background-color: #FFFFFF;
+    height: 5px;
+}
+
+hr {
+	height: 1px;
+	border-width: 0;
+	background-color: #D1D7DC;
+	color: #D1D7DC;
+}
+
+.legend {
+	text-align:center;
+	margin: 0 auto;
+}
+
+/* Links
+ ------------ */
+
+/* Links adjustment to correctly display an order of rtl/ltr mixed content */
+.rtl a {
+	direction: rtl;
+	unicode-bidi: embed;
+}
+
+a:link {
+	color: #000;
+	text-decoration: none;
+}
+
+a:active,
+a:visited {
+	color: #000;
+	text-decoration: none;
+}
+
+a.forumlink {
+	color: #000;
+	font-weight: bold;
+	/*font-family: Helvetica, Arial, sans-serif;*/
+	font-size: 1.2em;
+}
+
+a.topictitle {
+	margin: 1px 0;
+	/*font-family: Helvetica, Arial, sans-serif;*/
+	font-size: 1.2em;
+}
+
+a.topictitle:visited {
+	color: #000;
+	text-decoration: none;
+}
+
+a:hover,
+a.topictitle:hover {
+	color: #000;
+	text-decoration: underline;
+}
+
+th a,
+th a:visited {
+	color: #FFA34F !important;
+	text-decoration: none;
+}
+
+th a:hover {
+	text-decoration: underline;
+}
+
+/* link overrides by ben */
+
+.rtl a,
+a:link,
+a:active,
+a:visited,
+a.forumlink,
+a.topictitle,
+a.topictitle:visited,
+a:hover,
+a.topictitle:hover,
+th a,
+th a:visited,
+th a:hover {
+  text-decoration: underline;
+}
+
+a {
+  color: #000;
+  text-decoration: underline;
+}
+
+/* Form Elements
+ ------------ */
+form {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+input {
+	color: #333333;
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size: 1.1em;
+	font-weight: normal;
+	padding: 1px;
+	border: 1px solid #ffffac;
+	background-color: #FAFAFA;
+}
+
+textarea {
+	background-color: #FAFAFA;
+	color: #333333;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	font-size: 1.3em; 
+	line-height: 1.4em;
+	font-weight: normal;
+	border: 1px solid #ffffac;
+	padding: 2px;
+}
+
+select {
+	color: #333333;
+	background-color: #FAFAFA;
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size: 1.1em;
+	font-weight: normal;
+	border: 1px solid #ffffac;
+	padding: 1px;
+}
+
+option {
+	padding: 0 1em 0 0;
+}
+
+option.disabled-option {
+	color: graytext;
+}
+
+.rtl option {
+	padding: 0 0 0 1em;
+}
+
+input.radio {
+	border: none;
+	background-color: transparent;
+}
+
+.post {
+	background-color: white;
+	border-style: solid;
+	border-width: 1px;
+}
+
+.btnbbcode {
+	color: #000000;
+	font-weight: normal;
+	font-size: 1.1em;
+	font-family: Verdana, Helvetica, sans-serif;
+	background-color: #EFEFEF;
+	border: 1px solid #666666;
+}
+
+.btnmain {
+	font-weight: bold;
+	background-color: #ECECEC;
+	border: 1px solid #ffffac;
+	cursor: pointer;
+	padding: 1px 5px;
+	font-size: 1.1em;
+}
+
+.btnlite {
+	font-weight: normal;
+	background-color: #ECECEC;
+	border: 1px solid #ffffac;
+	cursor: pointer;
+	padding: 1px 5px;
+	font-size: 1.1em;
+}
+
+.btnfile {
+	font-weight: normal;
+	background-color: #ECECEC;
+	border: 1px solid #ffffac;
+	padding: 1px 5px;
+	font-size: 1.1em;
+}
+
+.helpline {
+	background-color: #DEE3E7;
+	border-style: none;
+}
+
+
+/* BBCode
+ ------------ */
+.quotetitle, .attachtitle {
+	margin: 10px 5px 0 5px;
+	padding: 4px;
+	border-width: 1px 1px 0 1px;
+	border-style: solid;
+	border-color: #ffffac;
+	color: #333333;
+	background-color: #ffffac;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+.quotetitle .quotetitle {
+	font-size: 1em;
+}
+
+.quotecontent {
+	margin: 0 5px 5px 5px;
+	padding: 0.5em;
+	border: 1px solid #ffffac;
+	font-weight: normal;
+	font-size: 11px;
+	line-height: 1.4em;
+	background-color: #FAFAFA;
+}
+
+..attachcontent {
+	margin: 0 5px 10px 5px;
+	padding: 5px;
+	border: 1px solid #ffffac;
+	font-weight: normal;
+	font-size: 1em;
+	line-height: 1.4em;
+	background-color: #FAFAFA;
+}
+
+.attachcontent {
+	font-size: 0.85em;
+}
+
+.codetitle {
+	margin: 10px 5px 0 5px;
+	padding: 2px 4px;
+	border-width: 1px 1px 0 1px;
+	border-style: solid;
+	border-color: #ffffac;
+	color: #333333;
+	background-color: #ffffac;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	font-size: 0.8em;
+}
+
+.codecontent {
+	direction: ltr;
+	margin: 0 5px 10px 5px;
+	padding: 5px;
+	border-color: #ffffac;
+	border-width: 0 1px 1px 1px;
+	border-style: solid;
+	font-weight: normal;
+	color: #006600;
+	font-size: 0.85em;
+	font-family: Monaco, 'Courier New', monospace;
+	background-color: #FAFAFA;
+}
+
+.syntaxbg {
+	color: #FFFFFF;
+}
+
+.syntaxcomment {
+	color: #FF8000;
+}
+
+.syntaxdefault {
+	color: #0000BB;
+}
+
+.syntaxhtml {
+	color: #000000;
+}
+
+.syntaxkeyword {
+	color: #007700;
+}
+
+.syntaxstring {
+	color: #DD0000;
+}
+
+
+/* Private messages
+ ------------------ */
+.pm_marked_colour {
+	background-color: #000000;
+}
+
+.pm_replied_colour {
+	background-color: #ffffac;
+}
+
+.pm_friend_colour {
+	background-color: #007700;
+}
+
+.pm_foe_colour {
+	background-color: #DD0000;
+}
+
+
+/* Misc
+ ------------ */
+img {
+	border: none;
+}
+
+.sep {
+	color: black;
+	background-color: #FFA34F;
+}
+
+table.colortable td {
+	padding: 0;
+}
+
+pre {
+	font-size: 1.1em;
+	font-family: Monaco, 'Courier New', monospace;
+}
+
+.nowrap {
+	white-space: nowrap;
+}
+
+.username-coloured {
+	font-weight: bold;
+}
+
+/* Custom things */
+/* Deck tag styles */
+div.deckbox {
+    /* broswer workarounds */
+    display: -moz-inline-stack;
+    display: inline-block;
+    zoom:1;
+    *display:inline;
+    vertical-align:top;
+    margin:5px;
+}
+
+span.censored {
+    background-color: #000000;
+    color: #000000;
+}
+
+span.censored:hover {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+#plz_container {
+    background-color: #e9ecef;
+    border: 1px solid black;
+    margin-right: 25px;
+    margin-left: 25px;
+}
+
+/* PLZ */
+
+table#plz {
+    border:0;
+    border-collapse:collapse;
+    height:45px;
+    width:100%;
+}
+
+table#plz td {
+    background:#e9ecef;
+    border:0;
+    font-size:10px;
+    text-align:center;
+    vertical-align:center;
+}
+
+table#plz2 {
+    border:0;
+    border-collapse:collapse;
+    width:100%;
+}
+
+table#plz2 td {
+    background:#e9ecef;
+    border:0;
+    font-size:10px;
+    text-align:center;
+    vertical-align:center;
+}
+
+/* Decoder */
+div#inline_decoder {
+    border:0 dotted #000;
+    display:none;
+    margin-bottom:10px;
+    margin-top:10px;
+    padding:10px;
+}
+
+table#decoder_table {
+    border:0 solid #000;
+    border-collapse:collapse;
+    border-spacing:0;
+}
+
+table#decoder_table td {
+    border-left:1px solid #000;
+    border-right:1px solid #000;
+    padding-left:15px;
+    padding-right:15px;
+}
+
+/* Mini PMO */
+#minipmo {
+    padding-left: 2em;
+}
+
+.pagination {
+  font-weight: normal;
+}
+
+/* ben's hacks */
+
+
+table.bpm_posttable {
+  width: 100%;
+  border: 1px solid #ffffac;
+  border-collapse: collapse;
+}
+
+div.bpm_profile_line {
+	overflow: hidden;
+}
+
+div.bpm_custom_rank {
+	/*position: absolute;*/
+	margin-top: 3px;
+	margin-bottom: 3px;
+	z-index: 100;
+	text-align:center;
+}
+
+
+div.bpm_profile {
+	width: 192px;
+}
+
+div.bpm_custom_title {
+	max-width: 192px;
+	overflow: hidden;
+	margin-top: 2px;
+	margin-bottom: 5px;
+	text-align:center;
+}
+
+.avatar_crop {
+	max-width: 192px;
+	max-height: 128px;
+	overflow: hidden;
+}
+
+.avatar_container {
+	text-align:center;
+}
+
+tr.bpm_posttoprow {
+  background-color: #ffffc0;
+}
+
+tr.bpm_postmiddlerow {
+}
+
+tr.bpm_postbottomrow {
+  background-color: #ffffac;
+}
+
+td.bpm_ignoredpost {
+  padding: 10px;
+  text-align: center;
+  font-size: 12px;
+}
+
+td.bpm_postauthor {
+  border-right: 1px solid #ffffac;
+  padding: 8px;
+}
+
+td.bpm_postinfo {
+  padding: 0px 7px 0px 7px;
+  vertical-align: middle;
+}
+
+td.bpm_postprofile {
+  border-right: 1px solid #ffffac;
+  padding: 3px;
+  vertical-align: top;
+  /*background-color: #ffffc0;*/
+  /*width: 275px;*/
+}
+
+td.bpm_post {
+  width: 100%;
+  vertical-align: top;
+}
+
+td.bpm_posttoplink {
+  border-right: 1px solid #ffffac;
+  padding: 5px 0px 5px 7px;
+}
+
+td.bpm_postbuttons {
+  padding: 5px 0px 5px 7px;
+}
+
+span.bpm_signature {
+
+}
+
+span.bpm_signature img {
+  vertical-align: middle;
+}
+
+b.postauthor {
+  font-size: 13px;
+}
+
+.postcount {
+	font-size: 10px;
+}
+
+table.bpm_postinfo {
+  width: 100%;
+}
+
+td.quotebuttons {
+  text-align: right;
+  width: auto;
+}
+
+td.postsubject {
+  text-align: left;
+}
+
+td.bpm_pagination {
+  font-size: 12px;
+}
+
+td.plz_search img {
+    vertical-align: middle;
+}
+
+span.bpm_topicdesc {
+  font-weight: normal;
+}
+
+span.youtube_link {
+  text-decoration: underline;
+  font-size: smaller;
+  color: #000;
+}
+
+span.youtube_link:hover {
+  color: #7D414D;
+}

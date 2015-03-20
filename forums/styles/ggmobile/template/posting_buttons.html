@@ -1,0 +1,21 @@
+<tr valign="middle" align="{S_CONTENT_FLOW_BEGIN}">
+	<td colspan="2">
+		<script type="text/javascript" src="{T_TEMPLATE_PATH}/editor.js"></script>
+	
+	</td>
+</tr>
+<!-- IF S_BBCODE_ALLOWED and S_BBCODE_QUOTE -->
+<tr valign="middle" align="{S_CONTENT_FLOW_BEGIN}">
+	<td colspan="2">
+		<img style="vertical-align:middle;" src="./styles/gg/imageset/hot_happy_notmine.gif" onclick="removeNestedQuotes()" onmouseover="helplinetext('Remove Nested Quotes')" onmouseout="helpline('tip')"> <input type="button" class="btnbbcode" name="rnq" value="Remove Nested Quotes" onclick="removeNestedQuotes()" onmouseover="helplinetext('Remove Nested Quotes')" onmouseout="helpline('tip')" />
+	</td>
+</tr>
+<!-- ENDIF -->
+<!-- IF S_BBCODE_ALLOWED -->
+<tr>
+	<td<!-- IF $S_SIGNATURE or S_EDIT_DRAFT --> colspan="2"<!-- ENDIF -->><input type="text" readonly="readonly" name="helpbox" style="width:100%" class="helpline" value="{L_STYLES_TIP}" /></td>
+	<!-- IF not $S_SIGNATURE and not S_EDIT_DRAFT -->
+		<td class="genmed" align="center">{L_FONT_COLOR}</td>
+	<!-- ENDIF -->
+</tr>
+<!-- ENDIF -->

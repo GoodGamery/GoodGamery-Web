@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="{S_CONTENT_DIRECTION}" lang="{S_USER_LANG}" xml:lang="{S_USER_LANG}">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset={S_CONTENT_ENCODING}" />
+    <meta http-equiv="content-language" content="{S_USER_LANG}" />
+    {META}
+	
+	<!-- For iPhones -->
+	<meta name="viewport" content="width=320">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <title>{SITENAME} &bull; <!-- IF S_IN_MCP -->{L_MCP} &bull; <!-- ELSEIF S_IN_UCP -->{L_UCP} &bull; <!-- ENDIF -->{PAGE_TITLE}</title>
+
+    <link rel="stylesheet" href="{T_STYLESHEET_LINK}" type="text/css" />
+
+    <!-- GoodGamery Specific Scripts -->
+	<script type='text/javascript' src='http://forums.goodgamery.com/includes/java/jquery/jquery.js'></script>
+	<script type='text/javascript' src="http://forums.goodgamery.com/includes/java/gg/cardTags.js"></script>
+	<script type='text/javascript' src='http://forums.goodgamery.com/includes/java/mtgh.js'></script>
+	<script type='text/javascript' src='http://forums.goodgamery.com/includes/java/jquery.dimensions.min.js'></script>
+	<script type='text/javascript' src="http://forums.goodgamery.com/includes/java/gg/image_resizer.js"></script>
+	<script type='text/javascript' src="http://forums.goodgamery.com/includes/java/gg/decoder.js"></script>
+	<script type='text/javascript' src="http://forums.goodgamery.com/includes/java/gg/linker.js"></script>
+	
+	<link rel="icon" type="image/png" href="http://goodgamery.com/favicon.png"/>
+</head>
+
+<body class="{S_CONTENT_DIRECTION}" onload="scanlinks();image_resizer();">
+
+<a name="top"></a>
+
+<div id="wrapheader">
+
+	<table id="wrapheader">
+	<tr>
+		<td id="logodesc">
+				<a href="http://www.goodgamery.com/"><img src="./images/gg_banner_small.png"></a>
+		</td>
+		<td id="menubar">
+			<!-- IF not S_IS_BOT --><a href="{U_LOGIN_LOGOUT}">{L_LOGIN_LOGOUT}</a>&nbsp;<!-- ENDIF -->
+			<!-- IF U_RESTORE_PERMISSIONS --> &nbsp;<a href="{U_RESTORE_PERMISSIONS}">{L_RESTORE_PERMISSIONS}</a><!-- ENDIF -->
+			<!-- IF S_BOARD_DISABLED and S_USER_LOGGED_IN --> &nbsp;<span style="color: red;">{L_BOARD_DISABLED}</span><!-- ENDIF -->
+			<!-- IF not S_IS_BOT -->
+				<!-- IF S_USER_LOGGED_IN -->
+					<!-- IF S_DISPLAY_PM --> &nbsp;<a href="{U_PRIVATEMSGS}">{PRIVATE_MESSAGE_INFO}<!-- IF PRIVATE_MESSAGE_INFO_UNREAD -->, {PRIVATE_MESSAGE_INFO_UNREAD}<!-- ENDIF --></a><!-- ENDIF -->
+				<!-- ELSEIF S_REGISTER_ENABLED and not (S_SHOW_COPPA or S_REGISTRATION) --> &nbsp;<a href="{U_REGISTER}">{L_REGISTER}</a>
+				<!-- ENDIF -->
+			<!-- ENDIF -->
+
+			<!-- IF MODERATORS or U_MCP or U_ACP or S_USER_LOGGED_IN -->
+				<br/>
+			<!-- ENDIF -->
+
+			<!-- IF MODERATORS -->
+				<!-- IF S_SINGLE_MODERATOR -->{L_MODERATOR}<!-- ELSE -->{L_MODERATORS}<!-- ENDIF -->: {MODERATORS}&nbsp;&nbsp;
+			<!-- ENDIF -->
+
+			<!-- IF U_MCP -->
+				[ <a href="{U_MCP}">{L_MCP}</a> ]&nbsp;&nbsp;
+			<!-- ENDIF -->
+
+			<!-- IF U_ACP -->
+				[ <a href="{U_ACP}">{L_ACP}</a> ]&nbsp;&nbsp;
+			<!-- ENDIF -->
+			
+			<!-- IF S_USER_LOGGED_IN -->
+				[ <a href="{U_PROFILE}">{L_PROFILE}</a> ]&nbsp;&nbsp;
+			<!-- ENDIF -->
+		</td>
+	</tr>
+	<tr>
+		<td class="plz_search" colspan="2">
+			<a href="{U_SEARCH_ACTIVE_TOPICS}"><img src="./styles/gg/imageset/icon_topic_latest.gif" /></a> <a href="{U_SEARCH_ACTIVE_TOPICS}"><b>{L_SEARCH_ACTIVE_TOPICS}</b></a>
+			<!-- IF S_USER_LOGGED_IN -->
+				&nbsp;&nbsp;<a href="{U_SEARCH_UNREAD}"><img src="./styles/gg/imageset/icon_topic_newest.gif" /></a> <a href="{U_SEARCH_UNREAD}"><b>{L_SEARCH_UNREAD}</b></a>
+			<!-- ENDIF -->
+		</td>
+	</tr>
+	</table> 
+</div>
+
+<div id="wrapcentre">
+
+	<br style="clear: both;" />
+
+	<!-- INCLUDE breadcrumbs.html -->
+
+	<br />
