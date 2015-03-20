@@ -1,16 +1,15 @@
 function toggle_image(img) {
-	var elem = $(img);
-	const cls = 'resized';
+	var cls = 'resized';
 
-	if (elem.hasClass(cls)) {
-		elem.removeAttr('width');
-		elem.removeAttr('height');
+	if (img.classList.contains(cls)) {
+		img.removeAttribute('width');
+		img.removeAttribute('height');
 	} else {
-		var w = elem.attar('width');
-		elem.attr('width', 800);
-		elem.attr('height', elem.attr('height') / (w / 800));
+		var w = img.getAttribute('width');
+		img.setAttribute('width', 800);
+		img.setAttribute('height', img.getAttribute('height') / (w / 800));
 	}
-	elem.toggleClass(cls);
+	img.classList.toggle(cls);
 }
 
 function image_resizer() {
