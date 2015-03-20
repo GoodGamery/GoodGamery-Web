@@ -1,0 +1,341 @@
+/*  
+Theme Name: GGery Mobile Theme
+Theme URI: http://goodgamery.com/
+Description: The GoodGamery website theme.
+Version: 0.1
+Author: Mark Diehr
+Author URI: http://goodgamery.com/
+
+	GGery Mobile Theme
+*/
+
+/* Main styles */
+
+body {
+	font-size: 10px; /* Resets 1em to 10px */
+	font-family: 'Trebuchet MS', 'Lucida Grande', Verdana, Arial, Sans-Serif;
+	background: white;
+	color: black;
+	text-align: left;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	}
+
+/* ************************* */
+/* Begin Typography & Colors */
+/* ************************* */
+
+/*
+    That yellowish color for frontpage
+        background-color: #F8F3EE;
+    Blue color for single pages
+        background-color: #F0EFF8;
+*/
+.invisitext {
+    color: #F0EFF8;
+    }
+    
+#sidebar a {
+	color: #39c;
+	}
+
+code {
+	font: 1.1em 'Courier New', Courier, Fixed;
+	}
+
+a, h2 a:hover, h3 a:hover {
+	color: #06c;
+	text-decoration: none;
+	}
+
+a:hover {
+	color: #147;
+	text-decoration: underline;
+	}
+
+/* End Typography & Colors */
+
+
+/* *********************** */
+/* Special hacks for GGery */
+/* *********************** */
+
+div, span, table, tr, td, p {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    }
+
+p {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    }
+
+.icon {
+    padding: 0;
+    margin: 0;
+    margin-right: 0.5em;
+    width: 50px;
+    display: inline;
+    }
+    
+.card_sidebar .icon {
+    margin: 0;
+    padding: 0;
+    }
+
+.blank_icon {
+    margin: 0;
+    padding: 0;
+    width: 50px;
+    }
+
+.icon_card {
+    overflow: hidden;
+    width: 37px;
+    height: 37px;
+    border: 1px solid black;
+    padding: 0;
+    margin: 0;
+    margin-top: 11px;
+    margin-left: 5px;
+    margin-right: 13px;
+    }
+
+.icon_card img {
+    width: 50px;
+    margin-top: -8px;
+    margin-left: -8px;
+    z-index: 5;
+    }
+    
+.icon_card:hover img {
+    z-index: 10000;
+    position: absolute;
+    }
+
+.floatclear {
+    clear: both;
+    }
+
+/* Card icons */
+
+
+/* Card previews */
+div.crop {
+    overflow: hidden;
+    float: left;
+    width: 100px;
+    height: 195px;
+    border: 1px solid black;
+    margin: 2px;
+    background-color: grey;
+    }
+    
+div.crop img {
+    width: 100px;
+    margin: -45px 0px 0px -28px;
+    z-index: 5;
+    }
+div.crop:hover {
+    overflow: visible;
+    }
+div.crop:hover img {
+    z-index: 10000;
+    position: absolute;
+    }
+
+/* Card tags */
+a.cardtag img {
+    display: none;
+    }
+a.cardtag:hover img {
+    display: inline;
+    position: absolute;
+    margin-top: 2em;
+    z-index: 10000;
+    }
+
+/* Article formatting */
+.entry {
+	padding-left: 1em;
+	padding-right: 1em;
+}
+.entry h3 {
+    font-size: 1.5em;
+    padding-bottom: 1em;
+    }
+
+.author {
+    font-size: 0.9em;
+    font-style: italic;
+    }
+       
+.entry_heading {
+    margin: 0;
+    padding: 0;
+    }
+.post_heading {
+	font-size: 1.5em;
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+
+
+/* Begin Structure */
+
+.narrowcolumn, .widecolumn {
+    display: block;
+	}
+    
+.narrowcolumn {
+    background-color: #F8F3EE;
+    }
+
+.widecolumn {
+    background-color: #F0EFF8;
+    }
+
+.post {
+	text-align: justify;
+    clear: both;
+    min-height: 10px;
+	}
+
+/* foots and feets */
+#sidebar_div {
+    padding: 0;
+    margin: 0;
+    }
+.foot_img {
+    padding: 0;
+    margin: 0;
+    margin-bottom: -3px;
+    }
+
+#footer {
+	padding: 0;
+	margin: 0 auto;
+	clear: both;
+    border: none;
+	}
+
+#footer p {
+	margin: 0;
+	padding: 0.5em;
+	text-align: center;
+	}
+/* End Structure */
+
+/* Begin Images */
+p img {
+	padding: 0;
+	max-width: 100%;
+	}
+
+/*	Using 'class="alignright"' on an image will (who would've
+	thought?!) align the image to the right. And using 'class="centered',
+	will of course center the image. This is much better than using
+	align="center", being much more futureproof (and valid) */
+
+img.centered {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	}
+
+img.alignright {
+	padding: 4px;
+	margin: 0 0 2px 7px;
+	display: inline;
+	}
+
+img.alignleft {
+	padding: 4px;
+	margin: 0 7px 2px 0;
+	display: inline;
+	}
+
+.alignright {
+    margin: 0;
+    padding: 0;
+	float: right;
+	}
+
+.alignleft {
+    margin: 0;
+    padding: 0;
+	float: left;
+    display: inline;
+	}
+/* End Images */
+
+/* Begin Headers */
+h1, h2, h3, h4 {
+	margin: 0;
+	padding: 0;
+}
+
+h1 {
+	font-size: 1.2em;
+}
+
+h2 {
+	font-size: 1.0em;
+}
+
+/* End Headers */
+
+/* Begin Lists
+
+	Special stylized non-IE bullets
+	Do not work in Internet Explorer, which merely default to normal bullets. */
+
+/* Begin Various Tags & Classes */
+acronym, abbr, span.caps {
+	cursor: help;
+	}
+
+acronym, abbr {
+	border-bottom: 1px dashed #999;
+	}
+
+blockquote {
+	margin: 15px 30px 0 10px;
+	padding-left: 20px;
+	border-left: 5px solid #ddd;
+	}
+
+blockquote cite {
+	margin: 5px 0 0;
+	display: block;
+	}
+
+.center {
+	text-align: center;
+	}
+
+a img {
+	border: none;
+	}
+
+.navigation {
+	display: block;
+	text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+	margin-top: 0px;
+	margin-bottom: 5px;
+	}
+/* End Various Tags & Classes*/
+
+
+/* New stuff */
+
+.post_block {
+	width: 100%;
+	border-top: 1px solid black;
+}
+

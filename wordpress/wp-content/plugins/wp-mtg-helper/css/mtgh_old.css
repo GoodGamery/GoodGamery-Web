@@ -1,0 +1,242 @@
+/* ---------->>> jtip <<<---------------------------------------------------------------*/
+#JT_close_left, #JT_close_right{font-size: 1.1em;}
+#JT_copy p, #JT_copy ul{font-size: 1.1em;}
+
+#JT_arrow{
+	position:absolute;
+	background-repeat: no-repeat;
+	background-position: left top;
+	z-index:101;
+}
+
+.JT_arrow_top{
+	height:23px;
+	width:10px;
+    top:-3px;
+}
+
+.JT_arrow_bottom{
+	height:23px;
+	width:10px;
+    top:266px;
+}
+
+.JT_arrow_left{
+	background-image: url(../images/arrow_left.gif);
+	left:-11px;
+}
+
+.JT_arrow_right{
+	background-image: url(../images/arrow_right.gif);
+}
+
+#JT {
+	position: absolute;
+	z-index:100;
+	border: 2px solid #000;
+	background:transparent;
+	width: 200px;
+	height: 285px;
+	background-image: url(../images/missing.jpg);
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+
+#JT_copy{
+	padding:0px 0px 0px 0px;
+	color:#333333;
+}
+
+
+
+#JT_copy p{
+margin:3px 0;
+}
+
+#JT_copy img{
+	padding: 0px;
+}
+
+.jTip{
+cursor:hand;
+white-space:nowrap;
+}
+
+/*=======================================MTG HELPER=============================================*/
+
+.mtgh{
+ 	border: 0px solid;
+	list-style:none;
+	margin: 20px 0;
+	padding: 0px;
+	text-align:left;
+}
+
+/*================ HEADER OPTIONS ==================*/
+
+.mtgh .mtgh_header {
+/*width: 500px;
+height: 25px;*/
+}
+
+.mtgh .header_options{
+	float:right;
+	margin-right:3px;
+	color:#000000;
+	text-decoration:none;
+}
+
+.mtgh .header_options a{
+	font-size:11px;
+	color:#000000;
+	text-decoration:none;
+}
+
+/*================ POOLHEADER ==================*/
+
+.mtgh .mtgh_header {
+	margin:0;
+	padding:3px 0;
+}
+
+.mtgh .mtgh_header h4{
+	font-weight:bold;
+	font-size: 150%;
+	text-align:left;
+	padding:0;
+	margin:0;
+}
+
+.mtgh .mtgh_header h4 hr{
+	padding:0;
+	margin:0;
+}
+
+.mtgh .mtgh_header a{
+	text-align:right;
+	font-weight:normal;
+	font-size: 90%;
+	padding:0;
+	margin:0;
+}
+
+/*================ POOLTABS ==================*/
+
+.mtgh .tab{
+	background:#CCCCCC;
+}
+.mtgh .tab ul{
+	width:100%;
+	margin:0px;
+	padding:0px;
+	list-style:none;
+}
+
+.mtgh .tab li{
+	float:left;
+	margin:0;
+	padding:0;
+	text-align:center;
+	overflow:hidden;
+}
+.mtgh .tab li a{
+	display:block;
+	color:#000000;
+	margin:0;
+	padding:0;
+	text-decoration:none;
+	width:100%%;
+	height:100%;
+}
+
+.mtgh .tab li a:hover{
+	text-decoration:underline;
+}
+
+/*================ CARDLIST ==================*/
+
+.mtgh .content{
+	margin:3px 3px 0 3px;
+	padding:0;
+	border:0px none;
+}
+
+.mtgh .content td{
+	vertical-align:top;
+	margin:0px;
+	padding:0px;
+}
+
+.mtgh .content ul{
+	list-style:none;
+	margin: 0px;
+	padding: 0px;
+    text-indent: 0;
+    font-size: 10px;
+}
+ 
+.mtgh .content li{
+	line-height:110%;
+	list-style:none;
+	margin: 0px;
+	padding: 0px;
+ }
+
+.mtgh .content li:before{
+	content: "";
+ }
+ 
+.mtgh .content a{
+	text-decoration:none;
+}
+
+/*================ CARDBOX==================*/
+
+.mtgh .card_box {
+	margin:0px;
+	padding:0px;
+	width: 200px;
+	height: 285px;
+}
+
+.mtgh .card_box img{
+	margin:0px;
+	padding:0px;
+}
+
+.mtgh .card_box table{
+	border-spacing: 0px;
+}
+
+.mtgh .card_box table td{
+	padding:0px;
+	margin:0px;
+}
+
+.mtgh .display_preview{
+	vertical-align:center;
+	width: 200px;
+	height: 285px;
+	padding:0px;
+	margin:0px;
+	background-image: url(../images/missing.jpg);
+	background-repeat: no-repeat;
+	background-position: left top;
+	background-color:#000;
+}
+
+/*================ STYLE IMG ==================*/
+
+.mtgh .thumbnail{
+ margin:0px;
+ padding:0px;	
+}
+
+img.cardpick_border{
+	border:2px solid red;
+}
+
+a.cardpick_border{
+	color:red;
+	font-weight:bold;
+}
