@@ -48,9 +48,24 @@
 	border: 2px solid #000;
 	background:transparent;
 	background-repeat: no-repeat;
-	background-position: left top;	width: 200px;
+	background-position: left top;
+	width: 200px;
 	height: 320px;
 	background-image: url(../images/dominion_back.jpg);
+}
+
+.HEARTHSTONE {
+	border: 0px solid #000;
+	background:transparent;
+	background-repeat: no-repeat;
+	background-position: 35px 0px;
+	width: 235px;
+	height: 350px;
+	background-image: url(../images/hearthstone_back.jpg);
+}
+
+.HEARTHSTONE #JT_copy {
+	margin-top: -80px;
 }
 
 #JT_copy{
