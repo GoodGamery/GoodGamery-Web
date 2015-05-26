@@ -1,6 +1,6 @@
 <?php
 
-$use_hs_cache = false;
+require('./config.php');
 
 //find card (executed from the generated posting via link)
 if( isset($_GET['find']) )
@@ -12,47 +12,49 @@ if( isset($_GET['find']) )
     }
     else
     {
-        echo "<img src=\"$card_url\" />";
+        echo "<img width='225px' src=\"$card_url\" />";
     }
 	//do not execute the rest of the code
 	die();
 }
 
 
-function get_hearthsone_card_from_name($cardName)
+function get_hearthsone_card_from_name(&$cardName)
 {
     $imgUrl = "";
 
     // Connect to DB
     $hostname = DB_HOST_MTG;
     $username = DB_USER_MTG;
-    $dbname = DB_NAME_HS;
+    $dbname = DB_NAME_MTG;
     $password = DB_PASSWORD_MTG;
 
+    $mysqli = null;
+
     // Connecting to your database
-    if ($use_hs_cache) {
+    if (USE_HS_CACHE) {
         $mysqli = new mysqli($hostname, $username, $password, $dbname);
         if ($mysqli->connect_errno) {
             echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
         } else {
-            $cardUrl = get_hearthstone_card_from_db($mysqli, $cardName);
+            $imgUrl = get_hearthstone_card_from_db($mysqli, $cardName);
         }
     }
 
     // Failed
     if ($imgUrl == "") {
         $imgUrl = get_hearthstone_card_from_api($cardName);
-        if ($use_hs_cache)
-            store_hearthstone_card_in_db($mysqli, $cardName, $cardUrl);
+        if (USE_HS_CACHE)
+            store_hearthstone_card_in_db($mysqli, $cardName, $imgUrl);
     }
 
-    if ($use_hs_cache)
+    if (USE_HS_CACHE && $mysqli)
         $mysqli->close();
 
     return $imgUrl;
 }
 
-function get_hearthstone_card_from_db($mysqli, $cardName)
+function get_hearthstone_card_from_db(&$mysqli, &$cardName)
 {
     // Hearthstone-ize-it
     $cardName = strtolower($cardName);
@@ -86,7 +88,7 @@ function get_hearthstone_card_from_db($mysqli, $cardName)
     return "";
 }
 
-function store_hearthstone_card_in_db($mysqli, $cardName, $cardUrl)
+function store_hearthstone_card_in_db(&$mysqli, &$cardName, &$imgUrl)
 {
     if ($mysqli->connect_errno)
         return;
@@ -94,14 +96,14 @@ function store_hearthstone_card_in_db($mysqli, $cardName, $cardUrl)
     $cardName = strtolower($cardName);
 
     $stmt = $mysqli->prepare("INSERT INTO `hs_cache` (`name`, `url`) VALUES ((?), (?))");
-    if (!$stmt->bind_param("ss", $cardName, $imgurl)) {
+    if (!$stmt->bind_param("ss", $cardName, $imgUrl)) {
         echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
     }
     $stmt->execute();
     $stmt->close();
 }
 
-function get_hearthstone_card_from_api($cardName)
+function get_hearthstone_card_from_api(&$cardName)
 {
     $url = 'https://omgvamp-hearthstone-v1.p.mashape.com/cards/'.rawurlencode($cardName).'?collectible=1';
     $ch = curl_init($url);
@@ -117,7 +119,8 @@ function get_hearthstone_card_from_api($cardName)
     if (is_array($result) && count($result) >= 1) {
         $imgURL = $result[0]->img;
     } else {
-        $imgURL = 'http://media-hearth.cursecdn.com/avatars/128/199/7834.png';
+        // "Not found" image
+        $imgURL = 'http://forums.goodgamery.com/includes/mtg/images/poopington.png';
     }
     return $imgURL;
 }

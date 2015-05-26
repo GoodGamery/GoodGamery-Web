@@ -58,14 +58,15 @@
 	border: 0px solid #000;
 	background:transparent;
 	background-repeat: no-repeat;
-	background-position: 35px 0px;
-	width: 235px;
-	height: 350px;
+	background-position: 10px 0px;
+	width: 168px;
+	height: 248px;
 	background-image: url(../images/hearthstone_back.jpg);
 }
 
 .HEARTHSTONE #JT_copy {
-	margin-top: -80px;
+	margin-top: -60px;
+	margin-left: -16px;
 }
 
 #JT_copy{
