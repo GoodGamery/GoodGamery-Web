@@ -83,7 +83,6 @@ switch ($search_id)
 	break;
 	
 	case 'ignored':
-		$run_ignored_search = true;
 		if ($user->data['user_id'] == ANONYMOUS)
 		{
 			login_box('', $user->lang['LOGIN_EXPLAIN_NEWPOSTS']);
@@ -324,6 +323,7 @@ if ($keywords || $author || $author_id || $search_id || $submit)
 	$sql = $field = $l_search_title = '';
 	if ($search_id)
 	{
+		$sql_ignore_topics = 'NOT EXISTS ( SELECT 1 FROM `phpbb_topics_ignore` i WHERE t.topic_id = i.topic_id AND i.user_id = ' . $user->data['user_id'] . ' )';
 		switch ($search_id)
 		{
 			// Oh holy Bob, bring us some activity...
@@ -346,6 +346,7 @@ if ($keywords || $author || $author_id || $search_id || $submit)
 						$last_post_time_sql
 						" . str_replace(array('p.', 'post_'), array('t.', 'topic_'), $m_approve_fid_sql) . '
 						' . ((sizeof($ex_fid_ary)) ? ' AND ' . $db->sql_in_set('t.forum_id', $ex_fid_ary, true) : '') . '
+						' . ' AND ' . $sql_ignore_topics . '
 					ORDER BY t.topic_last_post_time DESC';
 				$field = 'topic_id';
 			break;
@@ -412,7 +413,8 @@ if ($keywords || $author || $author_id || $search_id || $submit)
 
 				$sql_where = 'AND t.topic_moved_id = 0
 					' . str_replace(array('p.', 'post_'), array('t.', 'topic_'), $m_approve_fid_sql) . '
-					' . ((sizeof($ex_fid_ary)) ? 'AND ' . $db->sql_in_set('t.forum_id', $ex_fid_ary, true) : '');
+					' . ((sizeof($ex_fid_ary)) ? 'AND ' . $db->sql_in_set('t.forum_id', $ex_fid_ary, true) : '') . '
+					' . ' AND ' . $sql_ignore_topics;
 
 				gen_sort_selects($limit_days, $sort_by_text, $sort_days, $sort_key, $sort_dir, $s_limit_days, $s_sort_key, $s_sort_dir, $u_sort_param);
 				$s_sort_key = $s_sort_dir = $u_sort_param = $s_limit_days = '';
@@ -426,7 +428,7 @@ if ($keywords || $author || $author_id || $search_id || $submit)
 				$sort_by_sql['t'] = 't.topic_last_post_time';
 				$sql_sort = 'ORDER BY ' . $sort_by_sql[$sort_key] . (($sort_dir == 'a') ? ' ASC' : ' DESC');
 
-				$sql = 'SELECT `topic_id` FROM ' . TOPICS_IGNORE_TABLE . ' WHERE user_id = ' . $user->data['user_id'];
+				$sql = 'SELECT `topic_id` FROM ' . TOPICS_IGNORE_TABLE . ' WHERE user_id = ' . $user->data['user_id'] . ' AND ' . $sql_ignore_topics;
 				$field = "topic_id";
 
 				gen_sort_selects($limit_days, $sort_by_text, $sort_days, $sort_key, $sort_dir, $s_limit_days, $s_sort_key, $s_sort_dir, $u_sort_param);
@@ -451,7 +453,8 @@ if ($keywords || $author || $author_id || $search_id || $submit)
 						FROM ' . POSTS_TABLE . ' p
 						WHERE p.post_time > ' . $user->data['user_lastvisit'] . "
 							$m_approve_fid_sql
-							" . ((sizeof($ex_fid_ary)) ? ' AND ' . $db->sql_in_set('p.forum_id', $ex_fid_ary, true) : '') . "
+							" . ((sizeof($ex_fid_ary)) ? ' AND ' . $db->sql_in_set('p.forum_id', $ex_fid_ary, true) : '') . '
+							' . ' AND ' . $sql_ignore_topics . "
 						$sql_sort";
 					$field = 'post_id';
 				}
@@ -462,22 +465,10 @@ if ($keywords || $author || $author_id || $search_id || $submit)
 						WHERE t.topic_last_post_time > ' . $user->data['user_lastvisit'] . '
 							AND t.topic_moved_id = 0
 							' . str_replace(array('p.', 'post_'), array('t.', 'topic_'), $m_approve_fid_sql) . '
-							' . ((sizeof($ex_fid_ary)) ? 'AND ' . $db->sql_in_set('t.forum_id', $ex_fid_ary, true) : '') . "
+							' . ((sizeof($ex_fid_ary)) ? 'AND ' . $db->sql_in_set('t.forum_id', $ex_fid_ary, true) : '') . '
+							' . ' AND ' . $sql_ignore_topics . "
 						$sql_sort";
-/*
-		[Fix] queued replies missing from "view new posts" (Bug #42705 - Patch by Paul)
-		- Creates temporary table, query is far from optimized
 
-					$sql = 'SELECT t.topic_id
-						FROM ' . TOPICS_TABLE . ' t, ' . POSTS_TABLE . ' p
-						WHERE p.post_time > ' . $user->data['user_lastvisit'] . '
-							AND t.topic_id = p.topic_id
-							AND t.topic_moved_id = 0
-							' . $m_approve_fid_sql . '
-							' . ((sizeof($ex_fid_ary)) ? 'AND ' . $db->sql_in_set('t.forum_id', $ex_fid_ary, true) : '') . "
-						GROUP BY t.topic_id
-						$sql_sort";
-*/
 					$field = 'topic_id';
 				}
 			break;
@@ -492,22 +483,6 @@ if ($keywords || $author || $author_id || $search_id || $submit)
 	$per_page = ($show_results == 'posts') ? $config['posts_per_page'] : $config['topics_per_page'];
 	$total_match_count = 0;
 	$total_ignored_count = 0;
-
-	// Topic ignore mode
-	$ignore_array;
-	if( !$run_ignored_search )
-	{
-		$sql_ignore = 'SELECT `topic_id` FROM ' . TOPICS_IGNORE_TABLE . ' WHERE user_id = ' . $user->data['user_id'];
-		if( $sql_ignore )
-		{
-			$ignore_result = $db->sql_query($sql_ignore);
-			while ($row = $db->sql_fetchrow($ignore_result))
-			{
-				$ignore_array[] = (int) $row['topic_id'];
-			}
-			$db->sql_freeresult($ignore_result);
-		}
-	}
 
 	// Set limit for the $total_match_count to reduce server load
 	$total_matches_limit = 1000;
@@ -570,20 +545,13 @@ if ($keywords || $author || $author_id || $search_id || $submit)
 		}
 		
 				
-		if( $success && $ignore_array )
-		{
-			$total_match_count = sizeof($id_ary) + $start;
+		// if( $success )
+		// {
+		// 	$total_match_count = sizeof($id_ary) + $start;
 			
-			// Pagination
-			$id_ary = array_slice($id_ary, 0, $per_page);
-			
-			// Strip items out of the array	
-			if( !$run_ignored_search )
-			{
-				$total_ignored_count = sizeof($ignore_array);
-				$id_ary = array_diff($id_ary, $ignore_array);
-			}
-		}
+		// 	// Pagination
+		// 	$id_ary = array_slice($id_ary, 0, $per_page);
+		// }
 
 	}
 
