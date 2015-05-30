@@ -60,8 +60,7 @@ $lang = array_merge($lang, array(
 	'FOUND_SEARCH_MATCH'		=> 'Search found %d match',
 	'FOUND_SEARCH_MATCHES'		=> 'Search found %d matches',
 	'FOUND_MORE_SEARCH_MATCHES'	=> 'Search found more than %d matches',
-	'FOUND_SEARCH_IGNORE'		=> 'Ignored %d thread',
-	'FOUND_SEARCH_IGNORES'		=> 'Ignored %d threads',
+	'FOUND_SEARCH_IGNORE'		=> 'Search for ignored threads',
 
 	'GLOBAL'				=> 'Global announcement',
 

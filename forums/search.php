@@ -323,7 +323,7 @@ if ($keywords || $author || $author_id || $search_id || $submit)
 	$sql = $field = $l_search_title = '';
 	if ($search_id)
 	{
-		$sql_ignore_topics = 'NOT EXISTS ( SELECT 1 FROM `phpbb_topics_ignore` i WHERE t.topic_id = i.topic_id AND i.user_id = ' . $user->data['user_id'] . ' )';
+		$sql_ignore_topics = 'NOT EXISTS ( SELECT 1 FROM `'.TOPICS_IGNORE_TABLE.'` i WHERE t.topic_id = i.topic_id AND i.user_id = ' . $user->data['user_id'] . ' )';
 		switch ($search_id)
 		{
 			// Oh holy Bob, bring us some activity...
@@ -428,7 +428,7 @@ if ($keywords || $author || $author_id || $search_id || $submit)
 				$sort_by_sql['t'] = 't.topic_last_post_time';
 				$sql_sort = 'ORDER BY ' . $sort_by_sql[$sort_key] . (($sort_dir == 'a') ? ' ASC' : ' DESC');
 
-				$sql = 'SELECT `topic_id` FROM ' . TOPICS_IGNORE_TABLE . ' WHERE user_id = ' . $user->data['user_id'] . ' AND ' . $sql_ignore_topics;
+				$sql = 'SELECT `topic_id` FROM ' . TOPICS_IGNORE_TABLE . ' WHERE user_id = ' . $user->data['user_id'];
 				$field = "topic_id";
 
 				gen_sort_selects($limit_days, $sort_by_text, $sort_days, $sort_key, $sort_dir, $s_limit_days, $s_sort_key, $s_sort_dir, $u_sort_param);
@@ -482,7 +482,6 @@ if ($keywords || $author || $author_id || $search_id || $submit)
 	// show_results should not change after this
 	$per_page = ($show_results == 'posts') ? $config['posts_per_page'] : $config['topics_per_page'];
 	$total_match_count = 0;
-	$total_ignored_count = 0;
 
 	// Set limit for the $total_match_count to reduce server load
 	$total_matches_limit = 1000;
@@ -543,16 +542,6 @@ if ($keywords || $author || $author_id || $search_id || $submit)
 			// Set $start to 0 if no matches were found
 			$start = 0;
 		}
-		
-				
-		// if( $success )
-		// {
-		// 	$total_match_count = sizeof($id_ary) + $start;
-			
-		// 	// Pagination
-		// 	$id_ary = array_slice($id_ary, 0, $per_page);
-		// }
-
 	}
 
 	// make sure that some arrays are always in the same order
@@ -610,15 +599,7 @@ if ($keywords || $author || $author_id || $search_id || $submit)
 	}
 
 	// Link to ignored items
-	if( $total_ignored_count > 0 )
-	{
-		$l_ignored_string = sprintf( $total_ignored_count == 1 ? $user->lang['FOUND_SEARCH_IGNORE'] : $user->lang['FOUND_SEARCH_IGNORES'], $total_ignored_count);
-		$l_ignored_matches = "( <a href='search.php?search_id=ignored'>" . $l_ignored_string . "</a> ) ";
-	}
-	else
-	{
-		$l_ignored_matches = "";
-	}
+	$l_ignored_matches = "( <a href='search.php?search_id=ignored'>" . $user->lang['FOUND_SEARCH_IGNORE'] . "</a> ) ";
 
 	// define some vars for urls
 	$hilit = implode('|', explode(' ', preg_replace('#\s+#u', ' ', str_replace(array('+', '-', '|', '(', ')', '&quot;'), ' ', $keywords))));
