@@ -23,14 +23,8 @@ function JT_init()
 function JT_show(url,linkId,title)
 {
 	if(title == false)
-		title="&nbsp;";
-	var isDominion = (title == "Dominion");
-	var isHearthstone = (title == "Hearthstone");
-	var className = isDominion
-		? "DOMINION"
-		: (isHearthstone
-			? "HEARTHSTONE"
-			: "MTG");
+		title = "MTG";
+	var className = title.toUpperCase();
 	var de = document.documentElement;
 	var w = self.innerWidth || (de&&de.clientWidth) || document.body.clientWidth;
 	var hasArea = w - getAbsoluteLeft(linkId);
