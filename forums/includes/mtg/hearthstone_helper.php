@@ -5,7 +5,7 @@ require('./config.php');
 //find card (executed from the generated posting via link)
 if( isset($_GET['find']) )
 {
-	$card_url = get_hearthsone_card_from_name($_GET['find']);
+    $card_url = get_netrunner_card_from_name($_GET['find']);
     if( isset($_GET['address']) )
     {
         echo $card_url;
@@ -14,12 +14,12 @@ if( isset($_GET['find']) )
     {
         echo "<img width='225px' src=\"$card_url\" />";
     }
-	//do not execute the rest of the code
-	die();
+    //do not execute the rest of the code
+    die();
 }
 
 
-function get_hearthsone_card_from_name(&$cardName)
+function get_netrunner_card_from_name(&$cardName)
 {
     $imgUrl = "";
 
@@ -44,7 +44,7 @@ function get_hearthsone_card_from_name(&$cardName)
     // Failed
     if ($imgUrl == "") {
         $imgUrl = get_hearthstone_card_from_api($cardName);
-        if (USE_HS_CACHE)
+        if (USE_HS_CACHE && $imgUrl != HS_DEFAULT_IMAGE)
             store_hearthstone_card_in_db($mysqli, $cardName, $imgUrl);
     }
 
@@ -60,7 +60,7 @@ function get_hearthstone_card_from_db(&$mysqli, &$cardName)
     $cardName = strtolower($cardName);
 
     //Prepare statement to find cached card image
-    $stmt = $mysqli->prepare("SELECT url FROM `hs_cache` WHERE name=(?)");
+    $stmt = $mysqli->prepare('SELECT url FROM `'.DB_TABLE_HEARTHSTONE.'` WHERE name=(?)');
     if (!$stmt->bind_param("s", $cardName)) {
         echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
     }
@@ -105,11 +105,11 @@ function store_hearthstone_card_in_db(&$mysqli, &$cardName, &$imgUrl)
 
 function get_hearthstone_card_from_api(&$cardName)
 {
-    $url = 'https://omgvamp-hearthstone-v1.p.mashape.com/cards/'.rawurlencode($cardName).'?collectible=1';
+    $url = HS_API_ENDPOINT.rawurlencode($cardName).'';
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_HEADER, 0);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        'X-Mashape-Key: ZJCXImZlmomshm7KaKlcCOSn87ppp1yOu2djsnbHHw3vETav9O',
+        'X-Mashape-Key: '.HS_MASHAPE_KEY,
         'Accept: application/json'
     ));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
@@ -120,7 +120,7 @@ function get_hearthstone_card_from_api(&$cardName)
         $imgURL = $result[0]->img;
     } else {
         // "Not found" image
-        $imgURL = 'http://forums.goodgamery.com/includes/mtg/images/poopington.png';
+        $imgURL = HS_DEFAULT_IMAGE;
     }
     return $imgURL;
 }
