@@ -105,7 +105,7 @@ function store_hearthstone_card_in_db(&$mysqli, &$cardName, &$imgUrl)
 
 function get_hearthstone_card_from_api(&$cardName)
 {
-    $url = HS_API_ENDPOINT.rawurlencode($cardName).'';
+    $url = HS_API_ENDPOINT.rawurlencode($cardName).'&collectible=1';
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_HEADER, 0);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
