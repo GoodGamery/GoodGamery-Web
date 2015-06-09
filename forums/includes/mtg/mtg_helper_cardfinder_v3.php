@@ -1,5 +1,7 @@
 <?php
-	
+
+require('./config.php');
+
 //find card (executed from the generated posting via link)
 if( isset($_GET['find']) )
 {
@@ -8,12 +10,20 @@ if( isset($_GET['find']) )
     {
         echo $card_url;
     }
+    else if( isset($_GET['img']))
+    {
+        // echo $card_url;
+        $fp = fopen($card_url, 'rb');
+        header('Content-Type: image/jpg');
+        // header('Content-Length: '.filesize($card_url));  // Not sure what the performance implications are
+        fpassthru($fp);
+    }
     else
     {
         echo "<img src=\"$card_url\" />";
     }
 	//do not execute the rest of the code
-	die();
+	exit;
 }
 
 function stripAccents($stripAccents)
