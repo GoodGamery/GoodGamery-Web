@@ -1,5 +1,9 @@
 <?php
 
+// Don't let this script run, ever
+die();
+
+/*
 require('./config.php');
 
 //find card (executed from the generated posting via link)
@@ -16,13 +20,13 @@ if( isset($_GET['code']) )
 	die();
 }
 
-/*
-    CREATE TABLE IF NOT EXISTS `netrunner_cache` (
-      `name` varchar(64) NOT NULL,
-      `url` varchar(256) NOT NULL,
-      PRIMARY KEY  (`name`)
-    ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Netrunner Cards';
-*/
+
+    // CREATE TABLE IF NOT EXISTS `netrunner_cache` (
+    //   `name` varchar(64) NOT NULL,
+    //   `url` varchar(256) NOT NULL,
+    //   PRIMARY KEY  (`name`)
+    // ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Netrunner Cards';
+
 
 
 function netrunner_setup()
@@ -95,4 +99,5 @@ function get_netrunner_cards()
     return $result;
 }
 
+*/
 ?>
