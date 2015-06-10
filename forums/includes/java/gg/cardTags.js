@@ -229,9 +229,10 @@ function fixPost(post) {
                 if (parsed == undefined) {
                     out_text += lines[ix] + "<br>";
                 } else {
-                    out_text += parsed.count + ' <a href="/includes/mtg/mtg_helper_cardfinder_v3.php?find=' + escape(parsed.name) + '&width=223&height=310" class="jTip" name=""  onclick=\'window.open("http://magiccards.info/card.php?card=' + escape(parsed.name) + '")\' >' + parsed.name + '</a><br/>';
+                    var cardNameSafe = encodeURIComponent(parsed.name).replace(/'/g,'%27');
+                    out_text += parsed.count + ' <a href="/includes/mtg/mtg_helper_cardfinder_v3.php?find=' + cardNameSafe + '&width=223&height=310" class="jTip" name=""  onclick=\'window.open("http://magiccards.info/card.php?card=' + cardNameSafe + '")\' >' + parsed.name + '</a><br/>';
                     for (var jx = 0; jx < parsed.count; jx++) {
-                        cardList .push("http://gatherer.wizards.com/Handlers/Image.ashx?type=card&name=" + encodeURIComponent(parsed.name).replace("'","%27"));
+                        cardList .push("http://gatherer.wizards.com/Handlers/Image.ashx?type=card&name=" + cardNameSafe);
                     }
                 }
             }
