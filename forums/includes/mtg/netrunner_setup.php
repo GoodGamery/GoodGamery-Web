@@ -1,9 +1,9 @@
 <?php
 
 // Don't let this script run, ever
-die();
+// die();
 
-/*
+
 require('./config.php');
 
 //find card (executed from the generated posting via link)
@@ -75,8 +75,8 @@ function store_netrunner_card_in_db(&$mysqli, &$cardName, &$imgUrl)
 
     $cardName = strtolower($cardName);
 
-    $stmt = $mysqli->prepare('INSERT INTO `'.DB_TABLE_NETRUNNER.'` (`name`, `url`) VALUES ((?), (?))');
-    if (!$stmt->bind_param("ss", $cardName, $imgUrl)) {
+    $stmt = $mysqli->prepare('INSERT INTO `'.DB_TABLE_NETRUNNER.'` (`name`, `url`) VALUES ((?), (?)) ON DUPLICATE KEY UPDATE `url`=(?)');
+    if (!$stmt->bind_param("sss", $cardName, $imgUrl, $imgUrl)) {
         echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
     }
     $stmt->execute();
@@ -99,5 +99,5 @@ function get_netrunner_cards()
     return $result;
 }
 
-*/
+
 ?>
