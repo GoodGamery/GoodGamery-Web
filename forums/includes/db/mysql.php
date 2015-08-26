@@ -71,7 +71,7 @@ class dbal_mysql extends dbal
 				// Determine what version we are using and if it natively supports UNICODE
 				if (version_compare($this->sql_server_info(true), '4.1.0', '>='))
 				{
-					@mysql_query("SET NAMES 'utf8'", $this->db_connect_id);
+					@mysql_query("SET NAMES 'utf8mb4'", $this->db_connect_id);
 
 					// enforce strict mode on databases that support it
 					if (version_compare($this->sql_server_info(true), '5.0.2', '>='))

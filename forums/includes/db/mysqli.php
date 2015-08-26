@@ -70,8 +70,8 @@ class dbal_mysqli extends dbal
 
 		if ($this->db_connect_id && $this->dbname != '')
 		{
-			@mysqli_query($this->db_connect_id, "SET NAMES 'utf8'");
-			@mysqli_query($this->db_connect_id, "SET CHARACTER SET 'utf8'");
+			@mysqli_query($this->db_connect_id, "SET NAMES 'utf8mb4'");
+			@mysqli_query($this->db_connect_id, "SET CHARACTER SET 'utf8mb4'");
 
 			// enforce strict mode on databases that support it
 			if (version_compare($this->sql_server_info(true), '5.0.2', '>='))
