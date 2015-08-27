@@ -1,0 +1,31 @@
+// Deck file for Magic Workstation (http://www.magicworkstation.com)
+
+// Lands
+    4 [SHM] Mystic Gate
+    4 [CHP] Mutavault
+    4 [10E] Adarkar Wastes
+    6 [SHM] Plains (2)
+    6 [US] Island (1)
+
+// Creatures
+    2 [SHM] Mistmeadow Witch
+    4 [SHM] Kitchen Finks
+    3 [LRW] Mirror Entity
+    2 [EVE] Glen Elendra Archamge
+    4 [LRW] Mulldrifter
+    4 [LRW] Sower of Temptation
+    4 [MOR] Reveillark
+
+// Spells
+    4 [10E] Wrath of God
+    2 [SHM] Runed Halo
+    3 [REW] Tidings
+    4 [WL] Mind Stone
+
+// Sideboard
+SB: 2 [SHM] Runed Halo
+SB: 2 [10E] Boomerang
+SB: 2 [ALA] Knight-Captain of Eos
+SB: 3 [MOR] Negate
+SB: 3 [LRW] Wispmare
+SB: 3 [LRW] Burrenton Forge-Tender

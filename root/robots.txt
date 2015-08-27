@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /forums
+User-agent: Baiduspider
+Disallow: /forums
