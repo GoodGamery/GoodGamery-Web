@@ -1,6 +1,6 @@
 <?php
 
-require('./config.php');
+include 'config.php';
 
 //find card (executed from the generated posting via link)
 if( isset($_GET['find']) )
