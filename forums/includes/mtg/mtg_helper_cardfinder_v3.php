@@ -147,6 +147,7 @@ function get_source_from_name_v3($name)
     $imgurl = "http://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=";
     $gathererurl = fetch_gatherer_redirect($url, 3);
     $pos = strpos($gathererurl, "multiverseid=");
+    $multiverseid = ""; // Default value
     if ( $pos > 0 )
     {
         $multiverseid = intval(substr($gathererurl, $pos+strlen("multiverseid=")));
