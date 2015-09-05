@@ -835,7 +835,7 @@ function random_paragraph($n, $c1, $c2)
 		$randomthing[] = manasymbol('g').": Regenerate $n.";
 	}
 	// UB
-	if (($c1 == 2 && $c == 3) || ($c1 == 3 && $c2 == 2)) {
+	if (($c1 == 2 && $c2 == 3) || ($c1 == 3 && $c2 == 2)) {
 		$randomthing[] = manasymbol('u').manasymbol('b').", ".tapsymbol().": Target player puts the top card of his or her library into his or her graveyard.";
 	}
 
