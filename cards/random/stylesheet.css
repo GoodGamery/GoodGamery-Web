@@ -1,0 +1,17 @@
+p {
+  line-height: 100%;
+}
+
+p.ability {
+	padding: 2px;
+	margin: 0px;
+}
+
+#manasymbol {
+	position: relative;
+	bottom: 2px;
+}
+
+table {
+	background-repeat:no-repeat;
+}
