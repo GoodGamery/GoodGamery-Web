@@ -1,0 +1,250 @@
+/*
+-----------------------------------------------------
+Wizards.com:  article.css
+Copyright (c) 2008 Wizards of the Coast
+http: //www.wizards.com/
+-----------------------------------------------------
+*/
+
+@import url("styles.css");
+
+/* Main content */
+/* ----------------------------------------------- */
+
+#centerColumn {
+	background: #fff;
+	width: 640px;
+	float: left;
+}
+#centerColumn #content {
+	width: 640px;
+	float: left;
+}
+#content img[align="left"] {
+	margin: 0 0.25em 0 0;
+}
+#content img[align="right"] {
+	margin: 0 0 0 0.25em;
+}
+#content blockquote {
+	margin: 20px 40px;
+}
+#content table.deckcontent p {
+	margin: 0;
+}
+
+
+/* Article box */
+/* ----------------------------------------------- */
+
+#centerColumn .article-top {
+	float: left;
+	height: 30px;
+	padding: 0px 10px 10px 10px;
+	width: 620px;
+	background: transparent url("../images/box-top-640.gif") left top no-repeat;
+}
+#centerColumn .article-top h3 {
+	background: transparent url("../images/heading_background.gif") no-repeat;
+	display: block;
+	height: 30px;
+	line-height: 30px;
+}
+#centerColumn .article-top h3 img {
+	display: block;
+	padding: 8px;
+}
+#centerColumn .center-content .heading {
+	float: left;
+	width: 620px;
+	border-bottom: 3px solid #666;
+	padding-bottom: 0.5em;
+	margin-bottom: 1.5em;
+}
+#centerColumn .center-content .heading .blurbImage {
+	float: right;
+}
+#centerColumn .center-content {
+	float: left;
+	width: 620px;
+	background: transparent url("../images/box-border-640.gif") right top repeat-y;
+	padding: 10px 6px 10px;
+}
+#centerColumn .center-content .article-content {
+	clear: left;
+	width: 620px;
+	overflow: hidden;
+}
+#centerColumn .center-content .article-content ul {
+	margin: 0 0 1.5em 1.5em;
+	list-style-type: disc;
+}
+#centerColumn .center-content .article-content ol {
+	margin: 0 0 2em 5em; 
+	list-style-type: decimal; 
+}
+/* caption spacing */
+#centerColumn .center-content .article-content i.caption {
+	margin-top: 10px;
+}
+
+#centerColumn .center-content .article-content i.caption-centered {
+	font-size: small;
+}
+
+/* left & right aligned image tags need a little buffer so the text doesnt get so close */
+.image-wrapper-left 
+{
+	margin-right: 10px;
+}
+
+.image-wrapper-right
+{
+	margin-left: 10px;
+}
+
+#centerColumn .center-content .article-content .article-image {
+	margin: 10px;
+}
+
+#centerColumn .center-content .article-content div .article-image {
+	margin: 0px;
+}
+
+#centerColumn .center-content .article-content .caption-wrapper {
+	margin-top: 0px;
+	margin-bottom: 5px;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+#centerColumn .center-content img {
+	max-width: 620px;
+	width: expression(width > 620 ? 620 : true); /* some article images are too wide for the available space */
+}
+#centerColumn .center-content .heading .description {
+	float: left;
+	width: 320px;
+}
+#centerColumn .center-content .heading h4 {
+	font-size: 1.833em;
+	margin: 0;
+	line-height: 1.1;
+	font-weight: bold;
+	padding: 10px 10px 10px 10px;
+}
+#centerColumn .center-content .heading h5.byline {
+	font-size: 1.00em;
+	font-weight: normal;
+	font-style: italic;
+	padding: 10px 6px 10px;
+}
+#centerColumn .center-content .heading .links {
+	float: right;
+	width: 290px;
+	padding: 4px 10px 0 0;
+}
+#centerColumn .center-content .heading ul.heading-links {
+	float: right;
+}
+#centerColumn .center-content .heading ul.heading-links li {
+	float: left;
+}
+#centerColumn .center-content .heading ul.heading-links a {
+	display: block;
+	float: left;
+	width: 16px;
+	height: 16px;
+	padding-left: 2px;
+}
+#centerColumn .center-content .heading ul.heading-links a.nowidth {
+	display: block;
+	float: left;
+	height: 16px;
+	padding-left: 2px;
+}
+#centerColumn .center-content .heading .author-image {
+	clear: both;
+	float: right;
+	padding: 4px 0;
+}
+#centerColumn .center-content .heading #archive-links {
+	clear: both;
+	float: right;
+}
+#centerColumn .center-content .heading #archive-links li {
+	list-style-type: disc;
+	margin: 0 0 0 1.5em;
+	color: #600;
+	line-height: 1.2;
+}
+#centerColumn .center-content .heading #archive-links a {
+	text-decoration: none;
+	font-weight: bold;
+	color: #600;
+	font-size: 0.917em;
+}
+#centerColumn .center-content .heading #archive-links a:hover {
+	text-decoration: underline;
+}
+#centerColumn .center-content h3 {
+	font-size: 1.167em;
+	margin: 1.286em 0;
+}
+#centerColumn .center-content img[align="center"] {
+	display: block;
+	text-align: center;
+}
+#centerColumn .center-content .footer-links {
+	clear: both;
+	float: left;
+	width: 100%;
+	margin-top: 1.5em;
+	border-top: 3px solid #ccc;
+	border-bottom: 3px solid #ccc;
+	padding: 11px 0;
+}
+#centerColumn .center-content .footer-links li {
+	float: left;
+	width: 222px;
+	height: 39px;
+	padding-right: 10px;
+	line-height: 1.2;
+}
+#centerColumn .center-content .footer-links a {
+	display: block;
+	text-decoration: none;
+	font-weight: bold;
+	color: #600;
+	vertical-align: bottom;
+}
+#centerColumn .center-content .footer-links a:hover {
+	text-decoration: underline;
+	cursor: pointer; /* for ie */
+}
+#centerColumn .center-content .footer-links a img {
+	float: left;
+	width: 59px;
+	padding-right: 6px;
+}
+#centerColumn .center-content .footer-links a .text {
+	float: right;
+	width: 147px;
+	padding: 10px 0 0 10px;
+	background: transparent url("../images/bullet_related_content.gif") left 14px no-repeat;
+}
+#centerColumn .center-content .footer-links li.email {
+	width: 140px;
+}
+#centerColumn .center-content .footer-links li.email a .text {
+	width: 65px;
+}
+#centerColumn .article-bottom {
+	float: left;
+	height: 6px;
+	width: 100%;
+	background: transparent url("../images/box-bottom-640.gif") left bottom no-repeat;
+}
+* html #centerColumn .article-bottom { /* for ie6 only */
+	margin-top: -8px;
+}

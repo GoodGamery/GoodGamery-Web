@@ -1,0 +1,113 @@
+/*
+-----------------------------------------------------
+Wizards.com:  site.css
+Copyright (c) 2008 Wizards of the Coast
+http: //www.wizards.com/
+-----------------------------------------------------
+*/
+
+@import url(reset.css);
+@import url(navigation.css);
+
+/* General Elements/Typography */
+/* ----------------------------------------------- */
+
+body {
+	font-size: 75%; /* Makes default size of text 12px on most older browsers */
+	line-height: 1.5em;
+}
+body, div, p, th, td, li, dd, input, select, textarea	{ /* Redundant selectors to help IE6 remember */
+	font-family: Arial, Helvetica, sans-serif;
+	color: #000;
+}
+table, thead, tbody, tr, th, td { /* Redundant selectors to help IE6 remember */
+	font-size: 1em;
+}
+html>body { /* Makes default size of text 12px on Firefox, Safari, IE7, Opera, etc. */
+	font-size: 12px;
+}
+
+/* From here on out, 1em = 12px */
+
+a img { border-style: none; }
+
+a:link { color: blue; }
+a:visited { color: purple; }
+a:focus
+a:hover,
+a:active { color: blue; }
+
+p {
+	font-size: 1em;
+	margin: 0 0 1.5em 0;
+}
+p strong, p b { /* outside of paragraphs, strong can be used for emphasis not necessarily as bold text */
+	font-weight: bold;
+}
+p em, p i { /* outside of paragraphs, em can be used for emphasis not necessarily as italic text */
+	font-style: italic;
+}
+
+.left {
+	float: left;
+	margin: 0.5em 0.5em 0.5em 0;
+}
+.right {
+	float: right;
+	margin: 0.5em 0 0.5em 0.5em;
+}
+.clear { clear: both; }
+
+.hidden { position: absolute; left: -9999em; }
+
+span.super {
+	font-size: 0.917em;
+	vertical-align: super;
+}
+span.sub {
+	font-size: 0.917em;
+	vertical-align: sub;
+}
+
+/* Logo */
+/* ----------------------------------------------- */
+
+h1#WizardsLogo img {
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	z-index: 3;
+}
+h1#WizardsLogo img a {
+	display: block;
+	width: 94px;
+	height: 60px;
+}
+/* adding style to main nav "Wizards of the Coast" link to remove
+   full width linkage */
+#mainNav a { display: block; width: 135px; height: 25px; }
+
+/* Wrapper / Main Content */
+/* ----------------------------------------------- */
+
+#wrap { /* wraps around container (for applying a background style/color/image to centered content */
+	float: left;
+}
+
+#container { /* wraps around header, main content and footer */
+	position: relative; /* makes logo (and everything else) absolutely positioned relative to this wrapper */
+	margin: 0 auto;
+	width: 910px;
+}
+#MasterMainContent {
+	clear: both; /* clears the float from the main navigation */
+}
+#bannerGraphic img {
+	display: block; /* gets rid of 3px of white space under image */
+}
+
+/* Search Control */
+/* ----------------------------------------------- */
+
+.searchControl .textBox { width:150px; }
+.searchControl .emptyTextBox { width:150px; font-style:italic; }

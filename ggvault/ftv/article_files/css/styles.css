@@ -1,0 +1,234 @@
+/*
+-----------------------------------------------------
+Wizards.com:  styles.css
+Copyright (c) 2008 Wizards of the Coast
+http: //www.wizards.com/
+-----------------------------------------------------
+*/
+
+@import url("navigation.css");
+
+
+/* Main content */
+/* ----------------------------------------------- */
+
+body, div, p, th, td, li, dd, input, select, textarea	{ /* Redundant selectors to help IE6 remember */
+	font-family: Verdana, Sans-Serif;
+}
+
+#bannerGraphic {
+	height: 70px;
+	width: 1000px;
+	position: relative;
+	background-image: url("./images/banner_multiverse.jpg");
+	z-index: 1;
+}
+#bannerGraphic h2#MagicLogo {
+	position: absolute;
+	top: 22px;
+	left: 5px;
+}
+body {
+	background: #000 url("./images/background_tile.jpg") top center repeat-x;
+}
+h1#WizardsLogo img {
+	top: 9px;
+	left: 15px;
+	width: 57px;
+}
+h1#WizardsLogo img a {
+	width: 57px;
+}
+#container { /* wraps around header, main content and footer */
+	width: 1020px;
+	position: relative;
+	z-index: 2;
+}
+#glow { /* the glow area that can be repeated */
+	float: left;
+	background: transparent url("./images/background_glow_tile.gif") top center repeat-y;
+}
+#glowStatic { /* the top of the glow area that can not be repeated */
+	padding: 0 10px;
+	float: left;
+	background: transparent url("./images/background_glow.gif") top center no-repeat;
+}
+#wrap { /* wraps around header, main content and footer (inside container) */
+	background: #dcd9c8 url("./images/background_all.jpg") top center no-repeat;
+}
+#wrapper { /* wraps around center and right-hand columns only */
+	float: right;
+	width: 817px;
+	margin: 0;
+}
+#adspaceRow {
+	margin: 11px 12px 0 5px;
+}
+#adspaceRow p, #adspaceRow img, #adspaceRow div {
+	width: 728px;
+	height: 90px;
+	margin: 0 auto;
+	overflow: hidden; /* added because there appeared to be some overfloat that was covering content. */
+	/* background: limegreen; */
+}
+#adspaceRow p iframe {
+	padding:0px; 
+	margin:0px; 
+	width:728px; 
+	height:90px; 
+	overflow:hidden; 
+	border:none; 
+	background:transparent; 
+}
+#centerColumn {
+	float: left;
+	margin: 11px 12px 40px 5px;
+	display: inline; /* fixes ie6 double margin bug */
+}
+#centerColumn a {
+	text-decoration: none;
+}
+#centerColumn a:hover {
+	text-decoration: underline;
+}
+#centerColumn #splash {
+	width: 800px;
+	height: 380px;
+}
+#centerColumn #slider {
+	width: 800px;
+	height: 150px;
+	margin: 9px 0 14px;
+}
+
+
+/* Right column (sidebar) */
+/* ----------------------------------------------- */
+
+#rightColumn {
+	float: right;
+	width: 160px;
+	margin-top: 11px;
+}
+#rightColumn .sideAd {
+	height: 600px;
+	/* background: limegreen; */
+}
+
+#rightColumn .sideAd iframe {
+	padding:0px; 
+	margin:0px; 
+	width:160px; 
+	height:600px; 
+	overflow:hidden; 
+	border:none; 
+	background:transparent; 
+}
+
+
+/* Styles to create a Magic card */
+/* ----------------------------------------------- */
+
+.magic-card {
+	width: 223px;
+	height: 310px;
+	padding: 3px;
+}
+.magic-card-rotated {
+	width: 310px;
+	height: 223px;
+	padding: 3px;
+}
+.magic-card-wide {
+	width: 446px;
+	height: 310px;
+	padding: 3px;
+}
+.magic-card-wide-rotated {
+	width: 310px;
+	height: 446px;
+	padding: 3px;
+}
+
+.card-box {
+	position: absolute;
+	width: 705px;
+	height: 325px;
+	padding: 3px;
+}
+.card-box-rotated {
+	position: absolute;
+	width: 325px;
+	height: 705px;
+	padding: 3px;
+}
+
+.revealer {
+	position: relative;
+	overflow: hidden;
+	width: 235px;
+	height: 316px;
+}
+.revealer-rotated {
+	position: relative;
+	overflow: hidden;
+	width: 316px;
+	height: 235px;
+}
+.revealer-wide {
+	position: relative;
+	overflow: hidden;
+	width: 464px;
+	height: 316px;
+}
+.revealer-wide-rotated {
+	position: relative;
+	overflow: hidden;
+	width: 316px;
+	height: 470px;
+}
+
+.shiftleft {
+	left: -229px;
+}
+.shiftup {
+	top: -233px;
+}
+
+.magic-card-black {
+	background: transparent url("./images/card-border-black.jpg") no-repeat;
+}
+.magic-card-silver {
+	background: transparent url("./images/card-border-silver.jpg") no-repeat;
+}
+.magic-card-white {
+	background: transparent url("./images/card-border-white.jpg") no-repeat;
+}
+.magic-card-right {
+	float: right;
+	margin: 0 0 0 0.5em;
+}
+.magic-card-center {
+	margin: 0 auto;
+}
+.magic-card-left {
+	float: left;
+	margin: 0 0.5em 0 0;
+}
+.magic-card .card-art {
+	width: 200px;
+	height: 285px;
+	overflow: hidden;
+}
+
+.addbutton { width: 130px; }
+
+.cardImageHover {
+	display:inline;
+	/*width:175px; 
+	height:243px;*/
+}
+
+a.nodec { color: #990000; }
+.cardgroup a.nodec { color: blue; }
+
