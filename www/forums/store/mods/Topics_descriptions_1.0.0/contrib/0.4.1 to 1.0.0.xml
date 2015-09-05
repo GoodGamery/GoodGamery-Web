@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet type="text/xsl" href="modx.prosilver.en.xsl"?>
+<!--For security purposes, please check: http://www.phpbb.com/mods/ for the
+latest version of this MOD. Although MODs are checked before being allowed in
+the MODs Database there is no guarantee that there are no security problems
+within the MOD. No support will be given for MODs not found within the MODs
+Database which can be found at http://www.phpbb.com/mods/-->
+<mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.phpbb.com/mods/xml/modx-1.2.3.xsd">
+	<header>
+		<license>http://opensource.org/licenses/gpl-license.php GNU General Public License v2</license>
+
+		<title lang="en">Topics descriptions</title>
+		<title lang="fr">Descriptions des sujets</title>
+
+		<description lang="en">
+			Add the possibility of describe topics, in posting page. Based on permissions per forum.
+			Descriptions are display in viewtopic, viewforum, search results (only display results as topic) and MCP forum.
+		</description>
+
+		<description lang="fr">
+			Ajoute la possibilité de décrire les sujets dans la page d'écriture/édition des sujets. Basé sur les permissions par forum.
+			Les descriptions sont affichés dans les sujets, des forums, les résultats de recherche (uniquement avec l'affichage sous forme de sujet) et la vue des sujets du MCP.
+		</description>
+		
+		<author-group>
+			<author>
+				<username>00mohgta7</username>
+				<email>moh.phpbb@gmail.com</email>
+			</author>
+		</author-group>
+
+		<mod-version>1.0.0</mod-version>
+
+		<installation>
+			<level>easy</level>
+			<time>600</time>
+			<target-version>3.0.6</target-version>
+		</installation>
+
+		<history>
+			<entry>
+				<date>2009-12-31</date>
+				<rev-version>1.0.0</rev-version>
+				<changelog lang="en">
+					<change>Remove duplicate conditions</change>
+					<change>Add install_topic_desc.php file</change>
+				</changelog>
+				<changelog lang="fr">
+					<change>Suppression de conditions dupliquées</change>
+					<change>Ajout du fichier install_topic_desc.php</change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2009-06-28</date>
+				<rev-version>0.4.1</rev-version>
+				<changelog lang="en">
+					<change>Add description in MCP forum</change>
+					<change>Fix bug when editing a described topic with permission to describe topic setting to no</change>
+				</changelog>
+				<changelog lang="fr">
+					<change>Ajout des descriptions dans la vue des sujets du MCP</change>
+					<change>Correction d'un bug lors de l'édition lorsque la permission de décrire les sujets est sur non</change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2009-05-10</date>
+				<rev-version>0.4.0</rev-version>
+				<changelog lang="en">
+					<change>Fix error in install file</change>
+					<change>Add description in search (only display results as topic)</change>
+				</changelog>
+				<changelog lang="fr">
+					<change>Fix d'une erreur dans le fichier d'installation</change>
+					<change>Ajout des descriptions dans la recherche (uniquement l'affichage des résultats en forme de sujet)</change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2009-05-02</date>
+				<rev-version>0.3.0</rev-version>
+				<changelog lang="en">
+					<change>Some code change</change>
+					<change>Add censor text for descriptions</change>
+					<change>Delete global permission</change>
+					<change>Truncate description if too long</change>
+				</changelog>
+				<changelog lang="fr">
+					<change>Plusieurs modifications du code</change>
+					<change>Ajout de la censure des descriptions</change>
+					<change>Suppression de la permission globale</change>
+					<change>Description tronquée si trop longue</change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2008-12-16</date>
+				<rev-version>0.2.0</rev-version>
+				<changelog lang="en">
+					<change>Added permissions system</change>
+					<change>codefix in template</change>
+				</changelog>
+				<changelog lang="fr">
+					<change>Ajout des permissions</change>
+					<change>Fix d'une erreur dans les styles</change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2008-12-14</date>
+				<rev-version>0.1.0</rev-version>
+				<changelog lang="en">
+					<change>Initial version</change>
+				</changelog>
+				<changelog lang="fr">
+					<change>Première version</change>
+				</changelog>
+			</entry>
+		</history>
+	</header>
+		
+	<action-group>
+		<open src="posting.php">
+			<edit>
+				<find><![CDATA[if ($auth->acl_get('f_topic_desc', $forum_id))
+	{
+		$post_data['topic_desc']		= utf8_normalize_nfc(request_var('desc', '', true));
+	}]]></find>
+				<action type="replace-with"><![CDATA[$post_data['topic_desc']		= ($auth->acl_get('f_topic_desc', $forum_id)) ? utf8_normalize_nfc(request_var('desc', '', true)) : $post_data['topic_desc'];]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA['topic_desc'			=> (!empty($post_data['topic_desc'])) ? $post_data['topic_desc'] : '',]]></find>
+				<action type="replace-with"><![CDATA['topic_desc'			=> $post_data['topic_desc'],]]></action>
+			</edit>
+		</open>
+		<open src="includes/functions_posting.php">
+			<edit>
+				<find><![CDATA['topic_desc'				=> (!empty($data['topic_desc'])) ? $data['topic_desc'] : '',]]></find>
+				<action type="replace-with"><![CDATA['topic_desc'				=> $data['topic_desc'],]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA['topic_desc'				=> (!empty($data['topic_desc'])) ? $data['topic_desc'] : '',]]></find>
+				<action type="replace-with"><![CDATA['topic_desc'				=> $data['topic_desc'],]]></action>
+			</edit>
+		</open>
+	</action-group>
+</mod>

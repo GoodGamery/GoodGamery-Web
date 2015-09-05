@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml-stylesheet type="text/xsl" href="modx.prosilver.en.xsl"?>
+<!--NOTICE: Please open this file in your web browser. If presented with a security warning, you may safely tell it to allow the blocked content.-->
+<!--For security purposes, please check: http://www.phpbb.com/mods/ for the latest version of this MOD.\nAlthough MODs are checked before being allowed in the MODs Database there is no guarantee that there are no security problems within the MOD.\nNo support will be given for MODs not found within the MODs Database which can be found at http://www.phpbb.com/mods/-->
+<mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.phpbb.com/mods/xml/modx-1.2.3.xsd">
+	<header>
+		<meta name="generator" content="MODX file generated with PP MODX Creator by tumba25"/>
+		<license><![CDATA[http://opensource.org/licenses/gpl-license.php GNU General Public License v2]]></license>
+		<title lang="en"><![CDATA[Custom User Posts- and Topics-Per-Page MOD]]></title>
+		<description lang="en"><![CDATA[A very simple mod allowing users to customise the number of posts and topics that appear per page to a given user.]]></description>
+		<author-notes lang="en"><![CDATA[It involves only a hook and custom fields created through the ACP, no alteration of phpBB's files. So it's very, well, MODular :P ]]></author-notes>
+		<author-group>
+			<author>
+				<realname><![CDATA[Al King]]></realname>
+				<username><![CDATA[KingAl]]></username>
+			</author>
+		</author-group>
+		<mod-version>1.0.1</mod-version>
+		<installation>
+			<level>easy</level>
+			<time>300</time>
+			<target-version>3.0.6</target-version>
+		</installation>
+		<history>
+			<entry>
+				<date>2009-11-27</date>
+				<rev-version>1.0.1</rev-version>
+				<changelog lang="en">
+					<change><![CDATA[Check if user is in ACP introduced: admin personal settings no longer change values displayed in Post Settings.]]></change>
+				</changelog>
+			</entry>
+		</history>
+	</header>
+	<action-group>
+		<copy>
+			<file from="root/includes/hooks/hook_user_per_page.php" to="includes/hooks/hook_user_per_page.php"/>
+		</copy>
+		<diy-instructions lang="en"><![CDATA[1. Enter the Administration Control Panel.
+
+2. Select the Users and Groups tab, then Custom profile fields.
+
+3. Create a new Numbers field with an identifier exactly "posts_per_page" (without quotation marks).
+
+4. Set the visibility permissions and description as you like. 
+The Field Name can be something like "Posts Per Page": 
+it doesn't need to be the same as the identifier.
+Do not make it a Required field. (Unless you really want to.)
+
+5. Set the lower bound at at least 1, and the default value to the same as your board-wide
+default (visible under the General tab, Post settings).
+
+6. Follow the same process for a field with the identifier "topics_per_page".
+
+7. Purge the cache (ACP General tab, Purge cache).
+
+8. You're done!]]></diy-instructions>
+	</action-group>
+</mod>

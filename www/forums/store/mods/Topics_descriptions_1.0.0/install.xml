@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet type="text/xsl" href="modx.prosilver.en.xsl"?>
+<!--For security purposes, please check: http://www.phpbb.com/mods/ for the
+latest version of this MOD. Although MODs are checked before being allowed in
+the MODs Database there is no guarantee that there are no security problems
+within the MOD. No support will be given for MODs not found within the MODs
+Database which can be found at http://www.phpbb.com/mods/-->
+<mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.phpbb.com/mods/xml/modx-1.2.3.xsd">
+	<header>
+		<license>http://opensource.org/licenses/gpl-license.php GNU General Public License v2</license>
+
+		<title lang="en">Topics descriptions</title>
+		<title lang="fr">Descriptions des sujets</title>
+
+		<description lang="en">
+			Add the possibility of describe topics, in posting page. Based on permissions per forum.
+			Descriptions are display in viewtopic, viewforum, search results (only display results as topic) and MCP forum.
+		</description>
+
+		<description lang="fr">
+			Ajoute la possibilité de décrire les sujets dans la page d'écriture/édition des sujets. Basé sur les permissions par forum.
+			Les descriptions sont affichés dans les sujets, des forums, les résultats de recherche (uniquement avec l'affichage sous forme de sujet) et la vue des sujets du MCP.
+		</description>
+		
+		<author-group>
+			<author>
+				<username>00mohgta7</username>
+				<email>moh.phpbb@gmail.com</email>
+			</author>
+		</author-group>
+
+		<mod-version>1.0.0</mod-version>
+
+		<installation>
+			<level>easy</level>
+			<time>600</time>
+			<target-version>3.0.6</target-version>
+		</installation>
+
+		<history>
+			<entry>
+				<date>2009-12-31</date>
+				<rev-version>1.0.0</rev-version>
+				<changelog lang="en">
+					<change>Remove duplicate conditions</change>
+					<change>Add install_topic_desc.php file</change>
+				</changelog>
+				<changelog lang="fr">
+					<change>Suppression des conditions dupliquées</change>
+					<change>Ajout du fichier install_topic_desc.php</change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2009-06-28</date>
+				<rev-version>0.4.1</rev-version>
+				<changelog lang="en">
+					<change>Add description in MCP forum</change>
+					<change>Fix bug when editing a described topic with permission to describe topic setting to no</change>
+				</changelog>
+				<changelog lang="fr">
+					<change>Ajout des descriptions dans la vue des sujets du MCP</change>
+					<change>Correction d'un bug lors de l'édition lorsque la permission de décrire les sujets est sur non</change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2009-05-10</date>
+				<rev-version>0.4.0</rev-version>
+				<changelog lang="en">
+					<change>Fix error in install file</change>
+					<change>Add description in search (only display results as topic)</change>
+				</changelog>
+				<changelog lang="fr">
+					<change>Fix d'une erreur dans le fichier d'installation</change>
+					<change>Ajout des descriptions dans la recherche (uniquement l'affichage des résultats en forme de sujet)</change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2009-05-02</date>
+				<rev-version>0.3.0</rev-version>
+				<changelog lang="en">
+					<change>Some code change</change>
+					<change>Add censor text for descriptions</change>
+					<change>Delete global permission</change>
+					<change>Truncate description if too long</change>
+				</changelog>
+				<changelog lang="fr">
+					<change>Plusieurs modifications du code</change>
+					<change>Ajout de la censure des descriptions</change>
+					<change>Suppression de la permission globale</change>
+					<change>Description tronquée si trop longue</change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2008-12-16</date>
+				<rev-version>0.2.0</rev-version>
+				<changelog lang="en">
+					<change>Added permissions system</change>
+					<change>codefix in template</change>
+				</changelog>
+				<changelog lang="fr">
+					<change>Ajout des permissions</change>
+					<change>Fix d'une erreur dans les styles</change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2008-12-14</date>
+				<rev-version>0.1.0</rev-version>
+				<changelog lang="en">
+					<change>Initial version</change>
+				</changelog>
+				<changelog lang="fr">
+					<change>Première version</change>
+				</changelog>
+			</entry>
+		</history>
+		
+		<link-group>
+			<link type="language" href="fr.xml" lang="en">French</link>
+			<link type="language" href="fr.xml" lang="fr">Français</link>
+			<link type="template" href="subsilver2.xml" lang="en">subsilver2</link>
+			<link type="template" href="subsilver2.xml" lang="fr">subsilver2</link>
+	</link-group>
+	</header>
+		
+	<action-group>
+		<copy>
+			<file from="root/install_topic_desc.php" to="install_topic_desc.php" />
+		</copy>
+		<open src="posting.php">
+			<edit>
+				<find><![CDATA[$uninit = array('post_attachment' => 0, 'poster_id' => $user->data['user_id'], 'enable_magic_url' => 0, 'topic_status' => 0, 'topic_type' => POST_NORMAL, 'post_subject' => '', 'topic_title' => '', 'post_time' => 0, 'post_edit_reason' => '', 'notify_set' => 0);]]></find>
+				<inline-edit>
+					<inline-find><![CDATA[, 'notify_set' => 0]]></inline-find>
+					<inline-action type="after-add"><![CDATA[, 'topic_desc' => '']]></inline-action>
+				</inline-edit>
+			</edit>
+			<edit>
+				<find><![CDATA[$message_parser->message		= utf8_normalize_nfc(request_var('message', '', true));]]></find>
+				<action type="after-add"><![CDATA[$post_data['topic_desc']		= ($auth->acl_get('f_topic_desc', $forum_id)) ? utf8_normalize_nfc(request_var('desc', '', true)) : $post_data['topic_desc'];]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA['topic_title'			=> (empty($post_data['topic_title'])) ? $post_data['post_subject'] : $post_data['topic_title'],]]></find>
+				<action type="after-add"><![CDATA['topic_desc'			=> $post_data['topic_desc'],]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA['UA_PROGRESS_BAR'		=> addslashes(append_sid("{$phpbb_root_path}posting.$phpEx", "f=$forum_id&amp;mode=popup")),]]></find>
+				<action type="after-add"><![CDATA['TOPIC_DESC'			=> $post_data['topic_desc'],																	 
+	'S_DESC_TOPIC'			=> ($auth->acl_get('f_topic_desc', $forum_id) && ($mode == 'post' || ($mode == 'edit' && $post_data['topic_first_post_id'] == $post_data['post_id']))) ? true : false,]]></action>
+			</edit>
+		</open>
+		<open src="includes/functions_posting.php">
+			<edit>
+				<find><![CDATA[$data['topic_title'] = truncate_string($data['topic_title']);]]></find>
+				<action type="after-add"><![CDATA[$data['topic_desc'] = (isset($data['topic_desc'])) ? truncate_string($data['topic_desc'], 100, 255, false) : '';]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA['topic_attachment'			=> (!empty($data['attachment_data'])) ? 1 : 0,]]></find>
+				<action type="after-add"><![CDATA['topic_desc'				=> $data['topic_desc'],]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA['topic_attachment'			=> (!empty($data['attachment_data'])) ? 1 : (isset($data['topic_attachment']) ? $data['topic_attachment'] : 0),]]></find>
+				<action type="after-add"><![CDATA['topic_desc'				=> $data['topic_desc'],]]></action>
+			</edit>
+		</open>
+		<open src="viewforum.php">
+			<edit>
+				<find><![CDATA['TOPIC_TYPE'		=> $topic_type,]]></find>
+				<action type="after-add"><![CDATA['TOPIC_DESC'		=> censor_text($row['topic_desc']),]]></action>
+			</edit>
+		</open>
+		<open src="viewtopic.php">
+			<edit>
+				<find><![CDATA['TOPIC_POSTER'	=> $topic_data['topic_poster'],]]></find>
+				<action type="after-add"><![CDATA['TOPIC_DESC' 	=> censor_text($topic_data['topic_desc']),]]></action>
+			</edit>
+		</open>
+		<open src="search.php">
+			<edit>
+				<find><![CDATA['TOPIC_TYPE'		=> $topic_type,]]></find>
+				<action type="after-add"><![CDATA['TOPIC_DESC'		=> censor_text($row['topic_desc']),]]></action>
+			</edit>
+		</open>
+		<open src="includes/mcp/mcp_forum.php">
+			<edit>
+				<find><![CDATA['TOPIC_TITLE'		=> $topic_title,]]></find>
+				<action type="after-add"><![CDATA['TOPIC_DESC'		=> censor_text($row['topic_desc']),]]></action>
+			</edit>
+		</open>
+		<open src="language/en/posting.php">
+			<edit>
+				<find><![CDATA['TOPIC_BUMPED'				=> 'Topic has been bumped successfully.',]]></find>
+				<action type="after-add"><![CDATA['TOPIC_DESC'				=> 'Topic description',]]></action>
+			</edit>
+		</open>
+		<open src="language/en/acp/permissions_phpbb.php">
+			<edit>
+				<find><![CDATA['acl_f_sticky'		=> array('lang' => 'Can post stickies', 'cat' => 'post'),]]></find>
+				<action type="after-add"><![CDATA['acl_f_topic_desc'	=> array('lang' => 'Can describe topics', 'cat' => 'post'),]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/posting_editor.html">
+			<edit>
+				<find><![CDATA[<dl style="clear: left;">
+		<dt><label for="subject">{L_SUBJECT}:</label></dt>
+		<dd><input type="text" name="subject" id="subject" size="45" maxlength="<!-- IF S_NEW_MESSAGE -->60<!-- ELSE -->64<!-- ENDIF -->" tabindex="2" value="{SUBJECT}{DRAFT_SUBJECT}" class="inputbox autowidth" /></dd>
+	</dl>]]></find>
+				<action type="after-add"><![CDATA[<!-- IF S_DESC_TOPIC -->
+		<dl style="clear: left;">
+			<dt><label for="desc">{L_TOPIC_DESC}:</label></dt>
+			<dd><input type="text" name="desc" id="desc" size="45" maxlength="100" tabindex="2" value="{TOPIC_DESC}" class="inputbox autowidth" /></dd>
+		</dl>
+	<!-- ENDIF -->]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/viewforum_body.html">
+			<edit>
+				<find><![CDATA[<!-- IF topicrow.S_TOPIC_REPORTED --><a href="{topicrow.U_MCP_REPORT}">{REPORTED_IMG}</a><!-- ENDIF --><br />]]></find>
+				<action type="after-add"><![CDATA[<!-- IF topicrow.TOPIC_DESC -->{topicrow.TOPIC_DESC}<br /><!-- ENDIF -->]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/viewtopic_body.html">
+			<edit>
+				<find><![CDATA[<h2><a href="{U_VIEW_TOPIC}">{TOPIC_TITLE}</a></h2>]]></find>
+				<action type="after-add"><![CDATA[<!-- IF TOPIC_DESC --><p>{TOPIC_DESC}</p><!-- ENDIF -->]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/search_results.html">
+			<edit>
+				<find><![CDATA[<!-- IF searchresults.S_TOPIC_REPORTED --><a href="{searchresults.U_MCP_REPORT}">{REPORTED_IMG}</a><!-- ENDIF --><br />]]></find>
+				<action type="after-add"><![CDATA[<!-- IF searchresults.TOPIC_DESC -->{searchresults.TOPIC_DESC}<br /><!-- ENDIF -->]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/mcp_forum.html">
+			<edit>
+				<find><![CDATA[<!-- IF topicrow.S_MOVED_TOPIC and S_CAN_DELETE -->&nbsp;<a href="{topicrow.U_DELETE_TOPIC}" class="topictitle">[ {L_DELETE_SHADOW_TOPIC} ]</a><!-- ENDIF -->
+					<br />]]></find>
+				<action type="after-add"><![CDATA[<!-- IF topicrow.TOPIC_DESC -->{topicrow.TOPIC_DESC}<br /><!-- ENDIF -->]]></action>
+			</edit>
+		</open>
+		<diy-instructions lang="en">Go to http://www.yourforum.com/install_topic_desc.php for finish installation.</diy-instructions>
+		<diy-instructions lang="fr">Allez à http://www.votreforum.com/install_topic_desc.php pour finir l'installation.</diy-instructions>
+	</action-group>
+</mod>
