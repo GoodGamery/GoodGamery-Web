@@ -17,6 +17,20 @@ p {
 
 include "rules_functions.php";
 
+// Patches for buggy code
+$insaneMode = false;
+$werewolf = false;
+$flavor = false;
+$masslevel = 7.5;
+$tempcenter = 0;
+$transform = false;
+$manacost = "{0}";
+$wording = ['', '', '', '', '', ''];
+
+function hackyRand($lo, $hi) {
+	return mt_rand(min($lo, $hi), max($lo, $hi));
+}
+
 function letter($input)
 {
 	$output = 'x';
@@ -169,7 +183,7 @@ function generate_manacost($color,$cmc) {
 //	echo "<p>Generating CMC=".$cmc." manacost for color: ".$color."</p>";
   $tmp = "";
 	if ($cmc > 1) {
-		$cc = mt_rand(1,2);
+		$cc = hackyRand(1,2);
 	  for ($a = 0; $a < $cc; $a = $a + 1) {
  	    $tmp = $tmp."{".one_letter_color($color)."}";
 	  }
@@ -202,7 +216,7 @@ function spell_name($color) {
 
 function random_name($color,$type) {
 	if ($type == "artifact") {
- 		switch(mt_rand(1,19)) {				
+ 		switch(hackyRand(1,19)) {				
 		  case 1 : $first = "Blazing"; break;
 		  case 2 : $first = "Butcher's"; break;
 		  case 3 : $first = "Cellar"; break;
@@ -223,7 +237,7 @@ function random_name($color,$type) {
 		  case 18 : $first = "Wooden"; break;
 		  case 19 : $first = "Supersized"; break;
  		}
- 		switch(mt_rand(1,19)) {				
+ 		switch(hackyRand(1,19)) {				
 		  case 1 : $last= "Torch"; break;
 		  case 2 : $last = "Cleaver"; break;
 		  case 3 : $last = "Door"; break;
@@ -247,7 +261,7 @@ function random_name($color,$type) {
  		}
 	}
 	elseif ($type == "land") {
- 		switch(mt_rand(1,16)) {				
+ 		switch(hackyRand(1,16)) {				
 		  case 1 : $first = "Clifftop"; break;
 		  case 2 : $first = "Gavony"; break;
 		  case 3 : $first = "Ghost"; break;
@@ -265,7 +279,7 @@ function random_name($color,$type) {
 		  case 15 : $first = "Haunted"; break;
 		  case 16 : $first = "Archangel's"; break;
  		}
- 		 switch(mt_rand(1,16)) {				
+ 		 switch(hackyRand(1,16)) {				
 		  case 1 : $last= "Retreat"; break;
 		  case 2 : $last = "Township"; break;
 		  case 3 : $last = "Quarter"; break;
@@ -286,7 +300,7 @@ function random_name($color,$type) {
 	}
 	if ($type != "creature") { // Spell
   	if ($color == "white") {
-  		switch(mt_rand(1,21)) {				
+  		switch(hackyRand(1,21)) {				
 			  case 1 : $first = "Bonds of"; break;
 			  case 2 : $first = "Archangel's"; break;
 			  case 3 : $first = "Bar the"; break;
@@ -309,7 +323,7 @@ function random_name($color,$type) {
 			  case 20 : $first = "Sudden"; break;
 			  case 21 : $first = "Moonsilver"; break;
   		}
-			switch(mt_rand(1,20)) {
+			switch(hackyRand(1,20)) {
 			  case 1 : $last = "Day"; break;
 			  case 2 : $last = "Devotion"; break;
 			  case 3 : $last = "Disappearance"; break;
@@ -333,7 +347,7 @@ function random_name($color,$type) {
   		} 
   	}				
   	elseif ($color == "blue") {
-  		switch(mt_rand(1,1)) {				
+  		switch(hackyRand(1,1)) {				
 				case 1 : $first = "Back from the"; break; 
 				case 2 : $first = "Artful"; break; 
 				case 3 : $first = "Bone to"; break; 
@@ -363,7 +377,7 @@ function random_name($color,$type) {
 				case 27 : $first = "Though"; break;
 			  case 21 : $first = "Moonsilver"; break;
   		}
-  		switch(mt_rand(1,24)) {				
+  		switch(hackyRand(1,24)) {				
 				case 1 : $last = "Alchemy"; break; 
 				case 2 : $last = "Ash"; break; 
 				case 3 : $last = "Blindness"; break; 
@@ -391,7 +405,7 @@ function random_name($color,$type) {
   		} 
   	}				
   	elseif ($color == "black") {
-  		switch(mt_rand(1,22)) {				
+  		switch(hackyRand(1,22)) {				
 				case 1 : $first = "Altar's"; break; 
 				case 2 : $first = "Bump in the"; break; 
 				case 3 : $first = "Dead"; break; 
@@ -416,7 +430,7 @@ function random_name($color,$type) {
 				case 22 : $first = "Zombie"; break;
 			  case 23 : $first = "Silverblade"; break;
   		}
-			switch(mt_rand(1,19)) {				
+			switch(hackyRand(1,19)) {				
 				case 1 : $last = "Allure"; break; 
 				case 2 : $last = "Ambition"; break; 
 				case 3 : $last = "Apocalypse"; break; 
@@ -439,7 +453,7 @@ function random_name($color,$type) {
   		}
   	}				
   	elseif ($color == "red") {
-  		switch(mt_rand(1,23)) {				
+  		switch(hackyRand(1,23)) {				
 				case 1 : $first = "Ancient"; break; 
 				case 2 : $first = "Alpha"; break; 
 				case 3 : $first = "Blasphemous"; break; 
@@ -464,7 +478,7 @@ function random_name($color,$type) {
 				case 22 : $first = "Vampiric"; break; 
 				case 23 : $first = "Wrack with"; break;
   		}
-  		switch(mt_rand(1,24)) {				
+  		switch(hackyRand(1,24)) {				
 				case 1 : $last = "Act"; break; 
 				case 2 : $last = "Bitten"; break; 
 				case 3 : $last = "Blood"; break; 
@@ -492,7 +506,7 @@ function random_name($color,$type) {
   		}
   	}				
   	elseif ($color == "green") {
-  		switch(mt_rand(1,20)) {				
+  		switch(hackyRand(1,20)) {				
 				case 1 : $first = "Bramble"; break; 
 				case 2 : $first = "Clinging"; break; 
 				case 3 : $first = "Creeping"; break; 
@@ -514,7 +528,7 @@ function random_name($color,$type) {
 				case 19 : $first = "Wild"; break; 
 				case 20 : $first = "Wreath of"; break; 
   		}
-  		switch(mt_rand(1,20)) {				
+  		switch(hackyRand(1,20)) {				
 				case 1 : $last = "Bone"; break; 
 				case 2 : $last = "Catch"; break; 
 				case 3 : $last = "Crush"; break; 
@@ -540,7 +554,7 @@ function random_name($color,$type) {
   }				
 	else { //Creature
 	  if ($color == "white") {
-	  	switch(mt_rand(1,28)) {
+	  	switch(hackyRand(1,28)) {
 		  	case 1 : $first = "Abbey"; break;	
 		  	case 2 : $first = "Angel"; break;	
 		  	case 3 : $first = "Angelic"; break;	
@@ -570,7 +584,7 @@ function random_name($color,$type) {
 		  	case 27 : $first = "Village"; break;	
 		  	case 28 : $first = "Voiceless"; break;	
 		  }				
-	  	switch(mt_rand(1,29)) {				
+	  	switch(hackyRand(1,29)) {				
 		  	case 1 : $last = "Angel"; break;	
 	  		case 2 : $last = "Bell-Ringer"; break;	
 		  	case 3 : $last = "Cat"; break;	
@@ -603,7 +617,7 @@ function random_name($color,$type) {
 	  	}				
 	  }					
 	  elseif ($color == "blue") {					
-	  	switch(mt_rand(1,16)) {				
+	  	switch(hackyRand(1,16)) {				
 		  	case 1 : $first = "Battleground"; break;	
 		  	case 2 : $first = "Cackling"; break;	
 		  	case 3 : $first = "Civilized"; break;	
@@ -621,7 +635,7 @@ function random_name($color,$type) {
 		  	case 15 : $first = "Stitched"; break;	
 		  	case 16 : $first = "Undead"; break;	
 		  }				
-	  	switch(mt_rand(1,12)) {				
+	  	switch(hackyRand(1,12)) {				
 		  	case 1 : $last = "Geist"; break;	
 		  	case 2 : $last = "Counterpart"; break;	
 		  	case 3 : $last = "Scholar"; break;	
@@ -637,7 +651,7 @@ function random_name($color,$type) {
 	  	}				
 	  }					
 	  elseif ($color == "black") {					
-	  	switch(mt_rand(1,41)) {				
+	  	switch(hackyRand(1,41)) {				
 		  	case 1 : $first = "Abattoir"; break;	
 		   	case 2 : $first = "Beguiler"; break;	
 		  	case 3 : $first = "Bitterheart"; break;	
@@ -680,7 +694,7 @@ function random_name($color,$type) {
 		  	case 40 : $first = "Village"; break;	
 		  	case 41 : $first = "Walking"; break;	
 	  	}				
-	  	switch(mt_rand(1,36)) {				
+	  	switch(hackyRand(1,36)) {				
 		  	case 1 : $last = "Boneflinger"; break;	
 		  	case 2 : $last = "Breath"; break;	
 		  	case 3 : $last = "Cannibals"; break;	
@@ -720,7 +734,7 @@ function random_name($color,$type) {
 	  	}				
 	  }					
 	  elseif ($color == "red") {					
-	  	switch(mt_rand(1,32)) {				
+	  	switch(hackyRand(1,32)) {				
 		  	case 1 : $first = "Ashmouth"; break;	
 		   	case 2 : $first = "Afflicted"; break;	
 		  	case 3 : $first = "Balefire"; break;	
@@ -754,7 +768,7 @@ function random_name($color,$type) {
 		  	case 31 : $first = "Tormented"; break;	
 		  	case 32 : $first = "Village"; break;	
 	  	}				
-		  switch(mt_rand(1,28)) {				
+		  switch(hackyRand(1,28)) {				
 		   	case 1 : $last = "Blademaster"; break;	
 		  	case 2 : $last = "Corpse"; break;	
 		  	case 3 : $last = "Cultist"; break;	
@@ -786,7 +800,7 @@ function random_name($color,$type) {
 		  }				
 	  }					
 	  elseif ($color == "green") {					
-	  	switch(mt_rand(1,36)) {				
+	  	switch(hackyRand(1,36)) {				
 				case 1 : $first = "Ambush"; break;
 				case 2 : $first = "Avacyn's"; break;
 				case 3 : $first = "Boneyard"; break;
@@ -824,7 +838,7 @@ function random_name($color,$type) {
 				case 35 : $first = "Woodland"; break;
 				case 36 : $first = "Young"; break;
 	  	}				
-	  	switch(mt_rand(1,29)) {				
+	  	switch(hackyRand(1,29)) {				
 				case 1 : $last = "Alpha"; break;
 				case 2 : $last = "Bear"; break;
 				case 3 : $last = "Beast"; break;
@@ -1363,11 +1377,11 @@ function creature_type($color,$name) {
   }
   else return "error";
 	}
-  return $tmp[mt_rand(0,count($tmp)-1)];
+  return $tmp[hackyRand(0,count($tmp)-1)];
 }
 
 function artist() {
-	switch(mt_rand(1,21)) {	
+	switch(hackyRand(1,21)) {	
 		case 1 : $firstname = 'Aleksi'; break;
 		case 2 : $firstname = 'Allan'; break;
 		case 3 : $firstname = 'Carl'; break;
@@ -1390,7 +1404,7 @@ function artist() {
 		case 20 : $firstname = 'Steve'; break;
 		case 21 : $firstname = 'Therese'; break;
 	}	
-	switch(mt_rand(1,21)) {
+	switch(hackyRand(1,21)) {
 		case 1 : $lastname = 'Argyle'; break;
 		case 2 : $lastname = 'Avon'; break;
 		case 3 : $lastname = 'Briclot'; break;
@@ -1418,7 +1432,7 @@ function artist() {
 
 function random_flavor($color) {
 
-	switch(mt_rand(1,193)) {
+	switch(hackyRand(1,193)) {
 		case 1 : $first = "Moorlanders speak in awe of the priests,"; break;
 		case 2 : $first = "The darkness crawls with vampires and ghouls,"; break;
 		case 3 : $first = "She endures without Avacyn but secretly asks:"; break;
@@ -1613,7 +1627,7 @@ function random_flavor($color) {
 		case 192 : $first = "I love what they've done,"; break;
 		case 193 : $first = "For centuries my creation kept this world in balance,"; break;
 	}
-	switch(mt_rand(1,194)) {
+	switch(hackyRand(1,194)) {
 		case 1: $last = "die boldly or die swiftly - for die you will."; break;
 		case 2: $last = "and death is no longer sanctuary from anything."; break;
 		case 3: $last = " the newly sired frenzy at the first whiff."; break;
@@ -1812,9 +1826,9 @@ function random_flavor($color) {
 		case 194 : $last = "a playground."; break;
 	}
 	$tmp = $first." ".$last;
-	if (mt_rand(0,1)) {
+	if (hackyRand(0,1)) {
 		$tmp = "&ldquo;".$tmp."&rdquo;";
- 		if (mt_rand(0,1)) $tmp = $tmp."<br>&mdash;".random_source($color);
+ 		if (hackyRand(0,1)) $tmp = $tmp."<br>&mdash;".random_source($color);
  	}	
  	return $tmp;
 }
@@ -1865,63 +1879,38 @@ function random_enemy_creature_type($color,$a,$plural) {
 //         $plural  True if plural form, false if single form.
 //--------------------------------------------------------
 function random_creature_type($color,$a,$plural) {
-	if ($plural == false) {
-	 if ($color == "white") {
- 	  $type[] = "Human";
-    $type[] = "Spirit";
-	 }
-   elseif ($color == "blue") {
-    $type[] = "Zombie";
-    $type[] = "Homunculus";
-   }
-   elseif ($color == "black") {
-    $type[] = "Vampire";
-    $type[] = "Zombie";
-    $type[] = "Demon";
-	  $type[] = "Skeleton";
-   }
-   elseif ($color == "red") {
-    $type[] = "Elemental";
-    $type[] = "Devil";
-   }
-   elseif ($color == "green") {
-    $type[] = "Hound";
-    $type[] = "Boar";
-    $type[] = "Wolf";
-   }
-   $creature = $type[mt_rand(0,count($type)-1)]; 
-   if( $a == true )	{
+	$type = [];
+	if ($color == "white") {
+		$type[] = $plural ? "Humans" : "Human";
+		$type[] = $plural ? "Spirits" : "Spirit";
+	}
+	elseif ($color == "blue") {
+		$type[] = $plural ? "Zombies" : "Zombie";
+		$type[] = $plural ? "Homunculi" : "Homunculus";
+	}
+	elseif ($color == "black") {
+		$type[] = $plural ? "Vampires" : "Vampire";
+		$type[] = $plural ? "Zombies" : "Zombie";
+		$type[] = $plural ? "Demons" : "Demon";
+		$type[] = $plural ? "Skeletons" : "Skeleton";
+	}
+	elseif ($color == "red") {
+		$type[] = $plural ? "Elementals" : "Elemental";
+		$type[] = $plural ? "Devils" : "Devil";
+	}
+	elseif ($color == "green") {
+		$type[] = $plural ? "Hounds" : "Hound";
+		$type[] = $plural ? "Boars" : "Boar";
+		$type[] = $plural ? "Wolves" : "Wolf";
+	} else {
+		$type[] = "";
+	}
+	$creature = $type[hackyRand(0,count($type)-1)]; 
+	if( $a == true )	{
 		if($creature[0] == 'E' || $creature[0] == 'A' || $creature[0] == 'O' || $creature[0] == 'U' || $creature[0] == 'I')	$creature = "an ".$creature;
 		else $creature = "a ".$creature;
-	  }
-	 return $creature;
-  }
-  else if ($plural == true) {
-   if ($color == "white") {
-    $type[] = "Humans";
-    $type[] = "Spirits";
-	 }
-   elseif ($color == "blue") {
-    $type[] = "Zombies";
-    $type[] = "Homunculi";
-   }
-   elseif ($color == "black") {
-    $type[] = "Vampires";
-    $type[] = "Zombies";
-    $type[] = "Demons";
-	  $type[] = "Skeletons";
-   }
-   elseif ($color == "red") {
-    $type[] = "Elementals";
-    $type[] = "Devils";
-   }
-   elseif ($color == "green") {
-    $type[] = "Hounds";
-    $type[] = "Boars";
-    $type[] = "Wolves";
-   }
-   return $type[mt_rand(0,count($type)-1)];
-  }
+	}
+	return $creature;
 }
 
 function random_enemy_color($color) {
@@ -1945,13 +1934,13 @@ function random_enemy_color($color) {
    $type[] = "black";
    $type[] = "blue";
   }
-  return $type[mt_rand(0,count($type)-1)];
+  return $type[hackyRand(0,count($type)-1)];
 }
 
 function random_source($color) {
 	
 	if ($color == "white") {
-		switch(mt_rand(1,19)) {
+		switch(hackyRand(1,19)) {
 	   case 1: return "Mikeus, the Lunarch";
 	   case 2: return "Oath of Avacyn";
 	   case 3: return "Ekatrin, Elder of Hanweir";
@@ -1974,7 +1963,7 @@ function random_source($color) {
 		}
 	}
   elseif ($color == "blue") {
-   switch(mt_rand(1,6)) {
+   switch(hackyRand(1,6)) {
 	   case 1: return "Stitcher Geralf";
 	   case 2: return "Amalric of Midvast Hall";
 	   case 3: return "Eruth of Lambholt";
@@ -1984,7 +1973,7 @@ function random_source($color) {
 	  }
   }
   elseif ($color == "black") {
-   switch(mt_rand(1,12)) {
+   switch(hackyRand(1,12)) {
 	   case 1: return "Enslow, ghoulcaller of Nephalia";
 	   case 2: return "Hildin, priest of Avavyn";
 	   case 3: return "Jadar, ghoulcaller of Nephalia";
@@ -2000,7 +1989,7 @@ function random_source($color) {
    }
   }
   elseif ($color == "red") {
-   switch(mt_rand(1,7)) {
+   switch(hackyRand(1,7)) {
 	   case 1: return "Thalia, Knight-Cathar";
 	   case 2: return "Elmut, crossway watcher";
 	   case 3: return "Runo Stromkirk";
@@ -2011,7 +2000,7 @@ function random_source($color) {
    }
   }
   elseif ($color == "green") {
-   switch(mt_rand(1,9)) {
+   switch(hackyRand(1,9)) {
 	   case 1: return "Wolfhunter's riddle";
 	   case 2: return "Paulin, trapper of Somberwald";
 	   case 3: return "Yonda of Gavony";
@@ -2061,7 +2050,7 @@ function static_ability($color,$name,$intext) {
 	//TODO Replace this hardwritten ability with Markov chain
 
 	if ($color == "white") {
-		switch(mt_rand(1,4)) {
+		switch(hackyRand(1,4)) {
 			case 1: $tmp = "protection from ".random_enemy_creatures($color); break;		
 			case 2: $tmp = "vigilance"; break;
 			case 3: $tmp = "flying"; break;
@@ -2069,14 +2058,14 @@ function static_ability($color,$name,$intext) {
 		}
 	}
 	if ($color == "blue") {
-		switch(mt_rand(1,3)) {
+		switch(hackyRand(1,3)) {
 			case 1: $tmp = "protection from ".random_enemy_creatures($color); break;		
 			case 2: $tmp = "flying"; break;
 			case 3: $tmp = $name." is unblockable."; break;
 			} 
 	}
 	if ($color == "black") {
-		switch(mt_rand(1,5)) {
+		switch(hackyRand(1,5)) {
 			case 1: $tmp = "protection from ".random_enemy_creatures($color); break;		
 			case 2: $tmp = "intimidate"; break;		
 			case 3: $tmp = "deathtouch"; break;	
@@ -2085,7 +2074,7 @@ function static_ability($color,$name,$intext) {
 		} 
 	}
 	if ($color == "red") {
-		switch(mt_rand(1,4)) {
+		switch(hackyRand(1,4)) {
 			case 1: $tmp = "protection from ".random_enemy_creatures($color); break;		
 			case 2: $tmp = "haste"; break;
 			case 3: $tmp = "trample"; break;				
@@ -2093,7 +2082,7 @@ function static_ability($color,$name,$intext) {
 		}
 	}
 	if ($color == "green") {
-		switch(mt_rand(1,9)) {
+		switch(hackyRand(1,9)) {
 			case 1: $tmp = "protection from ".random_enemy_creatures($color); break;		
 			case 2: $tmp = "trample"; break;		
 			case 3: $tmp = "deathtouch"; break;		
@@ -2120,25 +2109,25 @@ function static_ability($color,$name,$intext) {
 }
 
 function flashback($color) {
-	return "Flashback ".generate_manacost(friendcolor($color),mt_rand(1,5))." <i>(You may cast this card from your graveyard for its flashback cost. Then exile it.)</i>";  	
+	return "Flashback ".generate_manacost(friendcolor($color),hackyRand(1,5))." <i>(You may cast this card from your graveyard for its flashback cost. Then exile it.)</i>";  	
 }
 
 function ability($color,$name) {
 	
 	//TODO replace this hardwritten ability with Markov chain
-	switch(mt_rand(1,6)) {
+	switch(hackyRand(1,6)) {
 		case 1: return keyword()." <i>(".WHENEVER("",$color,$name,true).".)</i>";
 		case 2: return "<i>".keyword()."</i> &mdash; ".ucfirst(trim(EFFECT("",false,true,$color,$name,true))).".";
 		case 3: return "<i>Fateful hour</i> &mdash; As long as you have 5 or less life, ".trim(EFFECT("",false,true,$color,$name,true)).".";
 		case 4: return "Undying <i>(When this creature dies, if it had no +1/+1 counters on it, return it to the battlefield under its owner's control with a +1/+1 counter on it.)</i>";
 	}
- switch(mt_rand(1,8)) {
- case 1: return "Resurrect ".generate_manacost(friendcolor($color),mt_rand(1,5))." <i>(You may cast this spell from your graveyard for its resurrection cost. When a resurrected creature dies, exile it instead.)</i>";
+ switch(hackyRand(1,8)) {
+ case 1: return "Resurrect ".generate_manacost(friendcolor($color),hackyRand(1,5))." <i>(You may cast this spell from your graveyard for its resurrection cost. When a resurrected creature dies, exile it instead.)</i>";
  case 2:  return "Undying <i>(When this creature dies, if it had no +1/+1 counters on it, return it to the battlefield under its owner's control with a +1/+1 counter on it.)</i>";
  case 3: return "<i>Funeral with Honors</i> &mdash; When this creature dies, players can't cast spells until end of turn.";
  case 4: return "<i>Fateful hour</i> &mdash; At the beginning of your upkeep, if you have less than 5 life, you may return ".$name." from your graveyard to the battlefield.";
  case 5: return "<i>Deathlink</i> &mdash; When ".$name." dies, you may sacrifice any number of creatures with combined power greater than ".$name.". If you do, return ".$name." to the battlefield.";
- case 6: return "Forceflash ".generate_manacost($color,mt_rand(4,6))." <i>(You may cast this spell for its forceflash cost as if it had flash.)</i>";
+ case 6: return "Forceflash ".generate_manacost($color,hackyRand(4,6))." <i>(You may cast this spell for its forceflash cost as if it had flash.)</i>";
  case 7: return "<i>Relay race</i> &mdash; When this creature dies, you may return another target creature from your graveyard to the battlefield tapped.";
  case 8: return "Slowtrip <i>(If you cast this spell from your hand, draw an additional card at the beginning of your next draw step.)</i>";
 
@@ -2146,21 +2135,22 @@ function ability($color,$name) {
 }
 
 function mass($wording,$flavor) {
-$d = 0;
-if ($wording[1] != '') $d++;
-if ($wording[2] != '') $d++;
-if ($wording[3] != '') $d++;
-if ($wording[4] != '') $d++;
-if ($wording[5] != '') $d++;
-if ($flavor != '') {
-	$d++;
-	if (strpos("<br>",$flavor)) $d++;
-}
-// Number of characters per row, approx. Tweak this
-$t = (strlen($wording[0]) + strlen($wording[1]) + strlen($wording[2]) + strlen($wording[3])
-	 + strlen($wording[4]) + strlen($flavor)) / 30;	
-//	 echo "<p>Card is believed to have ".$t." lines of text and ".$d." paragraph spaces.</p>";
-	 return $d*0.7 + $t*1.2;
+	$d = 0;
+	if ($wording[1] != '') $d++;
+	if ($wording[2] != '') $d++;
+	if ($wording[3] != '') $d++;
+	if ($wording[4] != '') $d++;
+	if ($wording[5] != '') $d++;
+	if ($flavor != '') {
+		$d++;
+		if (strpos("<br>",$flavor))
+			$d++;
+	}
+	// Number of characters per row, approx. Tweak this
+	$t = (strlen($wording[0]) + strlen($wording[1]) + strlen($wording[2]) + strlen($wording[3])
+		 + strlen($wording[4]) + strlen($flavor)) / 30;	
+	//	 echo "<p>Card is believed to have ".$t." lines of text and ".$d." paragraph spaces.</p>";
+		 return $d*0.7 + $t*1.2;
 }
 
 echo "<head><title>GoodGamery's Avacyn Restored Exclusive Preview Card!</title><link rel='stylesheet' href='stylesheet.css'></head><body topmargin='0' bottommargin='0' link='7777EE' alink='7777EE' vlink='7777EE' ulink='7777EE'><center><br>";
@@ -2168,7 +2158,7 @@ echo "<head><title>GoodGamery's Avacyn Restored Exclusive Preview Card!</title><
 // Defaults
 $preview = false;
 $iplock = false;
-$seed = mt_rand(1000000,9999999);
+$seed = hackyRand(1000000,9999999);
 //Art choice
 if (isset($_GET['preview'])) {
 	$preview = true;
@@ -2189,7 +2179,7 @@ elseif (isset($_GET['iplock'])) {
 // Seed generator with number
 mt_srand($seed); 
 
-$tmp = mt_rand(1,5);
+$tmp = hackyRand(1,5);
 if ($tmp == 1) $color = "white";
 elseif ($tmp == 2) $color = "blue";
 elseif ($tmp == 3) $color = "black";
@@ -2198,7 +2188,7 @@ elseif ($tmp == 5) $color = "green";
 
 if (isset($_POST['back'])) {
 	$back = true;
-	switch (mt_rand(1,15)) {
+	switch (hackyRand(1,15)) {
 		case 1: $type = "back2.jpg"; break;
 		case 2: $type = "back3.jpg"; break;
 		case 2: $type = "back4.jpg"; break;
@@ -2216,13 +2206,13 @@ else {
 	}
 	else {
 		$transform = false;
-		if (mt_rand(0,1)) $cardtype = "spell";
+		if (hackyRand(0,1)) $cardtype = "spell";
 		else $cardtype = "creature";
 	}
 	
 	
 	$name = random_name($color,$cardtype);
-	$cmc = mt_rand(1,5);
+	$cmc = hackyRand(1,5);
 	if (!$transform) $manacost = generate_manacost($color, $cmc);
 
 	
@@ -2234,16 +2224,16 @@ else {
 	//"placeholder"; // Fix this when AVR art is spoiled
 	if (!$preview) {
 		switch ($color) {
-			case "black": $art = "homelands/".mt_rand(1,25).".png"; break;// BLACK 
-			case "blue": $art = "homelands/".mt_rand(26,50).".png"; break;// BLUE
-			case "green": $art = "homelands/".mt_rand(51,75).".png"; break;// GREEN
-			case "red": $art = "homelands/".mt_rand(76,100).".png"; break;// RED
-			case "white":	$art = "homelands/".mt_rand(101,125).".png"; break;// WHITE
+			case "black": $art = "homelands/".hackyRand(1,25).".png"; break;// BLACK 
+			case "blue": $art = "homelands/".hackyRand(26,50).".png"; break;// BLUE
+			case "green": $art = "homelands/".hackyRand(51,75).".png"; break;// GREEN
+			case "red": $art = "homelands/".hackyRand(76,100).".png"; break;// RED
+			case "white":	$art = "homelands/".hackyRand(101,125).".png"; break;// WHITE
 		}
 	}
 	else
 	{
-		$art = "spell".mt_rand(1,7).".jpg"; // Any spell
+		$art = "spell".hackyRand(1,7).".jpg"; // Any spell
 	}
 	
 	// CREATURE!!
@@ -2264,7 +2254,7 @@ else {
 			}
 			// Fix art
 			if ($preview) {
-				switch(mt_rand(1,3)) {
+				switch(hackyRand(1,3)) {
 					case 1: $art = "demon1"; break;
 					case 2: $art = "skeleton"; break;
 					case 3: $art = "zombie"; break;
@@ -2275,22 +2265,22 @@ else {
 		}
 		else {
 		$typeline = "Creature - ".creature_type($color,$name);
-			$pow = mt_rand(1,$cmc/2);
-			$tough = max(1,mt_rand(1,$cmc/2+1-mt_rand(1,$pow/2)));
-			if ($color == "white") $tough = $tough + mt_rand(0,$cmc/2);
-		  elseif ($color == "blue") $pow = max(1,$pow + mt_rand(-1,0));
-		  elseif ($color == "black") $pow = $pow + mt_rand(0,$cmc/2);
+			$pow = hackyRand(1,$cmc/2);
+			$tough = max(1,hackyRand(1,$cmc/2+1-hackyRand(1,$pow/2)));
+			if ($color == "white") $tough = $tough + hackyRand(0,$cmc/2);
+		  elseif ($color == "blue") $pow = max(1,$pow + hackyRand(-1,0));
+		  elseif ($color == "black") $pow = $pow + hackyRand(0,$cmc/2);
 		  elseif ($color == "red") ;
 		  elseif ($color == "green") {
-		   $pow = $pow + mt_rand(0,$cmc/2);
-		   $tough = $tough + mt_rand(0,$cmc/2);	
+		   $pow = $pow + hackyRand(0,$cmc/2);
+		   $tough = $tough + hackyRand(0,$cmc/2);	
 		  };
 		
 			// Werewolf?
-			if (mt_rand(1,5) == 1) {
+			if (hackyRand(1,5) == 1) {
 				$werewolf = true;
-				$werewolf_pow = $pow + mt_rand(1,5);
-				$werewolf_tough = $tough + mt_rand(1,5);
+				$werewolf_pow = $pow + hackyRand(1,5);
+				$werewolf_tough = $tough + hackyRand(1,5);
 			}
 			else $werewolf = false;
 		}
@@ -2322,15 +2312,15 @@ else {
 			}
 			
 			// Paragraph
-			elseif (mt_rand(0,1)) {
-					if ($color == "green" && mt_rand(0,1)) {
+			elseif (hackyRand(0,1)) {
+					if ($color == "green" && hackyRand(0,1)) {
 											// Add mana ability
-					switch(mt_rand(1,14)) {
+					switch(hackyRand(1,14)) {
 						case 0:
 							$wording[$wr] = "{1}, {T}: Add ".mana($color)." to your mana pool. At the beginning of your next end step, untap ".$name.".";
 							break;
 						case 1:
-							$wording[$wr] = "{T}: Add ".mana($color)." to your mana pool. ".$name." deals ".mt_rand(1,2)." damage to you.";
+							$wording[$wr] = "{T}: Add ".mana($color)." to your mana pool. ".$name." deals ".hackyRand(1,2)." damage to you.";
 							break;
 						case 2:
 							$wording[$wr] = "{T}: Add ".mana($color)." to your mana pool. ".$name." doesn&rsquo;t untap during your next untap step.";
@@ -2384,10 +2374,7 @@ else {
 					$wording[$wr] = ucfirst(static_ability($color,$name,false));	$wr++;
 			}
 	
-		// Set masslevel
-		$masslevel = 7.5;
-	
-		if (mt_rand(0,2) && !$werewolf && $wording[$wr-1] != "Flying"&& $wording[$wr-2] != "Flying") {
+		if ($wr >= 2 && hackyRand(0,2) && !$werewolf && $wording[$wr-1] != "Flying"&& $wording[$wr-2] != "Flying") {
 				if (strpos(" ".$name, "Seakite") ||
 						strpos(" ".$name, "Angel") ||
 						strpos(" ".$name, "Griffin") ||
@@ -2399,9 +2386,9 @@ else {
 		
 		// Fix art
 		if ($preview) {
-			if (strpos(" ".$typeline, "Dragon")) $art = "dragon".mt_rand(1,4).".jpg";
-			elseif (strpos(" ".$typeline, "Angel")) $art = "angel".mt_rand(1,3).".jpg";
-			elseif (strpos(" ".$typeline, "Human")) $art = "human".mt_rand(1,3).".jpg";
+			if (strpos(" ".$typeline, "Dragon")) $art = "dragon".hackyRand(1,4).".jpg";
+			elseif (strpos(" ".$typeline, "Angel")) $art = "angel".hackyRand(1,3).".jpg";
+			elseif (strpos(" ".$typeline, "Human")) $art = "human".hackyRand(1,3).".jpg";
 			elseif (strpos(" ".$typeline, "Shaman")) $art = "human3.jpg";
 			elseif (strpos(" ".$typeline, "Hound")) $art = "wolf.jpg";				
 			elseif (strpos(" ".$typeline, "Boar")) $art = "boar.jpg";
@@ -2409,7 +2396,7 @@ else {
 			elseif (strpos(" ".$typeline, "Bear")) $art = "bear.jpg";				
 			elseif (strpos(" ".$typeline, "Bird")) $art = "bird.jpg";	
 			elseif (strpos(" ".$typeline, "Wolf")) $art = "wolf.jpg";				
-			elseif (strpos(" ".$typeline, "Vampire")) $art = "human".mt_rand(1,3).".jpg";
+			elseif (strpos(" ".$typeline, "Vampire")) $art = "human".hackyRand(1,3).".jpg";
 			elseif (strpos(" ".$typeline, "Skeleton")) $art = "skeleton.jpg";				
 			elseif (strpos(" ".$typeline, "Spirit")) $art = "spirit.jpg";				
 			elseif (strpos(" ".$typeline, "Zombie")) $art = "skeleton.jpg";				
@@ -2424,7 +2411,7 @@ else {
 		if ($werewolf) { 		// Add werewolf ability
 					$wording[$wr] = werewolf_paragraph($color,$name);	$wr++;
 		}
-		elseif ($transform && mt_rand(0,1)) { 		// Add transform ability
+		elseif ($transform && hackyRand(0,1)) { 		// Add transform ability
 					$wording[$wr] = transform_paragraph($color,$name);	$wr++;
 		}
 	
@@ -2435,7 +2422,7 @@ else {
 	else {
 		// Power level of ability randomly determined
 		$pt = "";
-		switch(mt_rand(1,12)) {
+		switch(hackyRand(1,12)) {
 			case 1:
 			case 2:
 			case 3:
@@ -2443,10 +2430,10 @@ else {
 			case 5:
 				$typeline = "Instant";	
 				$wording[$wr] = instant_paragraph($color,$name,$powerlevel); $wr++;
-				if(mt_rand(-5,1) && mass($wording,$flavor) < $masslevel) {
+				if(hackyRand(-5,1) && mass($wording,$flavor) < $masslevel) {
 			 		$wording[$wr] = instant_paragraph($color,$name,$powerlevel); $wr++;
 				}
-				elseif(mt_rand(-5,1) && mass($wording,$flavor) < $masslevel) {
+				elseif(hackyRand(-5,1) && mass($wording,$flavor) < $masslevel) {
 			 		$wording[$wr] = flashback($color); $wr++;
 				}
 				break;
@@ -2455,10 +2442,10 @@ else {
 			case 7:
 				$typeline = "Sorcery";
 				$wording[$wr] = sorcery_paragraph($color,$name,$powerlevel); $wr++;
-				if (mt_rand(1,1) == 1 && mass($wording,$flavor) < $masslevel) { //TODO add length checker here!!
+				if (hackyRand(1,1) == 1 && mass($wording,$flavor) < $masslevel) { //TODO add length checker here!!
 			 		$wording[$wr] = sorcery_paragraph($color,$name,$powerlevel); $wr++;
 				}
-				elseif (mt_rand(1,5) == 1 && mass($wording,$flavor) < $masslevel) { //TODO add length checker here!!
+				elseif (hackyRand(1,5) == 1 && mass($wording,$flavor) < $masslevel) { //TODO add length checker here!!
 			 		$wording[$wr] = flashback($color); $wr++;
 				}
 				break;
@@ -2474,8 +2461,8 @@ else {
 				$name = random_name("",$type); 
 				$manacost = "{".$cmc."}";
 			 	$wording[$wr] = paragraph("artifact",$color,$name,$powerlevel); $wr++;
-			 	if ($preview) $art = "artifact".mt_rand(1,6).".jpg";
-			 	else $art = "homelands/".mt_rand(131,135).".png";
+			 	if ($preview) $art = "artifact".hackyRand(1,6).".jpg";
+			 	else $art = "homelands/".hackyRand(131,135).".png";
 			 	break;
 			case 11:
 			case 12:
@@ -2485,20 +2472,20 @@ else {
 				$cardtype = "land";
 				$name = random_name("","land"); 
 				$manacost = "";
-				if (mt_rand(0,1)) {
+				if (hackyRand(0,1)) {
 					// Add drawback
-					if (mt_rand(0,1)) {
+					if (hackyRand(0,1)) {
 						$wording[$wr] = $name." enters the battlefield tapped.";
 						$wr++;
 					}
 					
 					// Add mana ability
-					switch(mt_rand(1,14)) {
+					switch(hackyRand(1,14)) {
 						case 0:
 							$wording[$wr] = "{1}, {T}: Add ".mana($color)." to your mana pool. At the beginning of your next end step, untap ".$name.".";
 							break;
 						case 1:
-							$wording[$wr] = "{T}: Add ".mana($color)." to your mana pool. ".$name." deals ".mt_rand(1,2)." damage to you.";
+							$wording[$wr] = "{T}: Add ".mana($color)." to your mana pool. ".$name." deals ".hackyRand(1,2)." damage to you.";
 							break;
 						case 2:
 							$wording[$wr] = "{T}: Add ".mana($color)." to your mana pool. ".$name." doesn&rsquo;t untap during your next untap step.";
@@ -2553,8 +2540,8 @@ else {
 					$wording[$wr] = "{T}: Add {1} to your mana pool."; $wr++;
 				}
 			 	$wording[$wr] = paragraph("land",$color,$name,$powerlevel); $wr++;
-			 	if ($preview) $art = "land".mt_rand(1,10).".jpg";
-			 	else $art = "homelands/".mt_rand(136,140).".png";
+			 	if ($preview) $art = "land".hackyRand(1,10).".jpg";
+			 	else $art = "homelands/".hackyRand(136,140).".png";
 			 	// Set color or colorless frame
 				$colorsymbol = false;
 				$tmp = $wr;
@@ -2565,7 +2552,7 @@ else {
 		}
 			
 		// Check if flavor can fit
-		if(!mt_rand(0,2) && mass($wording,$flavor) < $masslevel)
+		if(!hackyRand(0,2) && mass($wording,$flavor) < $masslevel)
 	 	$flavor = random_flavor($color); 
 		
 	}
@@ -2583,7 +2570,7 @@ else {
 	}
 	if (
 		($rarity == "mythicrare" || $rarity == "rare") &&
-		mt_rand(0,1) == 1 &&
+		hackyRand(0,1) == 1 &&
 		($cardtype == "creature" || $cardtype == "artifact" || $cardtype == "land") &&
 		strlen($typeline) < 23
 		) {
@@ -2651,7 +2638,7 @@ if (!$back) {
 	if ($tempcenter == 1) echo "<center>";
 	if ($wording[0] != '') echo "<p style='margin-top: 2px;'>".parse($wording[0],$tempfontsize)."</p>";
 	if ($tempcenter == 1) echo "</center>";
-	for ($i = 1; $i < 5; $i++) {
+	for ($i = 1; $i < 5 && $i < count($wording); $i++) {
 		if ($wording[$i] != '') echo "<p style='margin-top: 6px;'>".parse($wording[$i],$tempfontsize)."</p>";
 	}
 	if ($flavor != '') {
@@ -2676,7 +2663,7 @@ else { // if ($back), that is.
 }
 
 mt_srand((double)(microtime() * 1000003));
-$seedNext = mt_rand(1000000,9999999);
+$seedNext = hackyRand(1000000,9999999);
 
 // Convert flags to strings
 if ($iplock) $iplock = "&iplock";
@@ -2721,7 +2708,7 @@ if (!$preview) {
 		$wLen = count($wording);
 		for ($i = 0; $i < $wLen; $i++) {
 			if ($wording[$i] != '') echo str_replace("{","",str_replace("}","",str_replace("{T}","Tap",$wording[$i])));
-			if (i+1 < $wLen && $wording[$i+1] != '') echo " / ";
+			if ($i+1 < $wLen && $wording[$i+1] != '') echo " / ";
 		}
 	}
 }

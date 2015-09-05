@@ -395,6 +395,7 @@ function ACTION_NOFOLLOW($p,$c,$may,$first) {
 	
 	$your = your($p);
 	$s = S($p);
+	$es = "";
 	if ($s == "s") $es = "es";
 	$s2 = $s;
 	if ($may) {
@@ -539,8 +540,8 @@ function ACTION_NOFOLLOW($p,$c,$may,$first) {
 //  Action -- Something a player actively performs
 // ($static is only passed along, an action cannot be static)
 // ******************
-function ACTION($t,$p,$followup,$static,$c,$n,$favorable,$may) {
-		
+function ACTION($t,$p,$followup,$static,$c,$n,$favorable = false,$may = false) {
+	
 	//Fix for "Whenever (action)", as "you" is omitted in the actual action text.
 //	if (($followup || $may) && $p == "you") {
 //		$t = $t." you";
@@ -586,6 +587,8 @@ function ACTION($t,$p,$followup,$static,$c,$n,$favorable,$may) {
 	// reset $may for the follow-up
 	if (mt_rand(1,10) == 1) { $may = true; }// TODO tweak this!
 	else { $may = false; }
+
+	$tobecontinued = false;
 
 	if (!$tobecontinued) {
 		//Return here if text is too big
@@ -1075,6 +1078,7 @@ function keyword() {
 }
 
 function werewolf_paragraph($c,$n) {
+	$favorable = false;
 	switch(mt_rand(1,4)) {
 			case 1:
 				return "Whenever ".EVENT_TRIGGER("",$c,$n).", transform ".$n."."; $wr++; break;
@@ -1100,6 +1104,8 @@ function paragraph($cardtype,$c,$n) {
 	
 	//TODO Implement Sorcery vs. Instant
 	//TODO Implement Enchantment (Curses!)
+	$favorable = false;
+	$may = false;
 	
 	if ($cardtype == "creature" || $cardtype == "land") {
 		// Card is creature
