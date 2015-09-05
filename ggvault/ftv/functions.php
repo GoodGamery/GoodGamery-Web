@@ -74,15 +74,6 @@ function getLink($linkUrl, $content) {
    return $anchorTag;
 }
 
-function hex2bin($hex)  {
-    if (!is_string($hex)) return null;
-    $r='';
-    for ($a=0; $a <= strlen($hex) - 1; $a+=2) { 
-        $r.=chr(hexdec($hex{$a}.$hex{($a+1)})); 
-     }
-    return $r;
-}  
-
 //generate a unique numeric hash from the given string
 function hashWord($word) {
    $PRIMES = array(2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89);
