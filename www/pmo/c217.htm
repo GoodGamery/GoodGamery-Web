@@ -1,0 +1,76 @@
+<HTML>
+<TITLE>Pro MTG Online</TITLE>
+<head>
+
+<SCRIPT LANGUAGE="JavaScript">
+var theImages = new Array()
+
+//Random-loading images
+theImages[0] = 'c217.GIF' 
+theImages[1] = 'c217.GIF'
+theImages[2] = 'c217.GIF' 
+theImages[3] = 'c217.GIF' 
+theImages[4] = 'c217.GIF'
+theImages[5] = 'c217.GIF' 
+theImages[6] = 'c217.GIF' 
+theImages[7] = 'c217.GIF'
+theImages[8] = 'c217.GIF' 
+theImages[9] = 'c217wtf.GIF' 
+theImages[10] = 'c217lol.GIF' 
+theImages[11] = 'c217omg.GIF' 
+
+var j = 0
+var p = theImages.length;
+var preBuffer = new Array()
+
+for (i = 0; i < p; i++)
+{
+	preBuffer[i] = new Image()
+	preBuffer[i].src = theImages[i]
+}
+
+var whichImage = Math.round(Math.random()*(p-1));
+
+function showImage()
+{
+	document.write('<img src="'+theImages[whichImage]+'" border=0>');
+}	
+
+
+
+</script>
+
+
+</head>
+
+
+<body bgcolor="#FFFFFF" text="#000000" font="verdana">
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#000000">
+<tr>
+<td valign="center">
+
+</td>
+<td valign="center">
+<center>
+<A HREF = "http://www.goodgamery.com"><IMG SRC = "frontpage.gif" border="0"></A>
+</center>
+</td>
+</tr>
+</table>
+
+<BR><BR>
+
+
+
+<font face="Verdana">
+<IMG SRC = "title.GIF">
+<CENTER><script>showImage();</script></CENTER>
+<CENTER>
+<A HREF = "c216.htm">previous</A> <A HREF = "c218.htm">next</A><BR>
+<A HREF = "c001.htm">first</A> <A HREF = "index.htm">last</A><BR>
+<A HREF = "http://z15.invisionfree.com/GoodGamery/index.php?showtopic=104">comment</A><BR><BR>
+<font color=#FFFFFF>magic fans disappointed that this akroma fails to have giant rack</font></font>
+
+</BODY>
+</HTML>
