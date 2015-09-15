@@ -54,7 +54,7 @@ function fetch_gatherer_redirect($url, $maxredirects)
             list($headername, $headervalue) = explode(":", $r);
             $rv = trim($headervalue);
             if ( strpos($rv, "multiverseid=") === FALSE && $maxredirects > 0 ) // Follow further redirects.
-                $rv = fetch_gatherer_redirect($gathererurl, $maxredirects - 1);
+                $rv = fetch_gatherer_redirect($url, $maxredirects - 1);
         }
     }
 
