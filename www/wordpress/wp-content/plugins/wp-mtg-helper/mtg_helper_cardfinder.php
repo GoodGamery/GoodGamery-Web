@@ -52,7 +52,7 @@ function fetch_gatherer_redirect($url, $maxredirects)
             list($headername, $headervalue) = explode(":", $r);
             $rv = trim($headervalue);
             if ( strpos($rv, "multiverseid=") === FALSE && $maxredirects > 0 ) // Follow further redirects.
-                $rv = fetch_gatherer_redirect($gathererurl, $maxredirects - 1);
+                $rv = fetch_gatherer_redirect($url, $maxredirects - 1);
         }
     }
 
@@ -146,6 +146,7 @@ function get_source_from_name_v3($name)
     $imgurl = "http://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=";
     $gathererurl = fetch_gatherer_redirect($url, 3);
     $pos = strpos($gathererurl, "multiverseid=");
+    $multiverseid = ""; // Default value
     if ( $pos > 0 )
     {
         $multiverseid = intval(substr($gathererurl, $pos+strlen("multiverseid=")));
