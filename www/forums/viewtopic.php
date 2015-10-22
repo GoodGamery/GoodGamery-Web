@@ -2129,7 +2129,7 @@ for ($i = 0, $end = sizeof($post_list); $i < $end; ++$i)
 
 		// bpm testing
 		'BPM_MESSAGE'		=> $unparsed_message,
-		'BPM_MESSAGE_ESCAPE'=> htmlspecialchars($unparsed_message, ENT_COMPAT | ENT_HTML401),
+		'BPM_MESSAGE_ESCAPE'=> htmlspecialchars($unparsed_message, ENT_QUOTES | ENT_HTML401),
 	);
 
 
