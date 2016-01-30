@@ -23,7 +23,7 @@
 <div id="page">
 <div id="header">
     <a href="<?php bloginfo('url'); ?>"><img src = "<?php bloginfo('stylesheet_directory'); ?>/images/title.png"></a>
-    | <a href="http://forums.goodgamery.com/">Forum</a>
+    | <a href="https://forums.goodgamery.com/">Forum</a>
     | <a href="http://www.goodgamery.com/pmo/">PMO</a>
-    | <a href="http://forums.goodgamery.com/viewtopic.php?t=1428">MTG Decoder</a>
+    | <a href="https://forums.goodgamery.com/viewtopic.php?t=1428">MTG Decoder</a>
 </div>

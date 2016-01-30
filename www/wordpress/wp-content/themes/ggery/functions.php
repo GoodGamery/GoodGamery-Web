@@ -123,7 +123,7 @@ function gg_display_banner()
 	END OF THE  RotE Alliance Post! --> 
 
 	<!-- BEGIN THE Emilevin Post!
-		<center><a href = "http://forums.goodgamery.com/viewtopic.php?p=305154#p305154"><img src = "http://www.goodgamery.com/articles/emilevin_banner.jpg" border = "0"></A></center><BR>
+		<center><a href = "https://forums.goodgamery.com/viewtopic.php?p=305154#p305154"><img src = "http://www.goodgamery.com/articles/emilevin_banner.jpg" border = "0"></A></center><BR>
 	END OF THE  Emilevin! Post! --> 
 
 	<!-- BEGIN THE Shirt Post!

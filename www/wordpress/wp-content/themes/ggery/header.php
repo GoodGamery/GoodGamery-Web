@@ -26,9 +26,9 @@ if ( !$withcomments && !is_single() ) {
 <?php wp_head(); ?>
 
 <!-- GGery scripts -->
-<script src="http://forums.goodgamery.com/includes/java/gg/cardTags.js" type="text/javascript"></script>
-<script src="http://forums.goodgamery.com/includes/java/gg/quoteUnnest.js" type="text/javascript"></script>
-<script src="http://forums.goodgamery.com/includes/java/gg/Decklist.js" type="text/javascript"></script>
+<script src="https://forums.goodgamery.com/includes/java/gg/cardTags.js" type="text/javascript"></script>
+<script src="https://forums.goodgamery.com/includes/java/gg/quoteUnnest.js" type="text/javascript"></script>
+<script src="https://forums.goodgamery.com/includes/java/gg/Decklist.js" type="text/javascript"></script>
 
 </head>
 
@@ -43,11 +43,11 @@ if ( !$withcomments && !is_single() ) {
                     <a href="<?php bloginfo('url'); ?>"><img src = "<?php bloginfo('stylesheet_directory'); ?>/images/invisibutton.gif" border="0"></a>
                 </td>
                 <td width="150" height="100" valign="middle">
-                    <center><a href="http://forums.goodgamery.com/viewtopic.php?t=1428"><img src="<?php bloginfo('stylesheet_directory'); ?>/images/decoder_little.jpg"></a></center>
+                    <center><a href="https://forums.goodgamery.com/viewtopic.php?t=1428"><img src="<?php bloginfo('stylesheet_directory'); ?>/images/decoder_little.jpg"></a></center>
                 </td>
                 <td width="200" height="100" valign="center">
                     
-                    <a href="http://forums.goodgamery.com/"><img src="<?php bloginfo('stylesheet_directory'); ?>/images/newforumlink.jpg"></a><br>
+                    <a href="https://forums.goodgamery.com/"><img src="<?php bloginfo('stylesheet_directory'); ?>/images/newforumlink.jpg"></a><br>
                     <a href="http://wbe02.mibbit.com/?settings=ececfe11aee20d6298208a748d9a6abc&server=irc.umich.edu&channel=%23goodgamery&noServerNotices=true&noServerMotd=true&autoConnect=true&nick=Morph22"><img src="<?php bloginfo('stylesheet_directory'); ?>/images/newchatlink.jpg"></a>
                 </td>
                 <td width="184" height="100" valign="bottom">
