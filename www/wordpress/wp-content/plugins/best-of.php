@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: GoodGamery Best-of
-Plugin URI: http://goodgamery.com
+Plugin URI: https://goodgamery.com
 Description: Displays bestof articles in the sidebar.
 Version: 0.5
 Author: Mark Diehr
@@ -78,7 +78,7 @@ function gg_sidebar_bestofs($number_of_bestofs)
 {
 ?>
     <li>
-		<!-- <a href="http://goodgamery.com/index.php/category/best-of/"><img src="http://goodgamery.com/wordpress/wp-content/themes/ggery/images/right_head.jpg" /></a><br /> -->
+		<!-- <a href="https://goodgamery.com/index.php/category/best-of/"><img src="https://goodgamery.com/wordpress/wp-content/themes/ggery/images/right_head.jpg" /></a><br /> -->
         <?php
         $category = 'best of';
         $order = 'rand';
@@ -90,7 +90,7 @@ function gg_sidebar_bestofs($number_of_bestofs)
             <?php $custom_fields = gg_get_custom_fields(); ?>
                 <div class="bestof_sidebar" style="clear:both; margin-left: 10px;">
 					<a href="<?php the_permalink(); ?>">
-						<img src="http://goodgamery.com/gg/icons/bestof.png" style="float: left; margin-right: 4px;">
+						<img src="https://goodgamery.com/gg/icons/bestof.png" style="float: left; margin-right: 4px;">
 						<?php the_title(); ?>
 					</a>
                 </div>

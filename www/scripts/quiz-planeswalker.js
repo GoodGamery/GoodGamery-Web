@@ -2,15 +2,15 @@
 // Quiz result options in a separate object for flexibility
 var resultOptions = [
     {   title: 'Chandler',
-        desc: '<img width="312px" height="445px" src="http://goodgamery.com/wordpress/wordpress/wp-content/uploads/2015/01/chandler.jpg"/><p>You are Chandler! The finest thief in the plane of Ulgrotha (even better than Joven!), there\'s no end to the mischief you get up to. But it\'s all in good fun, right?</p>'},
+        desc: '<img width="312px" height="445px" src="https://goodgamery.com/wordpress/wordpress/wp-content/uploads/2015/01/chandler.jpg"/><p>You are Chandler! The finest thief in the plane of Ulgrotha (even better than Joven!), there\'s no end to the mischief you get up to. But it\'s all in good fun, right?</p>'},
     {   title: 'Anaba Shaman',
-        desc: '<img width="312px" height="445px" src="http://goodgamery.com/wordpress/wordpress/wp-content/uploads/2015/01/anabashaman.jpg"/><p>You are Anaba Shaman! You can be fun to be around, but you\'re dangerous! If somebody gets on your bad side, BOOM - one damage. That\'s what they get for playing with fire.</p>'},
+        desc: '<img width="312px" height="445px" src="https://goodgamery.com/wordpress/wordpress/wp-content/uploads/2015/01/anabashaman.jpg"/><p>You are Anaba Shaman! You can be fun to be around, but you\'re dangerous! If somebody gets on your bad side, BOOM - one damage. That\'s what they get for playing with fire.</p>'},
     {   title: 'Hazduhr the Abbot',
-        desc: '<img width="312px" height="445px" src="http://goodgamery.com/wordpress/wordpress/wp-content/uploads/2015/01/HazduhrtheAbbot.jpg"/><p>You are Hazduhr the Abbot! It takes an organized mind to run the entire church of Serra. Some say your work leaves you with little time for a personal life, but you put the good of the church over even your own health.</p>'},
+        desc: '<img width="312px" height="445px" src="https://goodgamery.com/wordpress/wordpress/wp-content/uploads/2015/01/HazduhrtheAbbot.jpg"/><p>You are Hazduhr the Abbot! It takes an organized mind to run the entire church of Serra. Some say your work leaves you with little time for a personal life, but you put the good of the church over even your own health.</p>'},
     {   title: 'Joven\'s Ferrets',
-        desc: '<img width="312px" height="445px" src="http://goodgamery.com/wordpress/wordpress/wp-content/uploads/2015/01/JovensFerrets.jpg"/><p>You are Joven\'s Ferrets! A loyal friend and vicious, scratchy enemy, you\'re always "ferreting" out fun. During the six hours a day that you aren\'t sleeping, that is.</p>'},
+        desc: '<img width="312px" height="445px" src="https://goodgamery.com/wordpress/wordpress/wp-content/uploads/2015/01/JovensFerrets.jpg"/><p>You are Joven\'s Ferrets! A loyal friend and vicious, scratchy enemy, you\'re always "ferreting" out fun. During the six hours a day that you aren\'t sleeping, that is.</p>'},
     {   title: 'Grandmother Sengir',
-        desc: '<img width="312px" height="445px" src="http://goodgamery.com/wordpress/wordpress/wp-content/uploads/2015/01/GrandmotherSengir.jpg"/><p>You are Grandmother Sengir! You are obsessed with power and uninterested in morality. Some call you insane, but you worked hard to become THE iconic female black-mana-using spellcaster of Magic, so forget the haters, girl!</p>'}
+        desc: '<img width="312px" height="445px" src="https://goodgamery.com/wordpress/wordpress/wp-content/uploads/2015/01/GrandmotherSengir.jpg"/><p>You are Grandmother Sengir! You are obsessed with power and uninterested in morality. Some call you insane, but you worked hard to become THE iconic female black-mana-using spellcaster of Magic, so forget the haters, girl!</p>'}
 ];
 
     

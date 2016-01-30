@@ -69,7 +69,7 @@ if ( !$withcomments && !is_single() ) {
 							 ?>
                             <div class="promtg_header">
                                 <a href="http://www.goodgamery.com/pmo/c<?php echo $pmo_addr ?>.htm">
-                                    <img src="http://goodgamery.com/pmo_icon.jpg">
+                                    <img src="https://goodgamery.com/pmo_icon.jpg">
 									<br><b>PMO</b> #<?php echo $pmo_addr ?>
                                 </a>
                             </div>

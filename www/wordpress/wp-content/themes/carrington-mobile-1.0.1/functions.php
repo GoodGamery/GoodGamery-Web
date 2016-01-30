@@ -106,7 +106,7 @@ function gg_pmo_post()
     <small><?php echo the_time('F jS, Y'); ?></small>
     </div>
     <div class="frontpage">
-        <a href="<?php echo $pmo_addr; ?>"><img class="icon" src="http://goodgamery.com/icons/pmoguy_icon.jpg"></a>
+        <a href="<?php echo $pmo_addr; ?>"><img class="icon" src="https://goodgamery.com/icons/pmoguy_icon.jpg"></a>
         <div class="front_text">
             <span class="author">by anonymous</span>
             <br /><br />

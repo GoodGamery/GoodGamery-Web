@@ -84,8 +84,8 @@ else
 {
 	// Banner
 	echo("<p style='width: 100%; padding: 1em; background-color: black;'>");
-	echo("<a href='http://goodgamery.com/index.php/2011/04/14/exclusive-preview-of-dual-land-from-innistrad/'><img src='./pics/gglogo_big.png' /></a>");
-	//echo("<a href='http://goodgamery.com/index.php/2011/04/14/exclusive-preview-of-dual-land-from-innistrad/'><img src='./pics/innistradbanner.jpg' /></a>");
+	echo("<a href='https://goodgamery.com/index.php/2011/04/14/exclusive-preview-of-dual-land-from-innistrad/'><img src='./pics/gglogo_big.png' /></a>");
+	//echo("<a href='https://goodgamery.com/index.php/2011/04/14/exclusive-preview-of-dual-land-from-innistrad/'><img src='./pics/innistradbanner.jpg' /></a>");
 	echo("</p>");
 }
 
@@ -254,7 +254,7 @@ else
 	// Break up the random chain with a new random seed
 	mt_srand((double)(microtime() * 1000003));
 	$seedNext = mt_rand(1000000,9999999);
-	$sharelink = "http://goodgamery.com/cards/random/?id=".$seed.($insaneMode?"&insane":"");
+	$sharelink = "https://goodgamery.com/cards/random/?id=".$seed.($insaneMode?"&insane":"");
 	echo "</p><p><a href='index.php?id=".$seedNext."'><img src='pics/button.png' border='0' alt=''></a>&nbsp;
 	<a href='index.php?id=".$seedNext."&insane'><img src='pics/button2.png' border='0' alt=''></a></p>
 	<p>

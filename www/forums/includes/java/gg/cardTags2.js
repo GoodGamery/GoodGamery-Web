@@ -186,7 +186,7 @@ function fixPost( post )
                  "poker",
                  function( inner )
                  {
-                     var base = '<img src="http://goodgamery.com/mt2/cards/';
+                     var base = '<img src="https://goodgamery.com/mt2/cards/';
                      var end = '.gif">';
                      
                      var rx = /\[([\dTJQKA][csdh])\]/g;

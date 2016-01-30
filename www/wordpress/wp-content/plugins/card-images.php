@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: GoodGamery Card Image
-Plugin URI: http://goodgamery.com
+Plugin URI: https://goodgamery.com
 Description: Displays card images in the sidebar.
 Version: 0.1
 Author: Mark Diehr

@@ -29,7 +29,7 @@ if (strlen($hexedParam) > 0) {
     $setName = getRandomWord();
   }
   $newUrlHash = generateHash($setName);
-header('Location: http://goodgamery.com/ggvault/ftv/?id=' . $newUrlHash);
+header('Location: https://goodgamery.com/ggvault/ftv/?id=' . $newUrlHash);
 }
 
 if ($invalidHash) {

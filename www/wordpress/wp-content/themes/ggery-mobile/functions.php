@@ -37,7 +37,7 @@ function gg_pmo_post()
     <table class="post_block">
         <tr>
             <td>
-                <a href="<?php echo $pmo_addr; ?>"><img class="icon" src="http://goodgamery.com/icons/pmoguy_icon.jpg"></a>
+                <a href="<?php echo $pmo_addr; ?>"><img class="icon" src="https://goodgamery.com/icons/pmoguy_icon.jpg"></a>
             </td>
             <td>
                 <h2>

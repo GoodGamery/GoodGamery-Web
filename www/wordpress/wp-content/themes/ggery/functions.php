@@ -114,12 +114,12 @@ function gg_display_banner()
 ?>
 	<!-- BEGIN THE  Temporary Jace Week Post!  
 		<BR><center>
-		<a href="http://goodgamery.com/index.php/2009/12/19/announcing-jace-week/"><img src="http://www.goodgamery.com/articles/jace/jace1on.jpg" border="0"/></a><a href="http://goodgamery.com/index.php/2009/12/21/jaceless-butcher/"><img src="http://www.goodgamery.com/articles/jace/jace2on.jpg" border="0"/></a><a href="http://goodgamery.com/index.php/2009/12/22/kormus-belleren-jaceful-antelope/"><img src="http://www.goodgamery.com/articles/jace/jace3on.jpg" border="0"/></a><a href="http://goodgamery.com/index.php/2009/12/23/pocket-jaces/"><img src="http://www.goodgamery.com/articles/jace/jace4on.jpg" border="0"/></a><a href="http://goodgamery.com/index.php/2009/12/24/echo-jacer/"><img src="http://www.goodgamery.com/articles/jace/jace5on.jpg" border="0"/></a><a href="http://goodgamery.com/index.php/2009/12/25/jace-cycle/"><img src="http://www.goodgamery.com/articles/jace/jace6on.jpg" border="0"/></a><a href="http://goodgamery.com/index.php/2009/12/26/from-the-vault-jace/"><img src="http://www.goodgamery.com/articles/jace/jace7on.jpg" border="0"/></a>
+		<a href="https://goodgamery.com/index.php/2009/12/19/announcing-jace-week/"><img src="http://www.goodgamery.com/articles/jace/jace1on.jpg" border="0"/></a><a href="https://goodgamery.com/index.php/2009/12/21/jaceless-butcher/"><img src="http://www.goodgamery.com/articles/jace/jace2on.jpg" border="0"/></a><a href="https://goodgamery.com/index.php/2009/12/22/kormus-belleren-jaceful-antelope/"><img src="http://www.goodgamery.com/articles/jace/jace3on.jpg" border="0"/></a><a href="https://goodgamery.com/index.php/2009/12/23/pocket-jaces/"><img src="http://www.goodgamery.com/articles/jace/jace4on.jpg" border="0"/></a><a href="https://goodgamery.com/index.php/2009/12/24/echo-jacer/"><img src="http://www.goodgamery.com/articles/jace/jace5on.jpg" border="0"/></a><a href="https://goodgamery.com/index.php/2009/12/25/jace-cycle/"><img src="http://www.goodgamery.com/articles/jace/jace6on.jpg" border="0"/></a><a href="https://goodgamery.com/index.php/2009/12/26/from-the-vault-jace/"><img src="http://www.goodgamery.com/articles/jace/jace7on.jpg" border="0"/></a>
 		</center><BR>
 	END OF THE Temporary Jace Week Post! -->
 
 	<!-- BEGIN THE  RotE Alliance Post! 
-	er><a href = "http://goodgamery.com/index.php/category/mtg/rise-of-the-eldrazi-alliance/"><img src = "http://www.goodgamery.com/articles/alliance.jpg" border = "0"></A></center><BR>
+	er><a href = "https://goodgamery.com/index.php/category/mtg/rise-of-the-eldrazi-alliance/"><img src = "http://www.goodgamery.com/articles/alliance.jpg" border = "0"></A></center><BR>
 	END OF THE  RotE Alliance Post! --> 
 
 	<!-- BEGIN THE Emilevin Post!
@@ -136,7 +136,7 @@ function gg_display_banner()
 	
 	<!-- BEGIN THE FROM THE VAULT Post! --
 		<center>
-			<iframe style="border: 0;" src="http://goodgamery.com/ggvault/ftv/banner.php" width="500" height="130" seamless="seamless" ></iframe>
+			<iframe style="border: 0;" src="https://goodgamery.com/ggvault/ftv/banner.php" width="500" height="130" seamless="seamless" ></iframe>
 		</center>
 		<BR>
 	-- END OF THE FROM THE VAULT Post! --> 
