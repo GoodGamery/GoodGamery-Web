@@ -135,7 +135,7 @@ echo("<title>$setTitle</title>");
                 </div>
                 <div id="ctl00_ctl00_ContentPlaceHolder1_mainContent_Article_archiveSection">
 					<ul id="archive-links">
-					    <li><a href="http://www.goodgamery.com/">Arcana Archive</a></li>
+					    <li><a href="https://goodgamery.com/">Arcana Archive</a></li>
 					    <li><a href="http://www.magiclampoon.com"><?php echo($authorName) ?> Archive</a></li>
 					</ul>
                 </div>
@@ -170,7 +170,7 @@ foreach ($cardIds as $id) {
 <?php echo("<a href='" . $randomLink . "'>Next Article >></a>"); ?>
 </div><br/>
 <div style="font-size:.9em;">
-<table align="center" width=0><tr><td valign="bottom" align="center">&copy; 2011 <a href="http://www.goodgamery.com">goodgamery.com</a></td></tr>
+<table align="center" width=0><tr><td valign="bottom" align="center">&copy; 2011 <a href="https://goodgamery.com">goodgamery.com</a></td></tr>
 <tr><td align="center">This is a joke. All intellectual claim to Magic: the Gathering belongs to Wizards of the Coast, as do all related web assets and designs. Thanks also to <a href="http://www.flickr.com/photos/mybluevan/">My Blue Van</a> and <a href="http://www.flickr.com/photos/jdurchen/">jdurchen</a> for the handsome photographs.</td></tr>
 </table>
 

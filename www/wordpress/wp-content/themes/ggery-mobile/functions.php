@@ -31,7 +31,7 @@ function gg_get_custom_fields()
 function gg_pmo_post()
 {
     $custom_fields = gg_get_custom_fields();
-    $pmo_addr = "http://www.goodgamery.com/pmo/c" . $custom_fields['pmo'] . ".htm";
+    $pmo_addr = "https://goodgamery.com/pmo/c" . $custom_fields['pmo'] . ".htm";
 ?>
     <!-- PMO Post -->
     <table class="post_block">
@@ -67,7 +67,7 @@ function gg_post_enhanced()
                     <?php if( $custom_fields['card'] != '') : ?>
                         <div class="blank_icon"><div class="icon_card"><img alt="Card Icon" src="<?php echo $custom_fields['card']; ?>" /></div></div>
                     <?php elseif( $custom_fields['icon'] == '') : ?>
-                        <img class="icon" alt="Missing Article Icon" src="http://www.goodgamery.com/icons/error_icon.jpg" />
+                        <img class="icon" alt="Missing Article Icon" src="https://goodgamery.com/icons/error_icon.jpg" />
                     <?php else : ?>
                         <img class="icon" alt="Article Icon" src="<?php echo $custom_fields['icon']; ?>" />
                     <?php endif; ?>

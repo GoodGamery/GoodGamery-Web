@@ -261,7 +261,7 @@ else
 		Share this card: <input id='share_link' type='text' name='link' value='$sharelink' size='55;' />
 		<br /><a href='index.php?id=".$seed."&set=innistrad".($insaneMode?"&insane":"")."'>Go to Innistrad spoiler mode and fool your friends!</a>
 	</p>
-	<p><a href='http://www.goodgamery.com/'>GoodGamery.com</a></p>";
+	<p><a href='https://goodgamery.com/'>GoodGamery.com</a></p>";
 }
 echo"</center>";
 ?>

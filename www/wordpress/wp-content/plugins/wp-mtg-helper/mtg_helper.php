@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: GG WP MtG-Helper
-Plugin URI:  http://www.goodgamery.com/
+Plugin URI:  https://goodgamery.com/
 Description: Mtg Helper supports you writing "Magic:the Gathering"-articles
 Version: 2.0
 Author: Sebastian Sebald with Heavy Modifications by Mark Diehr
-Author URI: http://www.goodgamery.com
+Author URI: https://goodgamery.com
 */
 
 /*  Copyright 2008  Sebastian Sebald  (email : sebastian (dot) sebald (at) gmail (dot) com)

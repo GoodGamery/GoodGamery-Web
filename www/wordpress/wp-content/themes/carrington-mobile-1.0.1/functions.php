@@ -94,7 +94,7 @@ function gg_get_custom_fields()
 function gg_pmo_post()
 {
     $custom_fields = gg_get_custom_fields();
-    $pmo_addr = "http://www.goodgamery.com/pmo/c" . $custom_fields['pmo'] . ".htm";
+    $pmo_addr = "https://goodgamery.com/pmo/c" . $custom_fields['pmo'] . ".htm";
 ?>
     <!-- PMO Post -->
     <div class="entry_heading">
@@ -111,7 +111,7 @@ function gg_pmo_post()
             <span class="author">by anonymous</span>
             <br /><br />
             Pro MTG Online, the ultimate self-aware Magic strategy web comic, has updated itself.
-            <a href="http://www.goodgamery.com/pmo/c<?php echo $custom_fields['pmo']; ?>.htm">
+            <a href="https://goodgamery.com/pmo/c<?php echo $custom_fields['pmo']; ?>.htm">
                 Click here to read it!
             </a>
         </div>
