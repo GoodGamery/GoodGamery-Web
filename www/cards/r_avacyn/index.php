@@ -215,6 +215,8 @@ function spell_name($color) {
 }
 
 function random_name($color,$type) {
+	$First = "Poopington";
+	$last = "Bear";
 	if ($type == "artifact") {
  		switch(hackyRand(1,19)) {				
 		  case 1 : $first = "Blazing"; break;
