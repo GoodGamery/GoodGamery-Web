@@ -48,7 +48,7 @@ if ( !$withcomments && !is_single() ) {
                 <td width="200" height="100" valign="center">
                     
                     <a href="https://forums.goodgamery.com/"><img src="<?php bloginfo('stylesheet_directory'); ?>/images/newforumlink.jpg"></a><br>
-                    <a href="http://wbe02.mibbit.com/?settings=ececfe11aee20d6298208a748d9a6abc&server=irc.umich.edu&channel=%23goodgamery&noServerNotices=true&noServerMotd=true&autoConnect=true&nick=Morph22"><img src="<?php bloginfo('stylesheet_directory'); ?>/images/newchatlink.jpg"></a>
+                    <a href="https://discord.gg/0iWdqLHcoFtqAhFY"><img src="<?php bloginfo('stylesheet_directory'); ?>/images/newchatlink.jpg"></a>
                 </td>
                 <td width="184" height="100" valign="bottom">
                     <center>
