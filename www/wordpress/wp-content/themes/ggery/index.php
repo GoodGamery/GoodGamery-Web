@@ -1,4 +1,5 @@
 <?php get_header(); ?>
+<?php get_sidebar(); ?>
 
 	<div id="content" class="narrowcolumn">
 
@@ -45,6 +46,5 @@
         <img class="foot_img" src="<?php bloginfo('stylesheet_directory'); ?>/images/oac.jpg">
 	</div>
 
-<?php get_sidebar(); ?>
 
 <?php get_footer(); ?>

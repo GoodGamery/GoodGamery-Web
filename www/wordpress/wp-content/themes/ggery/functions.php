@@ -111,35 +111,5 @@ function gg_get_facebook_share()
 <?php
 function gg_display_banner()
 {
-?>
-	<!-- BEGIN THE  Temporary Jace Week Post!  
-		<BR><center>
-		<a href="https://goodgamery.com/index.php/2009/12/19/announcing-jace-week/"><img src="https://goodgamery.com/articles/jace/jace1on.jpg" border="0"/></a><a href="https://goodgamery.com/index.php/2009/12/21/jaceless-butcher/"><img src="https://goodgamery.com/articles/jace/jace2on.jpg" border="0"/></a><a href="https://goodgamery.com/index.php/2009/12/22/kormus-belleren-jaceful-antelope/"><img src="https://goodgamery.com/articles/jace/jace3on.jpg" border="0"/></a><a href="https://goodgamery.com/index.php/2009/12/23/pocket-jaces/"><img src="https://goodgamery.com/articles/jace/jace4on.jpg" border="0"/></a><a href="https://goodgamery.com/index.php/2009/12/24/echo-jacer/"><img src="https://goodgamery.com/articles/jace/jace5on.jpg" border="0"/></a><a href="https://goodgamery.com/index.php/2009/12/25/jace-cycle/"><img src="https://goodgamery.com/articles/jace/jace6on.jpg" border="0"/></a><a href="https://goodgamery.com/index.php/2009/12/26/from-the-vault-jace/"><img src="https://goodgamery.com/articles/jace/jace7on.jpg" border="0"/></a>
-		</center><BR>
-	END OF THE Temporary Jace Week Post! -->
-
-	<!-- BEGIN THE  RotE Alliance Post! 
-	er><a href = "https://goodgamery.com/index.php/category/mtg/rise-of-the-eldrazi-alliance/"><img src = "https://goodgamery.com/articles/alliance.jpg" border = "0"></A></center><BR>
-	END OF THE  RotE Alliance Post! --> 
-
-	<!-- BEGIN THE Emilevin Post!
-		<center><a href = "https://forums.goodgamery.com/viewtopic.php?p=305154#p305154"><img src = "https://goodgamery.com/articles/emilevin_banner.jpg" border = "0"></A></center><BR>
-	END OF THE  Emilevin! Post! --> 
-
-	<!-- BEGIN THE Shirt Post!
-		<center><a href = "http://www.printfection.com/goodgamery/pmoticons/_s_344077"><img src = "https://goodgamery.com/articles/shirt_banner.jpg" border = "0"></A></center><BR>
-	END OF THE  Shirt Post! --> 
-
-	<!-- BEGIN THE BlockRogue Post! --
-		<center><a href = "http://www.blockrogue.com"><img src = "https://goodgamery.com/brbanner.jpg" border = "0"></A></center><BR>
-	-- END OF THE BlockRogue Post! --> 
-	
-	<!-- BEGIN THE FROM THE VAULT Post! --
-		<center>
-			<iframe style="border: 0;" src="https://goodgamery.com/ggvault/ftv/banner.php" width="500" height="130" seamless="seamless" ></iframe>
-		</center>
-		<BR>
-	-- END OF THE FROM THE VAULT Post! --> 
-<?php
 }
 ?>

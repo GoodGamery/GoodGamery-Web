@@ -248,7 +248,7 @@ h1 {
 #headerimg {
 	height: 115px; 
 	width: 800px;
-	background: url('images/title.jpg') no-repeat top left;
+	background: url('images/logo_head.png') no-repeat top left;
 }
 
 #headerimg .description {
@@ -393,7 +393,7 @@ body {
 	margin: auto;
     margin-top: 10px;
 	padding: 0;
-	width: 800px;
+	width: 950px;
 	border: 0px;
 	text-align: left;
 	}
@@ -402,8 +402,9 @@ body {
 	background-color: white;
 	margin: 0; 
 	padding: 0; 
-	height: 115px; 
-	}
+	height: 115px;
+    float: left;
+}
 
 .narrowcolumn, .widecolumn {
 	float: left;
@@ -411,17 +412,17 @@ body {
     padding: 0px;
     margin-left: 30px;
     padding-top: 30px;
-	width: 590px;
+	width: 750px;
     display: inline;
 	}
     
 .narrowcolumn {
-    background: url('images/left_head.jpg') no-repeat top left;
+    /*background: url('images/left_head.jpg') no-repeat top left;*/
     background-color: #F8F3EE;
     }
 
 .widecolumn {
-    background: url('images/blue_head.jpg') no-repeat top left;
+    /*background: url('images/blue_head.jpg') no-repeat top left;*/
     background-color: #F0EFF8;
 	}
 
@@ -464,6 +465,7 @@ body {
 #sidebar_div {
     padding: 0;
     margin: 0;
+    float: right;
     }
 .foot_img {
     padding: 0;
@@ -471,13 +473,17 @@ body {
     margin-bottom: -3px;
     }
 #footer_foot {
-    background: url('https://goodgamery.com/bottoms/white.jpg') no-repeat top left;
+    /*background: url('https://goodgamery.com/bottoms/white.jpg') no-repeat top left;*/
     display: block;
     clear: both;
-    width: 800px;
-    height: 50px;
+    width: 950px;
+    height: 10px;
     padding: 0;
     margin: 0 auto;
+    background-color: white;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    content: "gullible";
     }
 
 #footer {

@@ -10,7 +10,7 @@
 </div>
 		<?php wp_footer(); ?>
 
-        <div id="footer_foot">&nbsp;</div>
+        <div id="footer_foot" style="color: white;">Gullible</div>
 
         <!-- Install GGery scripts -->
         <script type="text/javascript"> installCardTags(); </script> 

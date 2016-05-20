@@ -1,4 +1,5 @@
 <?php get_header(); ?>
+<?php get_sidebar(); ?>
 
 	<div id="content" class="narrowcolumn">
 
@@ -21,7 +22,5 @@
 	<?php edit_post_link('Edit this entry.', '<p>', '</p>'); ?>
     <img class="foot_img" src="<?php bloginfo('stylesheet_directory'); ?>/images/oac.jpg">
 	</div>
-
-<?php get_sidebar(); ?>
 
 <?php get_footer(); ?>
