@@ -43,7 +43,6 @@
 
 	<?php endif; ?>
     
-        <img class="foot_img" src="https://goodgamery.com/bottoms/oac.jpg">
 
 	</div>
 

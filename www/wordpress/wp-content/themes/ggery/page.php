@@ -20,7 +20,6 @@
 	<?php endwhile; endif; ?>
     <br/>
 	<?php edit_post_link('Edit this entry.', '<p>', '</p>'); ?>
-    <img class="foot_img" src="<?php bloginfo('stylesheet_directory'); ?>/images/oac.jpg">
 	</div>
 
 <?php get_footer(); ?>

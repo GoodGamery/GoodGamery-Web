@@ -71,8 +71,6 @@
 		<?php include (TEMPLATEPATH . '/searchform.php'); ?>
 
 	<?php endif; ?>
-
-        <img class="foot_img" src="<?php bloginfo('stylesheet_directory'); ?>/images/oac.jpg">
 	</div>
 
 

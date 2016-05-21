@@ -41,8 +41,6 @@
 
         <?php //comments_template(); ?>
         
-        <img class="foot_img" src="https://goodgamery.com/bottoms/oac-blue.jpg">
-
 	<?php endwhile; else: ?>
 
 		<p>Sorry, no posts matched your criteria.</p>
