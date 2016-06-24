@@ -59,6 +59,8 @@ function netrunner_setup()
             $imageUrl = 'http://netrunnerdb.com'.$card->imagesrc;
             store_netrunner_card_in_db($mysqli, $card->title, $imageUrl);
         }
+    } else {
+        echo '<br>cardsJson was null';
     }
 
     echo '<br>Done!';
@@ -67,13 +69,19 @@ function netrunner_setup()
         $mysqli->close();
 }
 
+function adjustName($input)
+{
+    $input = strtolower($input);
+    $input = preg_replace("/['\"&]/u", "", $input);
+    return $input;
+}
 
 function store_netrunner_card_in_db(&$mysqli, &$cardName, &$imgUrl)
 {
     if ($mysqli->connect_errno)
         return;
 
-    $cardName = strtolower($cardName);
+    $cardName = adjustName($cardName);
 
     $stmt = $mysqli->prepare('INSERT INTO `'.DB_TABLE_NETRUNNER.'` (`name`, `url`) VALUES ((?), (?)) ON DUPLICATE KEY UPDATE `url`=(?)');
     if (!$stmt->bind_param("sss", $cardName, $imgUrl, $imgUrl)) {
@@ -81,12 +89,13 @@ function store_netrunner_card_in_db(&$mysqli, &$cardName, &$imgUrl)
     }
     $stmt->execute();
     $stmt->close();
-    echo "<br>Stored card $cardName $imgUrl";
+    echo "<br>Stored card <b>$cardName</b> $imgUrl";
 }
 
 function get_netrunner_cards()
 {
     $url = NETRUNNER_API_ENDPOINT;
+    echo '<br>Get netrunner cards from <a href="'.$url.'">'.$url.'</a>...';
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_HEADER, 0);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
@@ -94,6 +103,10 @@ function get_netrunner_cards()
     ));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
     $resultJSON = curl_exec($ch);
+    if ($resultJSON === FALSE) {
+        echo '<br>curl failed';
+        return null;
+    }
     curl_close($ch);
     $result = json_decode($resultJSON);
     return $result;

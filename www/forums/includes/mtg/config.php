@@ -12,5 +12,5 @@ define('HS_DEFAULT_IMAGE', 'https://forums.goodgamery.com/includes/mtg/images/po
 
 define('USE_NETRUNNER_CACHE', true);
 define('DB_TABLE_NETRUNNER', 'netrunner_cache');
-define('NETRUNNER_API_ENDPOINT', 'http://netrunnerdb.com/api/cards/');
+define('NETRUNNER_API_ENDPOINT', 'https://netrunnerdb.com/api/cards/');
 define('NETRUNNER_DEFAULT_IMAGE', 'https://forums.goodgamery.com/includes/mtg/images/netrunner_404.jpg');

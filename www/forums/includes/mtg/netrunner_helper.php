@@ -61,9 +61,19 @@ function get_netrunner_card_from_name(&$cardName)
     return $imgUrl;
 }
 
+function adjustName($input)
+{
+    $input = strtolower($input);
+    $input = preg_replace("/['\"&]/u", "", $input);
+    return $input;
+}
+
 function get_netrunner_card_from_db(&$mysqli, &$cardName)
 {
-    $cardName = strtolower($cardName);
+    // if ($debug || true) { echo "<b>cardName: <pre>$cardName</pre></b>"; }
+    $cardName = adjustName($cardName);
+    // if ($debug || true) { echo "<b>adjusted cardName: <pre>$cardName</pre></b>"; }
+
 
     //Prepare statement to find cached card image
     $stmt = $mysqli->prepare('SELECT url FROM `'.DB_TABLE_NETRUNNER.'` WHERE name=(?)');
