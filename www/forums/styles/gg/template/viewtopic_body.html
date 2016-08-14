@@ -398,11 +398,13 @@ function unEscapeHtml(text) {
       .replace(/&gt;/g, '>')
       .replace(/&#39;/g, '\'')
       .replace(/&amp;/g, '&')
+      .replace(/&#0?58;/g, ':')
+      .replace(/&#46;/g,'.')
       ;
 }
 
 function quickQuote(author, escapedMessage) {
-    var message = unEscapeHtml(escapedMessage);
+  var message = unEscapeHtml(escapedMessage);
   var quickreply = document.getElementById('quickreply');
   //quickreply.value = "";
   if(quickreply.value.length > 0)
