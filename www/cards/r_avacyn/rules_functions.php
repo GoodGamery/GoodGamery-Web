@@ -541,7 +541,7 @@ function ACTION_NOFOLLOW($p,$c,$may,$first) {
 // ($static is only passed along, an action cannot be static)
 // ******************
 function ACTION($t,$p,$followup,$static,$c,$n,$favorable = false,$may = false) {
-	
+	$tmp = '';
 	//Fix for "Whenever (action)", as "you" is omitted in the actual action text.
 //	if (($followup || $may) && $p == "you") {
 //		$t = $t." you";
