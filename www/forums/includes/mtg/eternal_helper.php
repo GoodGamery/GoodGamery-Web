@@ -42,6 +42,7 @@ function eternal_card_tags($card_name_original, $display_name)
         $card_name_corrected = preg_replace("/[^a-zA-Z ',\-]/u", "", $card_name_corrected); // characters in card names
         $card_name_corrected = strtolower($card_name_corrected); // use title case, but not for "of" and "the"
         $card_name_corrected = ucwords($card_name_corrected);
+        $card_name_corrected = str_replace("To", "to", $card_name_corrected);
         $card_name_corrected = str_replace("Of", "of", $card_name_corrected);
         $card_name_corrected = str_replace("The", "the", $card_name_corrected);
         $card_name_corrected = preg_replace("/[ ]+/u", "+", $card_name_corrected);    // spaces to +
