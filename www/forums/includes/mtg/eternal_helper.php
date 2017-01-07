@@ -47,12 +47,12 @@ function eternal_card_tags($card_name_original, $display_name)
         $card_name_corrected = preg_replace("/[\x{00E6}\x{00C6}]/u", "ae", $card_name_corrected);    // AE Ligature
         $card_name_corrected = preg_replace("/[^a-zA-Z ',\-]/u", "", $card_name_corrected); // characters in card names
         $card_name_corrected = strtolower($card_name_corrected); // use title case, but not for "of" and "the"
-        $card_name_corrected = ucwords($card_name_corrected);
-        $card_name_corrected = str_replace("To", "to", $card_name_corrected);
-        $card_name_corrected = str_replace("Of", "of", $card_name_corrected);
-        $card_name_corrected = str_replace("The", "the", $card_name_corrected);
-        $card_name_corrected = str_replace("At", "at", $card_name_corrected);
-        $card_name_corrected = str_replace("In", "in", $card_name_corrected);
+        $card_name_corrected = ucwords($card_name_corrected, " -"); // uppercase after a hyphen
+        $card_name_corrected = preg_replace("/\bTo\b/", "to", $card_name_corrected);
+        $card_name_corrected = preg_replace("/\bOf\b/", "of", $card_name_corrected);
+        $card_name_corrected = preg_replace("/\bThe\b/", "the", $card_name_corrected);
+        $card_name_corrected = preg_replace("/\bAt\b/", "at", $card_name_corrected);
+        $card_name_corrected = preg_replace("/\bIn\b/", "in", $card_name_corrected);
         $card_name_corrected = ucfirst($card_name_corrected); // "The" is still capitalized at the start of the filename
         $card_name_corrected = preg_replace("/[ ]+/u", "+", $card_name_corrected);    // spaces to +
 
