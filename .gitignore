@@ -42,3 +42,8 @@ forums/includes/mtg/config.php
 wordpress/wp-content/plugins/wp-mtg-helper/config.php
 *.meta
 www/wordpress/wp-content/uploads/*
+*.gitignore~
+www/forums/config.php
+www/forums/includes/mtg/config.php
+www/wordpress/wp-content/plugins/wp-mtg-helper/config.php
+www/wordpress/wp-config.php
