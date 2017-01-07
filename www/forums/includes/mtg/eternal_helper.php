@@ -39,7 +39,7 @@ function eternal_card_tags($card_name_original, $display_name)
         // Replace the bad characters in the card name
         $card_name_corrected = preg_replace("/[\x{00E8}\x{00E9}]/u", "e", $card_name_corrected);     // `e
         $card_name_corrected = preg_replace("/[\x{00E6}\x{00C6}]/u", "ae", $card_name_corrected);    // AE Ligature
-        $card_name_corrected = preg_replace("/[^a-zA-Z ',]/u", "", $card_name_corrected); // quote and comma need to be retained
+        $card_name_corrected = preg_replace("/[^a-zA-Z ',\-]/u", "", $card_name_corrected); // characters in card names
         $card_name_corrected = strtolower($card_name_corrected); // use title case, but not for "of" and "the"
         $card_name_corrected = ucwords($card_name_corrected);
         $card_name_corrected = str_replace("Of", "of", $card_name_corrected);
