@@ -8,6 +8,12 @@ if( isset($_GET['find']) )
     {
         echo $card_url;
     }
+    else if( isset($_GET['img']))
+    {
+        $fp = fopen($card_url, 'rb');
+        header('Content-Type: image/png');
+        fpassthru($fp);
+    }
     else
     {
         echo "<img src=\"$card_url\" />";
