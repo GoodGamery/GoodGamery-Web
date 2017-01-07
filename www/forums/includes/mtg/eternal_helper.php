@@ -45,6 +45,9 @@ function eternal_card_tags($card_name_original, $display_name)
         $card_name_corrected = str_replace("To", "to", $card_name_corrected);
         $card_name_corrected = str_replace("Of", "of", $card_name_corrected);
         $card_name_corrected = str_replace("The", "the", $card_name_corrected);
+        $card_name_corrected = str_replace("At", "at", $card_name_corrected);
+        $card_name_corrected = str_replace("In", "in", $card_name_corrected);
+        $card_name_corrected = ucfirst($card_name_corrected); // "The" is still capitalized at the start of the filename
         $card_name_corrected = preg_replace("/[ ]+/u", "+", $card_name_corrected);    // spaces to +
 
         // Format the final html output
