@@ -33,7 +33,7 @@ Scroller = function( settings ) {
 	this.currentday       = settings.currentday;
 	this.order            = settings.order;
 	this.throttle         = false;
-	this.handle           = '<div id="infinite-handle"><span>' + text.replace( '\\', '' ) + '</span></div>';
+	this.handle           = '<div id="infinite-handle"><span><button>' + text.replace( '\\', '' ) + '</button></span></div>';
 	this.click_handle     = settings.click_handle;
 	this.google_analytics = settings.google_analytics;
 	this.history          = settings.history;
@@ -137,7 +137,7 @@ Scroller.prototype.query = function() {
 		scripts        : window.infiniteScroll.settings.scripts,
 		styles         : window.infiniteScroll.settings.styles,
 		query_args     : window.infiniteScroll.settings.query_args,
-		last_post_date : window.infiniteScroll.settings.last_post_date,
+		last_post_date : window.infiniteScroll.settings.last_post_date
 	};
 };
 
@@ -186,7 +186,7 @@ Scroller.prototype.thefooter = function() {
  */
 Scroller.prototype.refresh = function() {
 	var	self   = this,
-		query, jqxhr, load, loader, color;
+		query, jqxhr, load, loader, color, customized;
 
 	// If we're disabled, ready, or don't pass the check, bail.
 	if ( this.disabled || ! this.ready || ! this.check() )
@@ -214,6 +214,20 @@ Scroller.prototype.refresh = function() {
 		action: 'infinite_scroll'
 	}, this.query() );
 
+	// Inject Customizer state.
+	if ( 'undefined' !== typeof wp && wp.customize && wp.customize.settings.theme ) {
+		customized = {};
+		query.wp_customize = 'on';
+		query.theme = wp.customize.settings.theme.stylesheet;
+		wp.customize.each( function( setting ) {
+			if ( setting._dirty ) {
+				customized[ setting.id ] = setting();
+			}
+		} );
+		query.customized = JSON.stringify( customized );
+		query.nonce = wp.customize.settings.nonce.preview;
+	}
+
 	// Fire the ajax request.
 	jqxhr = $.post( infiniteScroll.settings.ajaxurl, query );
 
@@ -234,23 +248,12 @@ Scroller.prototype.refresh = function() {
 			}
 
 			// Check for and parse our response.
-			if ( ! response )
+			if ( ! response || ! response.type ) {
 				return;
-
-			response = $.parseJSON( response );
-
-			if ( ! response || ! response.type )
-				return;
-
-			// If there are no remaining posts...
-			if ( response.type == 'empty' ) {
-				// Disable the scroller.
-				self.disabled = true;
-				// Update body classes, allowing the footer to return to static positioning
-				self.body.addClass( 'infinity-end' ).removeClass( 'infinity-success' );
+			}
 
 			// If we've succeeded...
-			} else if ( response.type == 'success' ) {
+			if ( response.type == 'success' ) {
 				// If additional scripts are required by the incoming set of posts, parse them
 				if ( response.scripts ) {
 					$( response.scripts ).each( function() {
@@ -315,7 +318,7 @@ Scroller.prototype.refresh = function() {
 				}
 
 				// stash the response in the page cache
-               			self.pageCache[self.page] = response;
+				self.pageCache[self.page] = response;
 
 				// Increment the page number
 				self.page++;
@@ -336,6 +339,8 @@ Scroller.prototype.refresh = function() {
 					if ( response.lastbatch ) {
 						if ( self.click_handle ) {
 							$( '#infinite-handle' ).remove();
+							// Update body classes
+							self.body.addClass( 'infinity-end' ).removeClass( 'infinity-success' );
 						} else {
 							self.body.trigger( 'infinite-scroll-posts-end' );
 						}
@@ -346,6 +351,9 @@ Scroller.prototype.refresh = function() {
 							self.body.trigger( 'infinite-scroll-posts-more' );
 						}
 					}
+				} else if ( response.lastbatch ) {
+					self.disabled = true;
+					self.body.addClass( 'infinity-end' ).removeClass( 'infinity-success' );
 				}
 
 				// Update currentday to the latest value returned from the server
@@ -394,7 +402,7 @@ Scroller.prototype.maybeLoadMejs = function() {
  */
 Scroller.prototype.initializeMejs = function( ev, response ) {
 	// Are there media players in the incoming set of posts?
-	if ( -1 === response.html.indexOf( 'wp-audio-shortcode' ) && -1 === response.html.indexOf( 'wp-video-shortcode' ) ) {
+	if ( ! response.html || -1 === response.html.indexOf( 'wp-audio-shortcode' ) && -1 === response.html.indexOf( 'wp-video-shortcode' ) ) {
 		return;
 	}
 
@@ -619,12 +627,28 @@ Scroller.prototype.updateURL = function( page ) {
 }
 
 /**
+ * Pause scrolling.
+ */
+Scroller.prototype.pause = function() {
+	this.disabled = true;
+};
+
+/**
+ * Resume scrolling.
+ */
+Scroller.prototype.resume = function() {
+	this.disabled = false;
+};
+
+/**
  * Ready, set, go!
  */
 $( document ).ready( function() {
 	// Check for our variables
 	if ( 'object' != typeof infiniteScroll )
 		return;
+
+	$( document.body ).addClass( infiniteScroll.settings.body_class );
 
 	// Set ajaxurl (for brevity)
 	ajaxurl = infiniteScroll.settings.ajaxurl;
@@ -654,6 +678,54 @@ $( document ).ready( function() {
             } , 250 );
         });
     }
+
+	// Integrate with Selective Refresh in the Customizer.
+	if ( 'undefined' !== typeof wp && wp.customize && wp.customize.selectiveRefresh ) {
+
+		/**
+		 * Handle rendering of selective refresh partials.
+		 *
+		 * Make sure that when a partial is rendered, the Jetpack post-load event
+		 * will be triggered so that any dynamic elements will be re-constructed,
+		 * such as ME.js elements, Photon replacements, social sharing, and more.
+		 * Note that this is applying here not strictly to posts being loaded.
+		 * If a widget contains a ME.js element and it is previewed via selective
+		 * refresh, the post-load would get triggered allowing any dynamic elements
+		 * therein to also be re-constructed.
+		 *
+		 * @param {wp.customize.selectiveRefresh.Placement} placement
+		 */
+		wp.customize.selectiveRefresh.bind( 'partial-content-rendered', function( placement ) {
+			var content;
+			if ( 'string' === typeof placement.addedContent ) {
+				content = placement.addedContent;
+			} else if ( placement.container ) {
+				content = $( placement.container ).html();
+			}
+
+			if ( content ) {
+				$( document.body ).trigger( 'post-load', { html: content } );
+			}
+		} );
+
+		/*
+		 * Add partials for posts added via infinite scroll.
+		 *
+		 * This is unnecessary when MutationObserver is supported by the browser
+		 * since then this will be handled by Selective Refresh in core.
+		 */
+		if ( 'undefined' === typeof MutationObserver ) {
+			$( document.body ).on( 'post-load', function( e, response ) {
+				var rootElement = null;
+				if ( response.html && -1 !== response.html.indexOf( 'data-customize-partial' ) ) {
+					if ( infiniteScroll.settings.id ) {
+						rootElement = $( '#' + infiniteScroll.settings.id );
+					}
+					wp.customize.selectiveRefresh.addPartials( rootElement );
+				}
+			} );
+		}
+	}
 });
 
 

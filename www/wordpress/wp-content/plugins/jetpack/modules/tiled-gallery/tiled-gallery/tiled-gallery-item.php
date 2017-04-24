@@ -1,5 +1,4 @@
 <?php
-
 abstract class Jetpack_Tiled_Gallery_Item {
 	public $image;
 
@@ -8,13 +7,22 @@ abstract class Jetpack_Tiled_Gallery_Item {
 		$this->grayscale = $grayscale;
 
 		$this->image_title = $this->image->post_title;
+
 		$this->image_alt = get_post_meta( $this->image->ID, '_wp_attachment_image_alt', true );
+		// If no Alt value, use the caption
+		if ( empty( $this->image_alt ) && ! empty( $this->image->post_excerpt ) ) {
+			$this->image_alt = trim( strip_tags( $this->image->post_excerpt ) );
+		}
+		// If still no Alt value, use the title
+		if ( empty( $this->image_alt ) && ! empty( $this->image->post_title ) ) {
+			$this->image_alt = trim( strip_tags( $this->image->post_title ) );
+		}
+
 		$this->orig_file = wp_get_attachment_url( $this->image->ID );
 		$this->link = $needs_attachment_link ? get_attachment_link( $this->image->ID ) : $this->orig_file;
 
-		$this->img_src = add_query_arg( array( 'w' => $this->image->width, 'h' => $this->image->height, 'crop' => true ), $this->orig_file );
-      
-   	}
+		$this->img_src = jetpack_photon_url( $this->orig_file, array( 'resize' => sprintf( '%d,%d', $this->image->width, $this->image->height ) ) );
+	}
 
 	public function fuzzy_image_meta() {
 		$meta = wp_get_attachment_metadata( $this->image->ID );
@@ -67,10 +75,9 @@ class Jetpack_Tiled_Gallery_Rectangular_Item extends Jetpack_Tiled_Gallery_Item 
 class Jetpack_Tiled_Gallery_Square_Item extends Jetpack_Tiled_Gallery_Item {
 	public function __construct( $attachment_image, $needs_attachment_link, $grayscale ) {
 		parent::__construct( $attachment_image, $needs_attachment_link, $grayscale );
-		$this->img_src_grayscale = jetpack_photon_url( $this->img_src, array( 'filter' => 'grayscale', 'resize' => array( $this->image->width, $this->image->height ) ) ); 
+		$this->img_src_grayscale = jetpack_photon_url( $this->img_src, array( 'filter' => 'grayscale', 'resize' => array( $this->image->width, $this->image->height ) ) );
 	}
 }
 
 class Jetpack_Tiled_Gallery_Circle_Item extends Jetpack_Tiled_Gallery_Square_Item {
 }
-?>

@@ -12,7 +12,10 @@ if( isset($_GET['find']) )
     {
         $fp = fopen($card_url, 'rb');
         header('Content-Type: image/png');
+        header('Cache-Control: max-age=864000, public');
         fpassthru($fp);
+        fclose($fp);
+        exit;
     }
     else
     {

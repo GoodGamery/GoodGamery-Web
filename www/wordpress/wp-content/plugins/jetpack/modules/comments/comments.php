@@ -3,7 +3,7 @@
 require dirname( __FILE__ ) . '/base.php';
 
 /**
- * Main Jetpack Comments class
+ * Main Comments class
  *
  * @package JetpackComments
  * @version 1.4
@@ -17,20 +17,20 @@ class Jetpack_Comments extends Highlander_Comments_Base {
 	 * Possible comment form sources
 	 * @var array
 	 */
-	var $id_sources = array();
+	public $id_sources = array();
 
 	/**
 	 * URL
 	 * @var string
 	 */
-	var $signed_url = '';
+	public $signed_url = '';
 
 	/**
 	 * The default comment form color scheme
 	 * @var string
 	 * @see ::set_default_color_theme_based_on_theme_settings()
 	 */
-	var $default_color_scheme =  'light';
+	public $default_color_scheme =  'light';
 
 	/** Methods ***************************************************************/
 
@@ -45,21 +45,23 @@ class Jetpack_Comments extends Highlander_Comments_Base {
 	}
 
 	/**
-	 * Main constructor for Jetpack Comments
+	 * Main constructor for Comments
 	 *
 	 * @since JetpackComments (1.4)
 	 */
 	public function __construct() {
 		parent::__construct();
 
-		// Jetpack Comments is loaded
+		// Comments is loaded
 
 		/**
-		 * `Fires after the Jetpack_Comments object has been instantiated
+		 * Fires after the Jetpack_Comments object has been instantiated
 		 *
-		 * @since ?
-		 * @module Jetpack_Comments
-		 * @param array $jetpack_comments First element in array of type Jetpack_Comments
+		 * @module comments
+		 *
+		 * @since 1.4.0
+		 *
+		 * @param array $jetpack_comments_loaded First element in array of type Jetpack_Comments
 		 **/
 		do_action_ref_array( 'jetpack_comments_loaded', array( $this ) );
 		add_action( 'after_setup_theme', array( $this, 'set_default_color_theme_based_on_theme_settings' ), 100 );
@@ -150,15 +152,11 @@ class Jetpack_Comments extends Highlander_Comments_Base {
 			return $avatar;
 		}
 
-		if ( false === strpos( $comment->comment_author_url, '/www.facebook.com/' ) && false === strpos( $comment->comment_author_url, '/twitter.com/' ) ) {
-			// It's neither FB nor Twitter - bail
-			return $avatar;
-		}
-
-		// It's a FB or Twitter avatar
+		// Detect whether it's a Facebook or Twitter avatar
 		$foreign_avatar = get_comment_meta( $comment->comment_ID, 'hc_avatar', true );
-		if ( empty( $foreign_avatar ) ) {
-			// Can't find the avatar details - bail
+		$foreign_avatar_hostname = parse_url( $foreign_avatar, PHP_URL_HOST );
+		if ( ! $foreign_avatar_hostname ||
+				! preg_match( '/\.?(graph\.facebook\.com|twimg\.com)$/', $foreign_avatar_hostname ) ) {
 			return $avatar;
 		}
 
@@ -173,6 +171,20 @@ class Jetpack_Comments extends Highlander_Comments_Base {
 	 * @since JetpackComments (1.4)
 	 */
 	public function comment_form_before() {
+		/**
+		 * Filters the setting that determines if Jetpagk comments should be enabled for
+		 * the current post type.
+		 *
+		 * @module comments
+		 *
+		 * @since 3.8.1
+		 *
+		 * @param boolean $return Should comments be enabled?
+		 */
+		if ( ! apply_filters( 'jetpack_comment_form_enabled_for_' . get_post_type(), true ) ) {
+			return;
+		}
+
 		// Add some JS to the footer
 		add_action( 'wp_footer', array( $this, 'watch_comment_parent' ), 100 );
 
@@ -186,12 +198,25 @@ class Jetpack_Comments extends Highlander_Comments_Base {
 	 * @since JetpackComments (1.4)
 	 */
 	public function comment_form_after() {
+		/** This filter is documented in modules/comments/comments.php */
+		if ( ! apply_filters( 'jetpack_comment_form_enabled_for_' . get_post_type(), true ) ) {
+			return;
+		}
 
 		// Throw it all out and drop in our replacement
 		ob_end_clean();
 
 		// If users are required to be logged in, and they're not, then we don't need to do anything else
 		if ( get_option( 'comment_registration' ) && !is_user_logged_in() ) {
+			/**
+			 * Changes the log in to comment prompt.
+			 *
+			 * @module comments
+			 *
+			 * @since 1.4.0
+			 *
+			 * @param string $var Default is "You must log in to post a comment."
+			 */
 			echo '<p class="must-log-in">' . sprintf( apply_filters( 'jetpack_must_log_in_to_comment', __( 'You must <a href="%s">log in</a> to post a comment.', 'jetpack' ) ), wp_login_url( get_permalink() . '#respond' ) ) . '</p>';
 			return;
 		}
@@ -217,9 +242,18 @@ class Jetpack_Comments extends Highlander_Comments_Base {
 			'show_avatars'         => ( get_option( 'show_avatars' )         ? '1' : '0' ),
 			'avatar_default'       => get_option( 'avatar_default' ),
 			'greeting'             => get_option( 'highlander_comment_form_prompt', __( 'Leave a Reply', 'jetpack' ) ),
+			/**
+			 * Changes the comment form prompt.
+			 *
+			 * @module comments
+			 *
+			 * @since 2.3.0
+			 *
+			 * @param string $var Default is "Leave a Reply to %s."
+			 */
 			'greeting_reply'       => apply_filters( 'jetpack_comment_form_prompt_reply', __( 'Leave a Reply to %s' , 'jetpack' ) ),
 			'color_scheme'         => get_option( 'jetpack_comment_form_color_scheme', $this->default_color_scheme ),
-			'lang'                 => get_bloginfo( 'language' ),
+			'lang'                 => get_locale(),
 			'jetpack_version'      => JETPACK__VERSION,
 		);
 
@@ -241,8 +275,7 @@ class Jetpack_Comments extends Highlander_Comments_Base {
 		}
 
 		$params['sig']    = $signature;
-		$url_origin       = set_url_scheme( 'http://jetpack.wordpress.com' );
-		$url              = "{$url_origin}/jetpack-comment/?" . http_build_query( $params );
+		$url              = "https://jetpack.wordpress.com/jetpack-comment/?" . http_build_query( $params );
 		$url              = "{$url}#parent=" . urlencode( set_url_scheme( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ) );
 		$this->signed_url = $url;
 		$height           = $params['comment_registration'] || is_user_logged_in() ? '315' : '430'; // Iframe can be shorter if we're not allowing guest commenting
@@ -252,14 +285,38 @@ class Jetpack_Comments extends Highlander_Comments_Base {
 			$url .= '&replytocom=' . (int) $_GET['replytocom'];
 		}
 
+		/**
+		 * Filter whether the comment title can be displayed.
+		 *
+		 * @module comments
+		 *
+		 * @since 4.7.0
+		 *
+		 * @param bool $show Can the comment be displayed? Default to true.
+		 */
+		$show_greeting = apply_filters( 'jetpack_comment_form_display_greeting', true );
+
 		// The actual iframe (loads comment form from Jetpack server)
 		?>
 
 		<div id="respond" class="comment-respond">
-			<h3 id="reply-title" class="comment-reply-title"><?php comment_form_title( esc_html( $params['greeting'] ), esc_html( $params['greeting_reply'] ) ); ?> <small><?php cancel_comment_reply_link( esc_html__( 'Cancel reply' , 'jetpack') ); ?></small></h3>
-			<div id="commentform" class="comment-form">
-				<iframe src="<?php echo esc_url( $url ); ?>" allowtransparency="<?php echo $transparent; ?>" style="width:100%; height: <?php echo $height; ?>px;border:0px;" frameBorder="0" scrolling="no" name="jetpack_remote_comment" id="jetpack_remote_comment"></iframe>
-			</div>
+			<?php if ( true === $show_greeting ) : ?>
+				<h3 id="reply-title" class="comment-reply-title"><?php comment_form_title( esc_html( $params['greeting'] ), esc_html( $params['greeting_reply'] ) ); ?> <small><?php cancel_comment_reply_link( esc_html__( 'Cancel reply' , 'jetpack') ); ?></small></h3>
+			<?php endif; ?>
+			<form id="commentform" class="comment-form">
+				<iframe src="<?php echo esc_url( $url ); ?>" style="width:100%; height: <?php echo $height; ?>px; border:0;" name="jetpack_remote_comment" class="jetpack_remote_comment" id="jetpack_remote_comment"></iframe>
+				<!--[if !IE]><!-->
+				<script>
+					document.addEventListener( 'DOMContentLoaded', function () {
+						var commentForms = document.getElementsByClassName( 'jetpack_remote_comment' );
+						for ( var i = 0; i < commentForms.length; i++ ) {
+							commentForms[i].allowTransparency = <?php echo $transparent; ?>;
+							commentForms[i].scrolling = 'no';
+						}
+					} );
+				</script>
+				<!--<![endif]-->
+			</form>
 		</div>
 
 		<?php // Below is required for comment reply JS to work ?>
@@ -275,7 +332,7 @@ class Jetpack_Comments extends Highlander_Comments_Base {
 	 * @since JetpackComments (1.4)
 	 */
 	public function watch_comment_parent() {
-		$url_origin = set_url_scheme( 'http://jetpack.wordpress.com' );
+		$url_origin = 'https://jetpack.wordpress.com';
 	?>
 
 		<!--[if IE]>
@@ -393,6 +450,14 @@ class Jetpack_Comments extends Highlander_Comments_Base {
 		// Bail if token is expired or not valid
 		if ( $check !== $post_array['sig'] )
 			wp_die( __( 'Invalid security token.', 'jetpack' ) );
+
+		/** This filter is documented in modules/comments/comments.php */
+		if ( ! apply_filters( 'jetpack_comment_form_enabled_for_' . get_post_type( $post_array['comment_post_ID'] ), true ) ) {
+			// In case the comment POST is legit, but the comments are
+			// now disabled, we don't allow the comment
+
+			wp_die( __( 'Comments are not allowed.', 'jetpack' ) );
+		}
 	}
 
 	/** Capabilities **********************************************************/
