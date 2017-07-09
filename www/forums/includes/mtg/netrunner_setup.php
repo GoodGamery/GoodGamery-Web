@@ -54,9 +54,10 @@ function netrunner_setup()
     }
 
     if (USE_NETRUNNER_CACHE && $cardsJson) {
-       echo '<br>Reading cards...';
-        foreach ($cardsJson as &$card) {
-            $imageUrl = 'http://netrunnerdb.com'.$card->imagesrc;
+        $urlTemplate = $cardsJson->imageUrlTemplate;
+        echo '<br>Reading cards...';
+        foreach ($cardsJson->data as &$card) {
+            $imageUrl = 'https://netrunnerdb.com/card_image/'.$card->code.'.png';
             store_netrunner_card_in_db($mysqli, $card->title, $imageUrl);
         }
     } else {
