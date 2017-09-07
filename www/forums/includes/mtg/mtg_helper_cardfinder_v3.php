@@ -12,11 +12,16 @@ if( isset($_GET['find']) )
     }
     else if( isset($_GET['img']))
     {
-        // echo $card_url;
-        $fp = fopen($card_url, 'rb');
-        header('Content-Type: image/jpg');
-        // header('Content-Length: '.filesize($card_url));  // Not sure what the performance implications are
-        fpassthru($fp);
+        // streamFile($card_url, 'image/jpg');
+        $fp = file_get_contents($card_url);
+        if(!$fp) {
+            error_log("Problem with card url: '$card_url'");
+            header('Content-Type: image/jpg');
+            readfile('./images/missing.jpg');
+        } else {
+            header('Content-Type: image/jpg');
+            fpassthru($fp);
+        }
     }
     else
     {
@@ -24,6 +29,21 @@ if( isset($_GET['find']) )
     }
 	//do not execute the rest of the code
 	exit;
+}
+
+function streamFile($filename, $contentType) {
+    header("Content-Type: $contentType");
+    // header('Content-Disposition: attachment; filename="' . basename($filename) . '"');
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $filename);
+    // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 500);
+    // curl_setopt($ch, CURLOPT_WRITEFUNCTION, function($curl, $data) {
+    //     echo $data;
+    //     return strlen($data);
+    // });
+    curl_exec($ch);
+    curl_close($ch);
 }
 
 function stripAccents($stripAccents)
