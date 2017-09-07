@@ -5018,7 +5018,7 @@ function mobile_device_detect()
 			|| (strpos($a, 'opera mini') !== false) 
 			|| (strpos($a, 'symbian') !== false) 
 			|| (strpos($a, 'nokia') !== false) 
-			|| (strpos($a, 'samsung') !== false) 
+			// || (strpos($a, 'samsung') !== false) // Fix bug when requesting desktop site
 			|| (strpos($a, 'ericsson,') !== false)  
 			|| (strpos($a, 'vodafone/') !== false)
 			|| (strpos($a, 'kindle') !== false) 
