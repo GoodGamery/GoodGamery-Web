@@ -239,7 +239,7 @@ function fixPost( post )
                              }
                              else
                              {
-                                 out_text += '<a href="/includes/mtg/mtg_helper_cardfinder_v3.php?find=' + parsed.name + '&width=223&height=310" class="jTip" name=""  onclick=\'window.open("http://magiccards.info/card.php?card=' + parsed.name + '")\' >' + parsed.name + '</a><br/>';
+                                 out_text += '<a href="https://goodgamery.com/api/mtg/html?card=' + parsed.name + '" class="jTip" name=""  onclick=\'window.open("http://magiccards.info/card.php?card=' + parsed.name + '")\' >' + parsed.name + '</a><br/>';
                                  for (var jx = 0; jx < parsed.count; jx++)
                                  {
                                      cardList += getImageSource(parsed.name) + "&";

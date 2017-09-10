@@ -230,9 +230,9 @@ function fixPost(post) {
                     out_text += lines[ix] + "<br>";
                 } else {
                     var cardNameSafe = encodeURIComponent(parsed.name).replace(/'/g,'%27');
-                    out_text += parsed.count + ' <a href="/includes/mtg/mtg_helper_cardfinder_v3.php?find=' + cardNameSafe + '&width=223&height=310" class="jTip" name=""  onclick=\'window.open("http://magiccards.info/card.php?card=' + cardNameSafe + '")\' >' + parsed.name + '</a><br/>';
+                    out_text += parsed.count + ' <a href="https://goodgamery.com/api/mtg/html?card=' + cardNameSafe + '" class="jTip" name=""  onclick=\'window.open("http://magiccards.info/card.php?card=' + cardNameSafe + '")\' >' + parsed.name + '</a><br/>';
                     for (var jx = 0; jx < parsed.count; jx++) {
-                        cardList .push("http://gatherer.wizards.com/Handlers/Image.ashx?type=card&name=" + cardNameSafe);
+                        cardList .push("https://goodgamery.com/api/mtg/image?card=" + cardNameSafe);
                     }
                 }
             }
