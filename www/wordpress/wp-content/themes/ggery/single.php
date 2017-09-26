@@ -27,11 +27,10 @@
 				</div>
                 <br>
                 <?php if ($custom_fields['pmo'] != '') : 
-                    gg_pmo_post(); 
+                    gg_pmo_post(true); 
                 else : 
                     the_content('<p class="serif">Read the rest of this entry &raquo;</p>');
                     gg_thread_link();
-					gg_get_facebook_share();
                 endif; ?>
                 
 				<?php link_pages('<p><strong>Pages:</strong> ', '</p>', 'number'); ?>

@@ -15,7 +15,7 @@
                 <div class="author"><?php echo $custom_fields['author'] ?><?php the_tags(' | more articles by ', ', ', ''); ?></div>
                 <br>
                 <?php if ($custom_fields['pmo'] != '') : 
-                    gg_pmo_post(); 
+                    gg_pmo_post(true); 
                 else : 
                     the_content('<p class="serif">Read the rest of this entry &raquo;</p>');
                     gg_thread_link();
