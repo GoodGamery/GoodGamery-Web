@@ -35,7 +35,7 @@ function gg_pmo_post($isSingle = false) {
     if ($isSingle) {
     ?>
         <!-- PMO Single PagePost -->
-        <div class="frontpage">
+        <div>
             <a href="<?php echo $pmo_addr; ?>" rel="bookmark" title="Permanent Link to <?php echo the_title(); ?>">
                 <?php echo the_title(); ?>
             </a>
