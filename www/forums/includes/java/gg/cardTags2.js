@@ -1,5 +1,7 @@
 var UID = 0;
 
+// IS THIS FILE EVEN USED? IT IS IMPOSSIBLE TO TELL
+
 function getImageSource(cardname, set)
 {
     set = set || "general";
