@@ -121,20 +121,9 @@ function timeto(to) {
     return rv;
 }
 
-function trim_whitespace(s) {
-    while (s.charAt(0).match(/\s/)) {
-        s = s.substring(1, s.length);
-    }
-
-    while (s.charAt(s.length - 1).match(/\s/)) {
-        s = s.substring(0, s.length - 1);
-    }
-
-    return s;
-}
-
 function parseLine(line) {
-    line = line.replace(/^\s*/, "");
+    line = line.replace(/ \(\w\w\w+\) [0-9]+/, "");    // Remove arena set/collector codes. See: https://forums.goodgamery.com/viewtopic.php?f=22&t=7950
+    line = line.trim();    // Remove spaces before the text
 
     if (line.toLowerCase().indexOf("sideboard") == 0 || line.toLowerCase().indexOf("maindeck") == 0 || line.match(/^\s*(\/\/.*)?\s*$/)) {
         return undefined;
@@ -259,7 +248,7 @@ function fixPost(post) {
         "draftcap", function draftcapReplace(inner) {
         inner = inner.replace(/<br>/gi, "\n");
 
-        var input_array = trim_whitespace(inner).split("\n");
+        var input_array = inner.trim().split("\n");
         var output = "";
         var pack_counter = 1;
         var last_size = 100;
