@@ -2,7 +2,7 @@
 var HUMAN_RESULT = {
     title: 'Human',
     desc: 
-        '<img width="223px" height="310px" src="https://goodgamery.com/api/mtg/image?q=t:human%20t:creature&sort=random&limit=1&p=_nocache"/><p>'
+        '<img width="223px" height="310px" src="https://mtgcardfinder.herokuapp.com/image?q=t:human%20t:creature&sort=random&limit=1&p=_nocache"/><p>'
         +"Congratulations, you are HUMAN! While many Magic creature types are real animals, many are not. However, bears, spiders, etc. cannot use the internet and therefore can't take this quiz. If you had your dog answer for you, there's nothing in the rules against that, but keep in mind that your dog is also now human as well."
         +'</p>'
 };

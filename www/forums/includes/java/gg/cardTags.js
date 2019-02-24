@@ -230,9 +230,9 @@ function fixPost(post) {
                     out_text += lines[ix] + "<br>";
                 } else {
                     var cardNameSafe = encodeURIComponent(parsed.name).replace(/'/g,'%27');
-                    out_text += parsed.count + ' <a href="https://goodgamery.com/api/mtg/html?card=' + cardNameSafe + '" class="jTip" name=""  onclick=\'window.open("http://magiccards.info/card.php?card=' + cardNameSafe + '")\' >' + parsed.name + '</a><br/>';
+                    out_text += parsed.count + ' <a href="https://mtgcardfinder.herokuapp.com/html?card=' + cardNameSafe + '" class="jTip" name=""  onclick=\'window.open("http://magiccards.info/card.php?card=' + cardNameSafe + '")\' >' + parsed.name + '</a><br/>';
                     for (var jx = 0; jx < parsed.count; jx++) {
-                        cardList .push("https://goodgamery.com/api/mtg/image?card=" + cardNameSafe);
+                        cardList .push("https://mtgcardfinder.herokuapp.com/image?card=" + cardNameSafe);
                     }
                 }
             }
