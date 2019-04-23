@@ -347,15 +347,7 @@ function mtgh_parser($matches)
 
 //display card borders and background or image
 function display_cardbox($id,$margin){
-	$img_url = get_bloginfo('wpurl') . MTGH_DIR . '/images/';
-	//top
-	$content = "<td class='card_box'><table cellspacing='0' cellpadding='0' style='{$margin}'><tr><td><img src=" . $img_url . "border_left_top.png /></td><td><img src=" . $img_url . "bottom_top.png /></td><td><img src=" . $img_url . "border_right_top.png /></td></tr>";
-	//middle
-	$content .= "<tr><td><img src=" . $img_url . "left_right.png /></td><td class='display_preview'><img id='{$id}_box' src='' style='display:none;' /></td><td><img src=" . $img_url . "left_right.png /></td></tr>";
-	//bottom
-	$content .= "<tr><td><img src=" . $img_url . "border_left_bottom.png /></td><td><img src=" . $img_url . "bottom_top.png /></td><td><img src=" . $img_url . "border_right_bottom.png /></td>";
-	$content .= "</tr></table></td>";
-	
+	$content = "<td class='card_box'><div class='display_preview'><img id='{$id}_box' src='' style='display:none;' /></div></table></td>";
 	return $content;
 }
 
@@ -404,7 +396,7 @@ function carddisplay_box(&$cards,$id,$pick,&$style,$colcount=1)
                 // Clickthrough to magiccards.info				
                 $card_name = $cards[$j]["cardname"];
                 $card_name_corrected = preg_replace("/[^a-zA-Z][^a-zA-Z]?/u", " ", $card_name);
-                $onclick = " onclick=window.open('http://magiccards.info/query.php?cardname=" . urlencode($card_name_corrected) . "') ";
+                $onclick = " onclick=window.open('https://scryfall.com/search?q=!" . urlencode($card_name_corrected) . "') ";
 
 				//cardname and link to the cardbox
 				$content .= "<span class='cardname'><a style='font-size:".get_option(mtghFontSize).";";
@@ -451,7 +443,7 @@ function carddisplay_box(&$cards,$id,$pick,&$style,$colcount=1)
             // Clickthrough to magiccards.info				
             $card_name = $card["cardname"];
             $card_name_corrected = preg_replace("/[^a-zA-Z\-!_][^a-zA-Z\-!_]?/u", " ", $card_name);
-            $onclick = " onclick=window.open('http://magiccards.info/query.php?cardname=" . urlencode($card_name_corrected) . "') ";
+            $onclick = " onclick=window.open('https://scryfall.com/search?q=!" . urlencode($card_name_corrected) . "') ";
             
 			//cardname and link to the cardbox
 			$content .= "<span class='cardname'><a style='font-size:".get_option(mtghFontSize).";";
@@ -518,11 +510,12 @@ function carddisplay_tooltip(&$cards,$pick,$pick_opt,$colcount=1){
 				$content .= "<span class='cardname'><a style='font-size:".get_option(mtghFontSize).";";
 				if( $add_class == "" )
 					$content .= "color:".get_option(mtghFontColor).";";
-				$content .= "' class='jTip {$add_class}' href='" . get_bloginfo('wpurl') . MTGH_DIR
-				."/mtg_helper_cardfinder.php?find=" . urlencode($cards[$j]["cardname"]) . "&width=200&height=285'"
-				."name='" . get_source_from_name($cards[$j]["cardname"]). "'>"
-				.$cards[$j]["cardname"]
-				."</a></span></li>";
+				$content .= "' class='jTip {$add_class}' href='https://goodgamery.com/api/mtg/card/html?card="
+					.urlencode($cards[$j]["cardname"])
+					."&width=200&height=285'"
+					."name='" . get_source_from_name($cards[$j]["cardname"]). "'>"
+					.$cards[$j]["cardname"]
+					."</a></span></li>";
 			}
 			$content .= "</ul></td>";
 			//calc next colums stard-/endpoint
@@ -558,11 +551,12 @@ function carddisplay_tooltip(&$cards,$pick,$pick_opt,$colcount=1){
 			$content .= "<span class='cardname'><a style='font-size:".get_option(mtghFontSize).";";
 			if( $add_class == "" )
 				$content .= "color:".get_option(mtghFontColor).";";
-			$content .= "' class='jTip {$add_class}' href='" . get_bloginfo('wpurl') . MTGH_DIR
-			."/mtg_helper_cardfinder.php?find=" . urlencode($card["cardname"]) . "&width=200&height=285'"
-			."name='" . get_source_from_name($card["cardname"]). "'>"
-			.$card["cardname"]
-			."</a></span></li>";
+			$content .= "' class='jTip {$add_class}' href='https://goodgamery.com/api/mtg/card/html?card="
+				.urlencode($card["cardname"])
+				."&width=200&height=285'"
+				."name='" . get_source_from_name($card["cardname"]). "'>"
+				.$card["cardname"]
+				."</a></span></li>";
 		}
 		$content .= "</ul>";
 	}
@@ -648,8 +642,8 @@ function carddisplay_thumbnail(&$stack, $pick, &$style){
 
 			}
 			
-			$content .= 	'<a href="' . get_bloginfo('wpurl') . MTGH_DIR 
-						.'/mtg_helper_cardfinder.php?find='.urlencode($cards[$j]).'&width=200&height=285" name="'
+			$content .= 	'<a href="https://goodgamery.com/api/mtg/card/html?card='
+						.urlencode($cards[$j]).'&width=200&height=285" name="'
 						.htmlspecialchars($cards[$j],ENT_QUOTES). '">'
 						."<img class='thumbnail ".$class." ".$add_class."' style='height:{$display_height}px;width:{$display_width}px;' src='"
 						. get_source_from_name(trim($cards[$j]))

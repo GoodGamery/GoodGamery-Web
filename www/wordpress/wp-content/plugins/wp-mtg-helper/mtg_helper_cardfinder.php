@@ -196,17 +196,18 @@ function gg_card_tags($card_name_original, $display_name)
         $card_name_corrected = stripslashes($card_name_original);
         
         // Replace the bad characters in the card name
-        $card_name_corrected = preg_replace("/[\x{00E8}\x{00E9}]/u", "e", $card_name_corrected);     // `e
-        $card_name_corrected = preg_replace("/[\x{00E6}\x{00C6}]/u", "ae", $card_name_corrected);    // AE Ligature
-        $card_name_corrected = preg_replace("/ ?\/\/ ?/u", "__", $card_name_corrected);              // Split cards
-        $card_name_corrected = preg_replace("/ ?\/ ?/u", "_", $card_name_corrected);                 // Who/What/When/Where/Why
-        $card_name_corrected = preg_replace("/[ -]/u", "_", $card_name_corrected);                   // Spaces and dashes
+        // $card_name_corrected = preg_replace("/[\x{00E8}\x{00E9}]/u", "e", $card_name_corrected);     // `e
+        $card_name_corrected = preg_replace("/[’]/u", "'", $card_name_corrected);              // Punctuation
+        # $card_name_corrected = preg_replace("/[\x{00E6}\x{00C6}]/u", "ae", $card_name_corrected);    // AE Ligature
+        // $card_name_corrected = preg_replace("/ ?\/\/ ?/u", "__", $card_name_corrected);              // Split cards
+        // $card_name_corrected = preg_replace("/ ?\/ ?/u", "_", $card_name_corrected);                 // Who/What/When/Where/Why
+        $card_name_corrected = preg_replace("/[ -]/u", "+", $card_name_corrected);                   // Spaces and dashes
         $card_name_corrected = preg_replace("/&amp;/u", "", $card_name_corrected);                   // '"
-        $card_name_corrected = preg_replace("/ \(foil\)/u", "", $card_name_corrected);               // Foils
-        $card_name_corrected = preg_replace("/#8217;|#8220;|#8221;/u", "", $card_name_corrected);    // '"
-        $card_name_corrected = preg_replace("/[:`'’,!&;\"]/u", "", $card_name_corrected);              // Punctuation
-        $card_name_corrected = preg_replace("/\#038/u", "", $card_name_corrected);              // HACKS
-        $card_name_corrected = preg_replace("/\#8221/u", "", $card_name_corrected);              // HACKS
+        // $card_name_corrected = preg_replace("/ \(foil\)/u", "", $card_name_corrected);               // Foils
+        $card_name_corrected = preg_replace("/#8217;|#8220;|#8221;/u", "\'", $card_name_corrected);    // '"
+        $card_name_corrected = preg_replace("/[:`,!&;\"]/u", "", $card_name_corrected);              // Punctuation
+        // $card_name_corrected = preg_replace("/\#038/u", "", $card_name_corrected);              // HACKS
+        # $card_name_corrected = preg_replace("/\#8221/u", "", $card_name_corrected);              // HACKS
         $card_name_corrected = stripAccents($card_name_corrected);
 
         // Lower case
@@ -225,15 +226,7 @@ function gg_card_tags($card_name_original, $display_name)
 
 function gg_card_tags_gatherer_img($card_name)
 {
-    if( $card_name == "super_secret_tech" )
-    {
-        $gatherer_image = "http://www.wizards.com/magic/images/SST_withborder.jpg"; // Super secret cards!
-    }
-    else
-    {
-        $gatherer_image = "http://www.wizards.com/global/images/magic/general/" . $card_name . ".jpg";
-    }
-    return $gatherer_image;
+    return "https://goodgamery.com/api/mtg/card/image?goof&card=" . $card_name;
 }
 
 function gg_card_tags_gatherer_address($card_name)
