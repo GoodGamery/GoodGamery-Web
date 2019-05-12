@@ -19,29 +19,16 @@ function mtgh_card($content){
 
 function parse_card_url ($card_names)
 {
-    // Clickthrough to magiccards.info				
+    // Clickthrough to scryfall				
     $card_name = $card_names[2];
     $card_name_corrected = preg_replace("/[^a-zA-Z\-!_][^a-zA-Z\-!_]?/u", " ", $card_name);
-    $onclick = " onclick=window.open('http://magiccards.info/query.php?cardname=" . urlencode($card_name_corrected) . "') ";
+    $onclick = " onclick=window.open('https://scryfall.com/search?q=!%22" . urlencode($card_name_corrected) . "%22') ";
 
 	return '<a href="' . get_bloginfo('wpurl') . MTGH_DIR 
 	.'/mtg_helper_cardfinder.php?find=' . urlencode($card_name) . '&width=200&height=285" class="jTip" name="" '
     . $onclick
     .'>'
 	. $card_name . '</a>';
-
-/*
-    $card_img = get_source_from_name($card_names[2]);
-	return '<a href="http://magiccards.info'
-	.'/query.php?cardname=' . urlencode($card_names[2]) . '&width=200&height=285" class="jTip" name="' . $card_img . '">'
-	. $card_names[2] . '</a>';
-/**/
-/*
-    return '<a href="http://magiccards.info/query.php?cardname='
-        . urlencode($card_names[2])
-        . '&width=200&height=285" class="jTip" name="">'
-        . $card_names[2] . '</a>';
-/**/
 }
 
 ?>
