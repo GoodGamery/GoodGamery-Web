@@ -404,7 +404,7 @@ function carddisplay_box(&$cards,$id,$pick,&$style,$colcount=1)
                 // Clickthrough to magiccards.info				
                 $card_name = $cards[$j]["cardname"];
                 $card_name_corrected = preg_replace("/[^a-zA-Z][^a-zA-Z]?/u", " ", $card_name);
-                $onclick = " onclick=window.open('http://magiccards.info/query.php?cardname=" . urlencode($card_name_corrected) . "') ";
+                $onclick = " onclick=window.open('https://scryfall.com/search?q=!%22" . urlencode($card_name_corrected) . "%22') ";
 
 				//cardname and link to the cardbox
 				$content .= "<span class='cardname'><a style='font-size:".get_option(mtghFontSize).";";
@@ -451,7 +451,7 @@ function carddisplay_box(&$cards,$id,$pick,&$style,$colcount=1)
             // Clickthrough to magiccards.info				
             $card_name = $card["cardname"];
             $card_name_corrected = preg_replace("/[^a-zA-Z\-!_][^a-zA-Z\-!_]?/u", " ", $card_name);
-            $onclick = " onclick=window.open('http://magiccards.info/query.php?cardname=" . urlencode($card_name_corrected) . "') ";
+            $onclick = " onclick=window.open('https://scryfall.com/search?q=!%22" . urlencode($card_name_corrected) . "%22') ";
             
 			//cardname and link to the cardbox
 			$content .= "<span class='cardname'><a style='font-size:".get_option(mtghFontSize).";";
