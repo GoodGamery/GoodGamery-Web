@@ -227,11 +227,13 @@ height: 25px;*/
 .mtgh .display_preview {
 	vertical-align:center;
 	width: 223px;
-	height: 310px;
+	/*height: 310px;*/
 	padding:0px;
 	margin:0px;
 	background-image: url(../images/missing.jpg);
 	background-repeat: no-repeat;
+	background-position: -10px -10px;
+	background-color:#000;
 }
 
 .mtgh .display_preview img {

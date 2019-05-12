@@ -1,6 +1,7 @@
 <?php
 /**
  * Sync architecture prototype
+ *
  * @author Dan Walmsley
  * To run tests: phpunit --testsuite sync --filter New_Sync
  */
@@ -74,6 +75,8 @@ interface iJetpack_Sync_Replicastore {
 
 	public function delete_metadata( $type, $object_id, $meta_ids );
 
+	public function delete_batch_metadata( $type, $object_ids, $meta_key );
+
 	// constants
 	public function get_constant( $constant );
 
@@ -119,6 +122,12 @@ interface iJetpack_Sync_Replicastore {
 	public function upsert_user( $user );
 
 	public function delete_user( $user_id );
+
+	public function upsert_user_locale( $user_id, $locale );
+
+	public function delete_user_locale( $user_id );
+
+	public function get_user_locale( $user_id );
 
 	public function get_allowed_mime_types( $user_id );
 
