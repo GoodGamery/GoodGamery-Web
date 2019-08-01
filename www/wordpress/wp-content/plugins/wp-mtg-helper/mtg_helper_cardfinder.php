@@ -175,12 +175,12 @@ function get_source_from_name_v3($name)
 //for secure cardname parsing 
 function get_source_from_name($name)
 {
-    $name = gg_card_tags($name, "runeboggle");
+    // $name = gg_card_tags($name, "runeboggle");
+
+    // $name = htmlspecialchars(urldecode($name));
+    // $name = preg_replace("/[ ]+/", " ", $name);
     
-	$name = htmlspecialchars(urldecode($name));
-	$name = preg_replace("/[ ]+/", " ", $name);
-    
-	return $name;
+	return gg_card_tags_gatherer_img($name);
 }
 
 // Filter definition
