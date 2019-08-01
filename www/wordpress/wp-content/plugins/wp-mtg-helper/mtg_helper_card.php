@@ -27,11 +27,11 @@ function mtgh_card($content){
 }
 
 function parse_card_url_override ($card_names)
-{
-    // Clickthrough to magiccards.info				
+{			
     $card_name = $card_names[2];
     $card_title = $card_names[3];
-    $card_name_corrected = preg_replace("/[^a-zA-Z\-!_][^a-zA-Z\-!_]?/u", " ", $card_name);
+    // $card_name_corrected = preg_replace("/[^a-zA-Z\-!_][^a-zA-Z\-!_]?/u", " ", $card_name);
+    $card_name_corrected = $card_name;
     $onclick = " onclick=window.open('https://scryfall.com/search?q=!%22" . urlencode($card_name_corrected) . "%22') ";
 
 	return '<a href="' . get_bloginfo('wpurl') . MTGH_DIR 
@@ -42,10 +42,10 @@ function parse_card_url_override ($card_names)
 }
 
 function parse_card_url ($card_names)
-{
-    // Clickthrough to magiccards.info				
+{			
     $card_name = $card_names[2];
-    $card_name_corrected = preg_replace("/[^a-zA-Z\-!_][^a-zA-Z\-!_]?/u", " ", $card_name);
+    // $card_name_corrected = preg_replace("/[^a-zA-Z\-!_][^a-zA-Z\-!_]?/u", " ", $card_name);
+    $card_name_corrected = $card_name;
     $onclick = " onclick=window.open('https://scryfall.com/search?q=!%22" . urlencode($card_name_corrected) . "%22') ";
 
 	return '<a href="' . get_bloginfo('wpurl') . MTGH_DIR 

@@ -197,14 +197,14 @@ function gg_card_tags($card_name_original, $display_name)
         
         // Replace the bad characters in the card name
         // $card_name_corrected = preg_replace("/[\x{00E8}\x{00E9}]/u", "e", $card_name_corrected);     // `e
-        $card_name_corrected = preg_replace("/[’]/u", "'", $card_name_corrected);              // Punctuation
+        $card_name_corrected = preg_replace("/[’]/u", "'", $card_name_corrected);              // Weird quotes
         # $card_name_corrected = preg_replace("/[\x{00E6}\x{00C6}]/u", "ae", $card_name_corrected);    // AE Ligature
         // $card_name_corrected = preg_replace("/ ?\/\/ ?/u", "__", $card_name_corrected);              // Split cards
         // $card_name_corrected = preg_replace("/ ?\/ ?/u", "_", $card_name_corrected);                 // Who/What/When/Where/Why
-        $card_name_corrected = preg_replace("/[ -]/u", "+", $card_name_corrected);                   // Spaces and dashes
-        $card_name_corrected = preg_replace("/&amp;/u", "", $card_name_corrected);                   // '"
+        // $card_name_corrected = preg_replace("/[ -]/u", "+", $card_name_corrected);                   // Spaces and dashes
+        $card_name_corrected = preg_replace("/&amp;/u", "", $card_name_corrected);                   // Ampersands
         // $card_name_corrected = preg_replace("/ \(foil\)/u", "", $card_name_corrected);               // Foils
-        $card_name_corrected = preg_replace("/#8217;|#8220;|#8221;/u", "\'", $card_name_corrected);    // '"
+        $card_name_corrected = preg_replace("/#8217;|#8220;|#8221;/u", "'", $card_name_corrected);    // '"
         $card_name_corrected = preg_replace("/[:`,!&;\"]/u", "", $card_name_corrected);              // Punctuation
         // $card_name_corrected = preg_replace("/\#038/u", "", $card_name_corrected);              // HACKS
         # $card_name_corrected = preg_replace("/\#8221/u", "", $card_name_corrected);              // HACKS
