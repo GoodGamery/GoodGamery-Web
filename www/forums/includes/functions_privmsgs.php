@@ -1,10 +1,13 @@
 <?php
 /**
 *
-* @package phpBB3
-* @version $Id$
-* @copyright (c) 2005 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* This file is part of the phpBB Forum Software package.
+*
+* @copyright (c) phpBB Limited <https://www.phpbb.com>
+* @license GNU General Public License, version 2 (GPL-2.0)
+*
+* For full copyright and license information, please see
+* the docs/CREDITS.txt file.
 *
 */
 
@@ -19,7 +22,8 @@ if (!defined('IN_PHPBB'))
 	Ability to simply add own rules by doing three things:
 		1) Add an appropriate constant
 		2) Add a new check array to the global_privmsgs_rules variable and the condition array (if one is required)
-		3) Add a new language variable to ucp.php
+		3) Implement the rule logic in the check_rule() function
+		4) Add a new language variable to ucp.php
 
 		The user is then able to select the new rule. It will be checked against and handled as specified.
 		To add new actions (yes, checks can be added here too) to the rule management, the core code has to be modified.
@@ -57,42 +61,42 @@ define('CHECK_TO', 5);
 */
 $global_privmsgs_rules = array(
 	CHECK_SUBJECT	=> array(
-		RULE_IS_LIKE		=> array('check0' => 'message_subject', 'function' => 'preg_match("/" . preg_quote({STRING}, "/") . "/i", {CHECK0})'),
-		RULE_IS_NOT_LIKE	=> array('check0' => 'message_subject', 'function' => '!(preg_match("/" . preg_quote({STRING}, "/") . "/i", {CHECK0}))'),
-		RULE_IS				=> array('check0' => 'message_subject', 'function' => '{CHECK0} == {STRING}'),
-		RULE_IS_NOT			=> array('check0' => 'message_subject', 'function' => '{CHECK0} != {STRING}'),
-		RULE_BEGINS_WITH	=> array('check0' => 'message_subject', 'function' => 'preg_match("/^" . preg_quote({STRING}, "/") . "/i", {CHECK0})'),
-		RULE_ENDS_WITH		=> array('check0' => 'message_subject', 'function' => 'preg_match("/" . preg_quote({STRING}, "/") . "$/i", {CHECK0})'),
+		RULE_IS_LIKE		=> array('check0' => 'message_subject'),
+		RULE_IS_NOT_LIKE	=> array('check0' => 'message_subject'),
+		RULE_IS				=> array('check0' => 'message_subject'),
+		RULE_IS_NOT			=> array('check0' => 'message_subject'),
+		RULE_BEGINS_WITH	=> array('check0' => 'message_subject'),
+		RULE_ENDS_WITH		=> array('check0' => 'message_subject'),
 	),
 
 	CHECK_SENDER	=> array(
-		RULE_IS_LIKE		=> array('check0' => 'username', 'function' => 'preg_match("/" . preg_quote({STRING}, "/") . "/i", {CHECK0})'),
-		RULE_IS_NOT_LIKE	=> array('check0' => 'username', 'function' => '!(preg_match("/" . preg_quote({STRING}, "/") . "/i", {CHECK0}))'),
-		RULE_IS				=> array('check0' => 'username', 'function' => '{CHECK0} == {STRING}'),
-		RULE_IS_NOT			=> array('check0' => 'username', 'function' => '{CHECK0} != {STRING}'),
-		RULE_BEGINS_WITH	=> array('check0' => 'username', 'function' => 'preg_match("/^" . preg_quote({STRING}, "/") . "/i", {CHECK0})'),
-		RULE_ENDS_WITH		=> array('check0' => 'username', 'function' => 'preg_match("/" . preg_quote({STRING}, "/") . "$/i", {CHECK0})'),
-		RULE_IS_FRIEND		=> array('check0' => 'friend', 'function' => '{CHECK0} == 1'),
-		RULE_IS_FOE			=> array('check0' => 'foe', 'function' => '{CHECK0} == 1'),
-		RULE_IS_USER		=> array('check0' => 'author_id', 'function' => '{CHECK0} == {USER_ID}'),
-		RULE_IS_GROUP		=> array('check0' => 'author_in_group', 'function' => 'in_array({GROUP_ID}, {CHECK0})'),
+		RULE_IS_LIKE		=> array('check0' => 'username'),
+		RULE_IS_NOT_LIKE	=> array('check0' => 'username'),
+		RULE_IS				=> array('check0' => 'username'),
+		RULE_IS_NOT			=> array('check0' => 'username'),
+		RULE_BEGINS_WITH	=> array('check0' => 'username'),
+		RULE_ENDS_WITH		=> array('check0' => 'username'),
+		RULE_IS_FRIEND		=> array('check0' => 'friend'),
+		RULE_IS_FOE			=> array('check0' => 'foe'),
+		RULE_IS_USER		=> array('check0' => 'author_id'),
+		RULE_IS_GROUP		=> array('check0' => 'author_in_group'),
 	),
 
 	CHECK_MESSAGE	=> array(
-		RULE_IS_LIKE		=> array('check0' => 'message_text', 'function' => 'preg_match("/" . preg_quote({STRING}, "/") . "/i", {CHECK0})'),
-		RULE_IS_NOT_LIKE	=> array('check0' => 'message_text', 'function' => '!(preg_match("/" . preg_quote({STRING}, "/") . "/i", {CHECK0}))'),
-		RULE_IS				=> array('check0' => 'message_text', 'function' => '{CHECK0} == {STRING}'),
-		RULE_IS_NOT			=> array('check0' => 'message_text', 'function' => '{CHECK0} != {STRING}'),
+		RULE_IS_LIKE		=> array('check0' => 'message_text'),
+		RULE_IS_NOT_LIKE	=> array('check0' => 'message_text'),
+		RULE_IS				=> array('check0' => 'message_text'),
+		RULE_IS_NOT			=> array('check0' => 'message_text'),
 	),
 
 	CHECK_STATUS	=> array(
-		RULE_ANSWERED		=> array('check0' => 'pm_replied', 'function' => '{CHECK0} == 1'),
-		RULE_FORWARDED		=> array('check0' => 'pm_forwarded', 'function' => '{CHECK0} == 1'),
+		RULE_ANSWERED		=> array('check0' => 'pm_replied'),
+		RULE_FORWARDED		=> array('check0' => 'pm_forwarded'),
 	),
 
 	CHECK_TO		=> array(
-		RULE_TO_GROUP		=> array('check0' => 'to', 'check1' => 'bcc', 'check2' => 'user_in_group', 'function' => 'in_array("g_" . {CHECK2}, {CHECK0}) || in_array("g_" . {CHECK2}, {CHECK1})'),
-		RULE_TO_ME			=> array('check0' => 'to', 'check1' => 'bcc', 'function' => 'in_array("u_" . $user_id, {CHECK0}) || in_array("u_" . $user_id, {CHECK1})'),
+		RULE_TO_GROUP		=> array('check0' => 'to', 'check1' => 'bcc', 'check2' => 'user_in_group'),
+		RULE_TO_ME			=> array('check0' => 'to', 'check1' => 'bcc'),
 	)
 );
 
@@ -222,7 +226,7 @@ function get_folder($user_id, $folder_id = false)
 */
 function clean_sentbox($num_sentbox_messages)
 {
-	global $db, $user, $config;
+	global $db, $user;
 
 	// Check Message Limit
 	if ($user->data['message_limit'] && $num_sentbox_messages > $user->data['message_limit'])
@@ -251,8 +255,6 @@ function clean_sentbox($num_sentbox_messages)
 */
 function check_rule(&$rules, &$rule_row, &$message_row, $user_id)
 {
-	global $user, $config;
-
 	if (!isset($rules[$rule_row['rule_check']][$rule_row['rule_connection']]))
 	{
 		return false;
@@ -260,16 +262,59 @@ function check_rule(&$rules, &$rule_row, &$message_row, $user_id)
 
 	$check_ary = $rules[$rule_row['rule_check']][$rule_row['rule_connection']];
 
-	// Replace Check Literals
-	$evaluate = $check_ary['function'];
-	$evaluate = preg_replace('/{(CHECK[0-9])}/', '$message_row[$check_ary[strtolower("\1")]]', $evaluate);
-
-	// Replace Rule Literals
-	$evaluate = preg_replace('/{(STRING|USER_ID|GROUP_ID)}/', '$rule_row["rule_" . strtolower("\1")]', $evaluate);
-
-	// Evil Statement
 	$result = false;
-	eval('$result = (' . $evaluate . ') ? true : false;');
+
+	$check0 = $message_row[$check_ary['check0']];
+
+	switch ($rule_row['rule_connection'])
+	{
+		case RULE_IS_LIKE:
+			$result = preg_match("/" . preg_quote($rule_row['rule_string'], '/') . '/i', $check0);
+		break;
+
+		case RULE_IS_NOT_LIKE:
+			$result = !preg_match("/" . preg_quote($rule_row['rule_string'], '/') . '/i', $check0);
+		break;
+
+		case RULE_IS:
+			$result = ($check0 == $rule_row['rule_string']);
+		break;
+
+		case RULE_IS_NOT:
+			$result = ($check0 != $rule_row['rule_string']);
+		break;
+
+		case RULE_BEGINS_WITH:
+			$result = preg_match("/^" . preg_quote($rule_row['rule_string'], '/') . '/i', $check0);
+		break;
+
+		case RULE_ENDS_WITH:
+			$result = preg_match("/" . preg_quote($rule_row['rule_string'], '/') . '$/i', $check0);
+		break;
+
+		case RULE_IS_FRIEND:
+		case RULE_IS_FOE:
+		case RULE_ANSWERED:
+		case RULE_FORWARDED:
+			$result = ($check0 == 1);
+		break;
+
+		case RULE_IS_USER:
+			$result = ($check0 == $rule_row['rule_user_id']);
+		break;
+
+		case RULE_IS_GROUP:
+			$result = in_array($rule_row['rule_group_id'], $check0);
+		break;
+
+		case RULE_TO_GROUP:
+			$result = (in_array('g_' . $message_row[$check_ary['check2']], $check0) || in_array('g_' . $message_row[$check_ary['check2']], $message_row[$check_ary['check1']]));
+		break;
+
+		case RULE_TO_ME:
+			$result = (in_array('u_' . $user_id, $check0) || in_array('u_' . $user_id, $message_row[$check_ary['check1']]));
+		break;
+	}
 
 	if (!$result)
 	{
@@ -288,7 +333,7 @@ function check_rule(&$rules, &$rule_row, &$message_row, $user_id)
 		break;
 
 		case ACTION_DELETE_MESSAGE:
-			global $db, $auth;
+			global $db;
 
 			// Check for admins/mods - users are not allowed to remove those messages...
 			// We do the check here to make sure the data we use is consistent
@@ -299,7 +344,7 @@ function check_rule(&$rules, &$rule_row, &$message_row, $user_id)
 			$userdata = $db->sql_fetchrow($result);
 			$db->sql_freeresult($result);
 
-			$auth2 = new auth();
+			$auth2 = new \phpbb\auth\auth();
 			$auth2->acl($userdata);
 
 			if (!$auth2->acl_get('a_') && !$auth2->acl_get('m_') && !$auth2->acl_getf_global('m_'))
@@ -421,7 +466,7 @@ function place_pm_into_folder(&$global_privmsgs_rules, $release = false)
 		$user_rules = $db->sql_fetchrowset($result);
 		$db->sql_freeresult($result);
 
-		if (sizeof($user_rules))
+		if (count($user_rules))
 		{
 			$sql = 'SELECT zebra_id, friend, foe
 				FROM ' . ZEBRA_TABLE . "
@@ -445,7 +490,7 @@ function place_pm_into_folder(&$global_privmsgs_rules, $release = false)
 				'bcc'				=> explode(':', $row['bcc_address']),
 				'friend'			=> (isset($zebra[$row['author_id']])) ? $zebra[$row['author_id']]['friend'] : 0,
 				'foe'				=> (isset($zebra[$row['author_id']])) ? $zebra[$row['author_id']]['foe'] : 0,
-				'user_in_group'		=> array($user->data['group_id']),
+				'user_in_group'		=> $user->data['group_id'],
 				'author_in_group'	=> array())
 			);
 
@@ -454,7 +499,7 @@ function place_pm_into_folder(&$global_privmsgs_rules, $release = false)
 		$db->sql_freeresult($result);
 
 		// Retrieve user memberships
-		if (sizeof($user_ids))
+		if (count($user_ids))
 		{
 			$sql = 'SELECT *
 				FROM ' . USER_GROUP_TABLE . '
@@ -499,7 +544,7 @@ function place_pm_into_folder(&$global_privmsgs_rules, $release = false)
 	}
 
 	// We place actions into arrays, to save queries.
-	$sql = $unread_ids = $delete_ids = $important_ids = array();
+	$unread_ids = $delete_ids = $important_ids = array();
 
 	foreach ($action_ary as $msg_id => $msg_ary)
 	{
@@ -555,14 +600,14 @@ function place_pm_into_folder(&$global_privmsgs_rules, $release = false)
 	// only gone through if new messages arrive.
 
 	// Delete messages
-	if (sizeof($delete_ids))
+	if (count($delete_ids))
 	{
-		$num_removed += sizeof($delete_ids);
+		$num_removed += count($delete_ids);
 		delete_pm($user_id, $delete_ids, PRIVMSGS_NO_BOX);
 	}
 
 	// Set messages to Unread
-	if (sizeof($unread_ids))
+	if (count($unread_ids))
 	{
 		$sql = 'UPDATE ' . PRIVMSGS_TO_TABLE . '
 			SET pm_unread = 0
@@ -573,7 +618,7 @@ function place_pm_into_folder(&$global_privmsgs_rules, $release = false)
 	}
 
 	// mark messages as important
-	if (sizeof($important_ids))
+	if (count($important_ids))
 	{
 		$sql = 'UPDATE ' . PRIVMSGS_TO_TABLE . '
 			SET pm_marked = 1 - pm_marked
@@ -586,7 +631,7 @@ function place_pm_into_folder(&$global_privmsgs_rules, $release = false)
 	// Move into folder
 	$folder = array();
 
-	if (sizeof($move_into_folder))
+	if (count($move_into_folder))
 	{
 		// Determine Full Folder Action - we need the move to folder id later eventually
 		$full_folder_action = ($user->data['user_full_folder'] == FULL_FOLDER_NONE) ? ($config['full_folder_action'] - (FULL_FOLDER_NONE*(-1))) : $user->data['user_full_folder'];
@@ -631,12 +676,12 @@ function place_pm_into_folder(&$global_privmsgs_rules, $release = false)
 
 		// Check Message Limit - we calculate with the complete array, most of the time it is one message
 		// But we are making sure that the other way around works too (more messages in queue than allowed to be stored)
-		if ($user->data['message_limit'] && $folder[$folder_id] && ($folder[$folder_id] + sizeof($msg_ary)) > $user->data['message_limit'])
+		if ($user->data['message_limit'] && $folder[$folder_id] && ($folder[$folder_id] + count($msg_ary)) > $user->data['message_limit'])
 		{
 			$full_folder_action = ($user->data['user_full_folder'] == FULL_FOLDER_NONE) ? ($config['full_folder_action'] - (FULL_FOLDER_NONE*(-1))) : $user->data['user_full_folder'];
 
 			// If destination folder itself is full...
-			if ($full_folder_action >= 0 && ($folder[$full_folder_action] + sizeof($msg_ary)) > $user->data['message_limit'])
+			if ($full_folder_action >= 0 && ($folder[$full_folder_action] + count($msg_ary)) > $user->data['message_limit'])
 			{
 				$full_folder_action = $config['full_folder_action'] - (FULL_FOLDER_NONE*(-1));
 			}
@@ -654,7 +699,7 @@ function place_pm_into_folder(&$global_privmsgs_rules, $release = false)
 					WHERE user_id = $user_id
 						AND folder_id = $dest_folder
 					ORDER BY msg_id ASC";
-				$result = $db->sql_query_limit($sql, (($folder[$dest_folder] + sizeof($msg_ary)) - $user->data['message_limit']));
+				$result = $db->sql_query_limit($sql, (($folder[$dest_folder] + count($msg_ary)) - $user->data['message_limit']));
 
 				$delete_ids = array();
 				while ($row = $db->sql_fetchrow($result))
@@ -663,7 +708,7 @@ function place_pm_into_folder(&$global_privmsgs_rules, $release = false)
 				}
 				$db->sql_freeresult($result);
 
-				$num_removed += sizeof($delete_ids);
+				$num_removed += count($delete_ids);
 				delete_pm($user_id, $delete_ids, $dest_folder);
 			}
 		}
@@ -699,7 +744,7 @@ function place_pm_into_folder(&$global_privmsgs_rules, $release = false)
 		}
 	}
 
-	if (sizeof($action_ary))
+	if (count($action_ary))
 	{
 		// Move from OUTBOX to SENTBOX
 		// We are not checking any full folder status here... SENTBOX is a special treatment (old messages get deleted)
@@ -740,7 +785,7 @@ function move_pm($user_id, $message_limit, $move_msg_ids, $dest_folder, $cur_fol
 		$move_msg_ids = array($move_msg_ids);
 	}
 
-	if (sizeof($move_msg_ids) && !in_array($dest_folder, array(PRIVMSGS_NO_BOX, PRIVMSGS_OUTBOX, PRIVMSGS_SENTBOX)) &&
+	if (count($move_msg_ids) && !in_array($dest_folder, array(PRIVMSGS_NO_BOX, PRIVMSGS_OUTBOX, PRIVMSGS_SENTBOX)) &&
 		!in_array($cur_folder_id, array(PRIVMSGS_NO_BOX, PRIVMSGS_OUTBOX)) && $cur_folder_id != $dest_folder)
 	{
 		// We have to check the destination folder ;)
@@ -756,10 +801,11 @@ function move_pm($user_id, $message_limit, $move_msg_ids, $dest_folder, $cur_fol
 
 			if (!$row)
 			{
+				send_status_line(403, 'Forbidden');
 				trigger_error('NOT_AUTHORISED');
 			}
 
-			if ($message_limit && $row['pm_count'] + sizeof($move_msg_ids) > $message_limit)
+			if ($message_limit && $row['pm_count'] + count($move_msg_ids) > $message_limit)
 			{
 				$message = sprintf($user->lang['NOT_ENOUGH_SPACE_FOLDER'], $row['folder_name']) . '<br /><br />';
 				$message .= sprintf($user->lang['CLICK_RETURN_FOLDER'], '<a href="' . append_sid("{$phpbb_root_path}ucp.$phpEx", 'i=pm&amp;folder=' . $row['folder_id']) . '">', '</a>', $row['folder_name']);
@@ -776,7 +822,7 @@ function move_pm($user_id, $message_limit, $move_msg_ids, $dest_folder, $cur_fol
 			$num_messages = (int) $db->sql_fetchfield('num_messages');
 			$db->sql_freeresult($result);
 
-			if ($message_limit && $num_messages + sizeof($move_msg_ids) > $message_limit)
+			if ($message_limit && $num_messages + count($move_msg_ids) > $message_limit)
 			{
 				$message = sprintf($user->lang['NOT_ENOUGH_SPACE_FOLDER'], $user->lang['PM_INBOX']) . '<br /><br />';
 				$message .= sprintf($user->lang['CLICK_RETURN_FOLDER'], '<a href="' . append_sid("{$phpbb_root_path}ucp.$phpEx", 'i=pm&amp;folder=inbox') . '">', '</a>', $user->lang['PM_INBOX']);
@@ -832,14 +878,26 @@ function update_unread_status($unread, $msg_id, $user_id, $folder_id)
 		return;
 	}
 
-	global $db, $user;
+	global $db, $user, $phpbb_container;
+
+	/* @var $phpbb_notifications \phpbb\notification\manager */
+	$phpbb_notifications = $phpbb_container->get('notification_manager');
+
+	$phpbb_notifications->mark_notifications('notification.type.pm', $msg_id, $user_id);
 
 	$sql = 'UPDATE ' . PRIVMSGS_TO_TABLE . "
 		SET pm_unread = 0
 		WHERE msg_id = $msg_id
 			AND user_id = $user_id
-			AND folder_id = $folder_id";
+			AND folder_id = $folder_id
+			AND pm_unread = 1";
 	$db->sql_query($sql);
+
+	// If the message is already marked as read, we just skip the rest to avoid negative PM count
+	if (!$db->sql_affectedrows())
+	{
+		return;
+	}
 
 	$sql = 'UPDATE ' . USERS_TABLE . "
 		SET user_unread_privmsg = user_unread_privmsg - 1
@@ -863,18 +921,35 @@ function update_unread_status($unread, $msg_id, $user_id, $folder_id)
 	}
 }
 
+function mark_folder_read($user_id, $folder_id)
+{
+	global $db;
+
+	$sql = 'SELECT msg_id
+		FROM ' . PRIVMSGS_TO_TABLE . '
+		WHERE folder_id = ' . ((int) $folder_id) . '
+			AND user_id = ' . ((int) $user_id) . '
+			AND pm_unread = 1';
+	$result = $db->sql_query($sql);
+
+	while ($row = $db->sql_fetchrow($result))
+	{
+		update_unread_status(true, $row['msg_id'], $user_id, $folder_id);
+	}
+	$db->sql_freeresult($result);
+}
+
 /**
 * Handle all actions possible with marked messages
 */
 function handle_mark_actions($user_id, $mark_action)
 {
-	global $db, $user, $phpbb_root_path, $phpEx;
+	global $db, $user, $phpbb_root_path, $phpEx, $request;
 
-	$msg_ids		= request_var('marked_msg_id', array(0));
-	$cur_folder_id	= request_var('cur_folder_id', PRIVMSGS_NO_BOX);
-	$confirm		= (isset($_POST['confirm'])) ? true : false;
+	$msg_ids		= $request->variable('marked_msg_id', array(0));
+	$cur_folder_id	= $request->variable('cur_folder_id', PRIVMSGS_NO_BOX);
 
-	if (!sizeof($msg_ids))
+	if (!count($msg_ids))
 	{
 		return false;
 	}
@@ -882,6 +957,11 @@ function handle_mark_actions($user_id, $mark_action)
 	switch ($mark_action)
 	{
 		case 'mark_important':
+
+			if (!check_form_key('ucp_pm_view'))
+			{
+				trigger_error('FORM_INVALID');
+			}
 
 			$sql = 'UPDATE ' . PRIVMSGS_TO_TABLE . "
 				SET pm_marked = 1 - pm_marked
@@ -898,6 +978,7 @@ function handle_mark_actions($user_id, $mark_action)
 
 			if (!$auth->acl_get('u_pm_delete'))
 			{
+				send_status_line(403, 'Forbidden');
 				trigger_error('NO_AUTH_DELETE_MESSAGE');
 			}
 
@@ -905,10 +986,10 @@ function handle_mark_actions($user_id, $mark_action)
 			{
 				delete_pm($user_id, $msg_ids, $cur_folder_id);
 
-				$success_msg = (sizeof($msg_ids) == 1) ? 'MESSAGE_DELETED' : 'MESSAGES_DELETED';
+				$success_msg = (count($msg_ids) == 1) ? 'MESSAGE_DELETED' : 'MESSAGES_DELETED';
 				$redirect = append_sid("{$phpbb_root_path}ucp.$phpEx", 'i=pm&amp;folder=' . $cur_folder_id);
 
-				meta_refresh(1, $redirect);
+				meta_refresh(3, $redirect);
 				trigger_error($user->lang[$success_msg] . '<br /><br />' . sprintf($user->lang['RETURN_FOLDER'], '<a href="' . $redirect . '">', '</a>'));
 			}
 			else
@@ -937,7 +1018,7 @@ function handle_mark_actions($user_id, $mark_action)
 */
 function delete_pm($user_id, $msg_ids, $folder_id)
 {
-	global $db, $user, $phpbb_root_path, $phpEx;
+	global $db, $user, $phpbb_container, $phpbb_dispatcher;
 
 	$user_id	= (int) $user_id;
 	$folder_id	= (int) $folder_id;
@@ -956,10 +1037,22 @@ function delete_pm($user_id, $msg_ids, $folder_id)
 		$msg_ids = array($msg_ids);
 	}
 
-	if (!sizeof($msg_ids))
+	if (!count($msg_ids))
 	{
 		return false;
 	}
+
+	/**
+	* Get all info for PM(s) before they are deleted
+	*
+	* @event core.delete_pm_before
+	* @var	int	user_id	 ID of the user requested the message delete
+	* @var	array	msg_ids	array of all messages to be deleted
+	* @var	int	folder_id	ID of the user folder where the messages are stored
+	* @since 3.1.0-b5
+	*/
+	$vars = array('user_id', 'msg_ids', 'folder_id');
+	extract($phpbb_dispatcher->trigger_event('core.delete_pm_before', compact($vars)));
 
 	// Get PM Information for later deleting
 	$sql = 'SELECT msg_id, pm_unread, pm_new
@@ -981,7 +1074,7 @@ function delete_pm($user_id, $msg_ids, $folder_id)
 	$db->sql_freeresult($result);
 	unset($msg_ids);
 
-	if (!sizeof($delete_rows))
+	if (!count($delete_rows))
 	{
 		return false;
 	}
@@ -1049,6 +1142,11 @@ function delete_pm($user_id, $msg_ids, $folder_id)
 		$user->data['user_unread_privmsg'] -= $num_unread;
 	}
 
+	/* @var $phpbb_notifications \phpbb\notification\manager */
+	$phpbb_notifications = $phpbb_container->get('notification_manager');
+
+	$phpbb_notifications->delete_notifications('notification.type.pm', array_keys($delete_rows));
+
 	// Now we have to check which messages we can delete completely
 	$sql = 'SELECT msg_id
 		FROM ' . PRIVMSGS_TO_TABLE . '
@@ -1063,15 +1161,13 @@ function delete_pm($user_id, $msg_ids, $folder_id)
 
 	$delete_ids = array_keys($delete_rows);
 
-	if (sizeof($delete_ids))
+	if (count($delete_ids))
 	{
 		// Check if there are any attachments we need to remove
-		if (!function_exists('delete_attachments'))
-		{
-			include($phpbb_root_path . 'includes/functions_admin.' . $phpEx);
-		}
-
-		delete_attachments('message', $delete_ids, false);
+		/** @var \phpbb\attachment\manager $attachment_manager */
+		$attachment_manager = $phpbb_container->get('attachment.manager');
+		$attachment_manager->delete('message', $delete_ids, false);
+		unset($attachment_manager);
 
 		$sql = 'DELETE FROM ' . PRIVMSGS_TABLE . '
 			WHERE ' . $db->sql_in_set('msg_id', $delete_ids);
@@ -1092,14 +1188,29 @@ function delete_pm($user_id, $msg_ids, $folder_id)
 */
 function phpbb_delete_user_pms($user_id)
 {
-	global $db, $user, $phpbb_root_path, $phpEx;
-
 	$user_id = (int) $user_id;
 
 	if (!$user_id)
 	{
 		return false;
 	}
+
+	return phpbb_delete_users_pms(array($user_id));
+}
+
+/**
+* Delete all PM(s) for given users and delete the ones without references
+*
+* @param	array		$user_ids	IDs of the users whose private messages we want to delete
+*
+* @return	boolean		False if there were no pms found, true otherwise.
+*/
+function phpbb_delete_users_pms($user_ids)
+{
+	global $db, $phpbb_container;
+
+	$user_id_sql = $db->sql_in_set('user_id', $user_ids);
+	$author_id_sql = $db->sql_in_set('author_id', $user_ids);
 
 	// Get PM Information for later deleting
 	// The two queries where split, so we can use our indexes
@@ -1108,7 +1219,7 @@ function phpbb_delete_user_pms($user_id)
 	// Part 1: get PMs the user received
 	$sql = 'SELECT msg_id
 		FROM ' . PRIVMSGS_TO_TABLE . '
-		WHERE user_id = ' . $user_id;
+		WHERE ' . $user_id_sql;
 	$result = $db->sql_query($sql);
 
 	while ($row = $db->sql_fetchrow($result))
@@ -1118,12 +1229,12 @@ function phpbb_delete_user_pms($user_id)
 	}
 	$db->sql_freeresult($result);
 
-	// Part 2: get PMs the user sent, but have yet to be received
-	// We cannot simply delete them. First we have to check,
+	// Part 2: get PMs the users sent, but are yet to be received.
+	// We cannot simply delete them. First we have to check
 	// whether another user already received and read the message.
 	$sql = 'SELECT msg_id
 		FROM ' . PRIVMSGS_TO_TABLE . '
-		WHERE author_id = ' . $user_id . '
+		WHERE ' . $author_id_sql . '
 			AND folder_id = ' . PRIVMSGS_NO_BOX;
 	$result = $db->sql_query($sql);
 
@@ -1141,6 +1252,9 @@ function phpbb_delete_user_pms($user_id)
 
 	$db->sql_transaction('begin');
 
+	/* @var $phpbb_notifications \phpbb\notification\manager */
+	$phpbb_notifications = $phpbb_container->get('notification_manager');
+
 	if (!empty($undelivered_msg))
 	{
 		// A pm is delivered, if for any recipient the message was moved
@@ -1149,7 +1263,7 @@ function phpbb_delete_user_pms($user_id)
 		// received them.
 		$sql = 'SELECT msg_id
 			FROM ' . PRIVMSGS_TO_TABLE . '
-			WHERE author_id = ' . $user_id . '
+			WHERE ' . $author_id_sql . '
 				AND folder_id <> ' . PRIVMSGS_NO_BOX . '
 				AND folder_id <> ' . PRIVMSGS_OUTBOX . '
 				AND folder_id <> ' . PRIVMSGS_SENTBOX;
@@ -1169,7 +1283,7 @@ function phpbb_delete_user_pms($user_id)
 		// Count the messages we delete, so we can correct the user pm data
 		$sql = 'SELECT user_id, COUNT(msg_id) as num_undelivered_privmsgs
 			FROM ' . PRIVMSGS_TO_TABLE . '
-			WHERE author_id = ' . $user_id . '
+			WHERE ' . $author_id_sql . '
 				AND folder_id = ' . PRIVMSGS_NO_BOX . '
 					AND ' . $db->sql_in_set('msg_id', array_merge($undelivered_msg, $delivered_msg)) . '
 			GROUP BY user_id';
@@ -1180,7 +1294,7 @@ function phpbb_delete_user_pms($user_id)
 			$num_pms = (int) $row['num_undelivered_privmsgs'];
 			$undelivered_user[$num_pms][] = (int) $row['user_id'];
 
-			if (sizeof($undelivered_user[$num_pms]) > 50)
+			if (count($undelivered_user[$num_pms]) > 50)
 			{
 				// If there are too many users affected the query might get
 				// too long, so we update the value for the first bunch here.
@@ -1209,6 +1323,8 @@ function phpbb_delete_user_pms($user_id)
 				WHERE folder_id = ' . PRIVMSGS_NO_BOX . '
 					AND ' . $db->sql_in_set('msg_id', $delivered_msg);
 			$db->sql_query($sql);
+
+			$phpbb_notifications->delete_notifications('notification.type.pm', $delivered_msg);
 		}
 
 		if (!empty($undelivered_msg))
@@ -1220,6 +1336,8 @@ function phpbb_delete_user_pms($user_id)
 			$sql = 'DELETE FROM ' . PRIVMSGS_TABLE . '
 				WHERE ' . $db->sql_in_set('msg_id', $undelivered_msg);
 			$db->sql_query($sql);
+
+			$phpbb_notifications->delete_notifications('notification.type.pm', $undelivered_msg);
 		}
 	}
 
@@ -1227,12 +1345,12 @@ function phpbb_delete_user_pms($user_id)
 	$sql = 'UPDATE ' . USERS_TABLE . '
 		SET user_new_privmsg = 0,
 			user_unread_privmsg = 0
-		WHERE user_id = ' . $user_id;
+		WHERE ' . $user_id_sql;
 	$db->sql_query($sql);
 
 	// Delete private message data of the user
 	$sql = 'DELETE FROM ' . PRIVMSGS_TO_TABLE . '
-		WHERE user_id = ' . (int) $user_id;
+		WHERE ' . $user_id_sql;
 	$db->sql_query($sql);
 
 	if (!empty($delete_ids))
@@ -1252,16 +1370,16 @@ function phpbb_delete_user_pms($user_id)
 		if (!empty($delete_ids))
 		{
 			// Check if there are any attachments we need to remove
-			if (!function_exists('delete_attachments'))
-			{
-				include($phpbb_root_path . 'includes/functions_admin.' . $phpEx);
-			}
-
-			delete_attachments('message', $delete_ids, false);
+			/** @var \phpbb\attachment\manager $attachment_manager */
+			$attachment_manager = $phpbb_container->get('attachment.manager');
+			$attachment_manager->delete('message', $delete_ids, false);
+			unset($attachment_manager);
 
 			$sql = 'DELETE FROM ' . PRIVMSGS_TABLE . '
 				WHERE ' . $db->sql_in_set('msg_id', $delete_ids);
 			$db->sql_query($sql);
+
+			$phpbb_notifications->delete_notifications('notification.type.pm', $delete_ids);
 		}
 	}
 
@@ -1269,12 +1387,12 @@ function phpbb_delete_user_pms($user_id)
 	// This way users are still able to read messages from users being removed
 	$sql = 'UPDATE ' . PRIVMSGS_TO_TABLE . '
 		SET author_id = ' . ANONYMOUS . '
-		WHERE author_id = ' . $user_id;
+		WHERE ' . $author_id_sql;
 	$db->sql_query($sql);
 
 	$sql = 'UPDATE ' . PRIVMSGS_TABLE . '
 		SET author_id = ' . ANONYMOUS . '
-		WHERE author_id = ' . $user_id;
+		WHERE ' . $author_id_sql;
 	$db->sql_query($sql);
 
 	$db->sql_transaction('commit');
@@ -1287,8 +1405,6 @@ function phpbb_delete_user_pms($user_id)
 */
 function rebuild_header($check_ary)
 {
-	global $db;
-
 	$address = array();
 
 	foreach ($check_ary as $check_type => $address_field)
@@ -1305,9 +1421,9 @@ function rebuild_header($check_ary)
 		$_types = array('u', 'g');
 		foreach ($_types as $type)
 		{
-			if (sizeof($$type))
+			if (count(${$type}))
 			{
-				foreach ($$type as $id)
+				foreach (${$type} as $id)
 				{
 					$address[$type][$id] = $check_type;
 				}
@@ -1323,7 +1439,10 @@ function rebuild_header($check_ary)
 */
 function write_pm_addresses($check_ary, $author_id, $plaintext = false)
 {
-	global $db, $user, $template, $phpbb_root_path, $phpEx;
+	global $db, $user, $template, $phpbb_root_path, $phpEx, $phpbb_container;
+
+	/** @var \phpbb\group\helper $group_helper */
+	$group_helper = $phpbb_container->get('group_helper');
 
 	$addresses = array();
 
@@ -1347,7 +1466,7 @@ function write_pm_addresses($check_ary, $author_id, $plaintext = false)
 		}
 
 		$address = array();
-		if (sizeof($u))
+		if (count($u))
 		{
 			$sql = 'SELECT user_id, username, user_colour
 				FROM ' . USERS_TABLE . '
@@ -1371,7 +1490,7 @@ function write_pm_addresses($check_ary, $author_id, $plaintext = false)
 			$db->sql_freeresult($result);
 		}
 
-		if (sizeof($g))
+		if (count($g))
 		{
 			if ($plaintext)
 			{
@@ -1384,7 +1503,7 @@ function write_pm_addresses($check_ary, $author_id, $plaintext = false)
 				{
 					if ($check_type == 'to' || $author_id == $user->data['user_id'] || $row['user_id'] == $user->data['user_id'])
 					{
-						$address[] = ($row['group_type'] == GROUP_SPECIAL) ? $user->lang['G_' . $row['group_name']] : $row['group_name'];
+						$address[] = $group_helper->get_name($row['group_name']);
 					}
 				}
 				$db->sql_freeresult($result);
@@ -1404,7 +1523,7 @@ function write_pm_addresses($check_ary, $author_id, $plaintext = false)
 					{
 						if ($check_type == 'to' || $author_id == $user->data['user_id'] || $row['user_id'] == $user->data['user_id'])
 						{
-							$row['group_name'] = ($row['group_type'] == GROUP_SPECIAL) ? $user->lang['G_' . $row['group_name']] : $row['group_name'];
+							$row['group_name'] = $group_helper->get_name($row['group_name']);
 							$address['group'][$row['group_id']] = array('name' => $row['group_name'], 'colour' => $row['group_colour']);
 						}
 					}
@@ -1418,7 +1537,7 @@ function write_pm_addresses($check_ary, $author_id, $plaintext = false)
 			}
 		}
 
-		if (sizeof($address) && !$plaintext)
+		if (count($address) && !$plaintext)
 		{
 			$template->assign_var('S_' . strtoupper($check_type) . '_RECIPIENT', true);
 
@@ -1465,7 +1584,7 @@ function write_pm_addresses($check_ary, $author_id, $plaintext = false)
 */
 function get_folder_status($folder_id, $folder)
 {
-	global $db, $user, $config;
+	global $user;
 
 	if (isset($folder[$folder_id]))
 	{
@@ -1481,10 +1600,10 @@ function get_folder_status($folder_id, $folder)
 		'cur'			=> $folder['num_messages'],
 		'remaining'		=> ($user->data['message_limit']) ? $user->data['message_limit'] - $folder['num_messages'] : 0,
 		'max'			=> $user->data['message_limit'],
-		'percent'		=> ($user->data['message_limit']) ? (($user->data['message_limit'] > 0) ? round(($folder['num_messages'] / $user->data['message_limit']) * 100) : 100) : 0,
+		'percent'		=> ($user->data['message_limit']) ? (($user->data['message_limit'] > 0) ? floor(($folder['num_messages'] / $user->data['message_limit']) * 100) : 100) : 0,
 	);
 
-	$return['message']	= sprintf($user->lang['FOLDER_STATUS_MSG'], $return['percent'], $return['cur'], $return['max']);
+	$return['message']	= $user->lang('FOLDER_STATUS_MSG', $user->lang('MESSAGES_COUNT', (int) $return['max']), (int) $return['cur'], $return['percent']);
 
 	return $return;
 }
@@ -1496,9 +1615,9 @@ function get_folder_status($folder_id, $folder)
 /**
 * Submit PM
 */
-function submit_pm($mode, $subject, &$data, $put_in_outbox = true)
+function submit_pm($mode, $subject, &$data_ary, $put_in_outbox = true)
 {
-	global $db, $auth, $config, $phpEx, $template, $user, $phpbb_root_path;
+	global $db, $auth, $config, $user, $phpbb_root_path, $phpbb_container, $phpbb_dispatcher, $request;
 
 	// We do not handle erasing pms here
 	if ($mode == 'delete')
@@ -1507,6 +1626,21 @@ function submit_pm($mode, $subject, &$data, $put_in_outbox = true)
 	}
 
 	$current_time = time();
+
+	$data = $data_ary;
+	/**
+	* Get all parts of the PM that are to be submited to the DB.
+	*
+	* @event core.submit_pm_before
+	* @var	string	mode	PM Post mode - post|reply|quote|quotepost|forward|edit
+	* @var	string	subject	Subject of the private message
+	* @var	array	data	The whole row data of the PM.
+	* @since 3.1.0-b3
+	*/
+	$vars = array('mode', 'subject', 'data');
+	extract($phpbb_dispatcher->trigger_event('core.submit_pm_before', compact($vars)));
+	$data_ary = $data;
+	unset($data);
 
 	// Collect some basic information about which tables and which rows to update/insert
 	$sql_data = array();
@@ -1522,9 +1656,9 @@ function submit_pm($mode, $subject, &$data, $put_in_outbox = true)
 		$_types = array('u', 'g');
 		foreach ($_types as $ug_type)
 		{
-			if (isset($data['address_list'][$ug_type]) && sizeof($data['address_list'][$ug_type]))
+			if (isset($data_ary['address_list'][$ug_type]) && count($data_ary['address_list'][$ug_type]))
 			{
-				foreach ($data['address_list'][$ug_type] as $id => $field)
+				foreach ($data_ary['address_list'][$ug_type] as $id => $field)
 				{
 					$id = (int) $id;
 
@@ -1544,7 +1678,7 @@ function submit_pm($mode, $subject, &$data, $put_in_outbox = true)
 			}
 		}
 
-		if (isset($data['address_list']['g']) && sizeof($data['address_list']['g']))
+		if (isset($data_ary['address_list']['g']) && count($data_ary['address_list']['g']))
 		{
 			// We need to check the PM status of group members (do they want to receive PM's?)
 			// Only check if not a moderator or admin, since they are allowed to override this user setting
@@ -1552,7 +1686,7 @@ function submit_pm($mode, $subject, &$data, $put_in_outbox = true)
 
 			$sql = 'SELECT u.user_type, ug.group_id, ug.user_id
 				FROM ' . USERS_TABLE . ' u, ' . USER_GROUP_TABLE . ' ug
-				WHERE ' . $db->sql_in_set('ug.group_id', array_keys($data['address_list']['g'])) . '
+				WHERE ' . $db->sql_in_set('ug.group_id', array_keys($data_ary['address_list']['g'])) . '
 					AND ug.user_pending = 0
 					AND u.user_id = ug.user_id
 					AND u.user_type IN (' . USER_NORMAL . ', ' . USER_FOUNDER . ')' .
@@ -1561,13 +1695,13 @@ function submit_pm($mode, $subject, &$data, $put_in_outbox = true)
 
 			while ($row = $db->sql_fetchrow($result))
 			{
-				$field = ($data['address_list']['g'][$row['group_id']] == 'to') ? 'to' : 'bcc';
+				$field = ($data_ary['address_list']['g'][$row['group_id']] == 'to') ? 'to' : 'bcc';
 				$recipients[$row['user_id']] = $field;
 			}
 			$db->sql_freeresult($result);
 		}
 
-		if (!sizeof($recipients))
+		if (!count($recipients))
 		{
 			trigger_error('NO_RECIPIENT');
 		}
@@ -1584,13 +1718,13 @@ function submit_pm($mode, $subject, &$data, $put_in_outbox = true)
 	{
 		case 'reply':
 		case 'quote':
-			$root_level = ($data['reply_from_root_level']) ? $data['reply_from_root_level'] : $data['reply_from_msg_id'];
+			$root_level = ($data_ary['reply_from_root_level']) ? $data_ary['reply_from_root_level'] : $data_ary['reply_from_msg_id'];
 
 			// Set message_replied switch for this user
 			$sql = 'UPDATE ' . PRIVMSGS_TO_TABLE . '
 				SET pm_replied = 1
-				WHERE user_id = ' . $data['from_user_id'] . '
-					AND msg_id = ' . $data['reply_from_msg_id'];
+				WHERE user_id = ' . $data_ary['from_user_id'] . '
+					AND msg_id = ' . $data_ary['reply_from_msg_id'];
 
 		// no break
 
@@ -1599,19 +1733,19 @@ function submit_pm($mode, $subject, &$data, $put_in_outbox = true)
 		case 'quotepost':
 			$sql_data = array(
 				'root_level'		=> $root_level,
-				'author_id'			=> $data['from_user_id'],
-				'icon_id'			=> $data['icon_id'],
-				'author_ip'			=> $data['from_user_ip'],
+				'author_id'			=> $data_ary['from_user_id'],
+				'icon_id'			=> $data_ary['icon_id'],
+				'author_ip'			=> $data_ary['from_user_ip'],
 				'message_time'		=> $current_time,
-				'enable_bbcode'		=> $data['enable_bbcode'],
-				'enable_smilies'	=> $data['enable_smilies'],
-				'enable_magic_url'	=> $data['enable_urls'],
-				'enable_sig'		=> $data['enable_sig'],
+				'enable_bbcode'		=> $data_ary['enable_bbcode'],
+				'enable_smilies'	=> $data_ary['enable_smilies'],
+				'enable_magic_url'	=> $data_ary['enable_urls'],
+				'enable_sig'		=> $data_ary['enable_sig'],
 				'message_subject'	=> $subject,
-				'message_text'		=> $data['message'],
-				'message_attachment'=> (!empty($data['attachment_data'])) ? 1 : 0,
-				'bbcode_bitfield'	=> $data['bbcode_bitfield'],
-				'bbcode_uid'		=> $data['bbcode_uid'],
+				'message_text'		=> $data_ary['message'],
+				'message_attachment'=> (!empty($data_ary['attachment_data'])) ? 1 : 0,
+				'bbcode_bitfield'	=> $data_ary['bbcode_bitfield'],
+				'bbcode_uid'		=> $data_ary['bbcode_uid'],
 				'to_address'		=> implode(':', $to),
 				'bcc_address'		=> implode(':', $bcc),
 				'message_reported'	=> 0,
@@ -1620,35 +1754,33 @@ function submit_pm($mode, $subject, &$data, $put_in_outbox = true)
 
 		case 'edit':
 			$sql_data = array(
-				'icon_id'			=> $data['icon_id'],
+				'icon_id'			=> $data_ary['icon_id'],
 				'message_edit_time'	=> $current_time,
-				'enable_bbcode'		=> $data['enable_bbcode'],
-				'enable_smilies'	=> $data['enable_smilies'],
-				'enable_magic_url'	=> $data['enable_urls'],
-				'enable_sig'		=> $data['enable_sig'],
+				'enable_bbcode'		=> $data_ary['enable_bbcode'],
+				'enable_smilies'	=> $data_ary['enable_smilies'],
+				'enable_magic_url'	=> $data_ary['enable_urls'],
+				'enable_sig'		=> $data_ary['enable_sig'],
 				'message_subject'	=> $subject,
-				'message_text'		=> $data['message'],
-				'message_attachment'=> (!empty($data['attachment_data'])) ? 1 : 0,
-				'bbcode_bitfield'	=> $data['bbcode_bitfield'],
-				'bbcode_uid'		=> $data['bbcode_uid']
+				'message_text'		=> $data_ary['message'],
+				'message_attachment'=> (!empty($data_ary['attachment_data'])) ? 1 : 0,
+				'bbcode_bitfield'	=> $data_ary['bbcode_bitfield'],
+				'bbcode_uid'		=> $data_ary['bbcode_uid']
 			);
 		break;
 	}
 
-	if (sizeof($sql_data))
+	if (count($sql_data))
 	{
-		$query = '';
-
 		if ($mode == 'post' || $mode == 'reply' || $mode == 'quote' || $mode == 'quotepost' || $mode == 'forward')
 		{
 			$db->sql_query('INSERT INTO ' . PRIVMSGS_TABLE . ' ' . $db->sql_build_array('INSERT', $sql_data));
-			$data['msg_id'] = $db->sql_nextid();
+			$data_ary['msg_id'] = $db->sql_nextid();
 		}
 		else if ($mode == 'edit')
 		{
 			$sql = 'UPDATE ' . PRIVMSGS_TABLE . '
 				SET message_edit_count = message_edit_count + 1, ' . $db->sql_build_array('UPDATE', $sql_data) . '
-				WHERE msg_id = ' . $data['msg_id'];
+				WHERE msg_id = ' . $data_ary['msg_id'];
 			$db->sql_query($sql);
 		}
 	}
@@ -1665,9 +1797,9 @@ function submit_pm($mode, $subject, &$data, $put_in_outbox = true)
 		foreach ($recipients as $user_id => $type)
 		{
 			$sql_ary[] = array(
-				'msg_id'		=> (int) $data['msg_id'],
+				'msg_id'		=> (int) $data_ary['msg_id'],
 				'user_id'		=> (int) $user_id,
-				'author_id'		=> (int) $data['from_user_id'],
+				'author_id'		=> (int) $data_ary['from_user_id'],
 				'folder_id'		=> PRIVMSGS_NO_BOX,
 				'pm_new'		=> 1,
 				'pm_unread'		=> 1,
@@ -1686,9 +1818,9 @@ function submit_pm($mode, $subject, &$data, $put_in_outbox = true)
 		if ($put_in_outbox)
 		{
 			$db->sql_query('INSERT INTO ' . PRIVMSGS_TO_TABLE . ' ' . $db->sql_build_array('INSERT', array(
-				'msg_id'		=> (int) $data['msg_id'],
-				'user_id'		=> (int) $data['from_user_id'],
-				'author_id'		=> (int) $data['from_user_id'],
+				'msg_id'		=> (int) $data_ary['msg_id'],
+				'user_id'		=> (int) $data_ary['from_user_id'],
+				'author_id'		=> (int) $data_ary['from_user_id'],
 				'folder_id'		=> PRIVMSGS_OUTBOX,
 				'pm_new'		=> 0,
 				'pm_unread'		=> 0,
@@ -1702,22 +1834,22 @@ function submit_pm($mode, $subject, &$data, $put_in_outbox = true)
 	{
 		$sql = 'UPDATE ' . USERS_TABLE . "
 			SET user_lastpost_time = $current_time
-			WHERE user_id = " . $data['from_user_id'];
+			WHERE user_id = " . $data_ary['from_user_id'];
 		$db->sql_query($sql);
 	}
 
 	// Submit Attachments
-	if (!empty($data['attachment_data']) && $data['msg_id'] && in_array($mode, array('post', 'reply', 'quote', 'quotepost', 'edit', 'forward')))
+	if (!empty($data_ary['attachment_data']) && $data_ary['msg_id'] && in_array($mode, array('post', 'reply', 'quote', 'quotepost', 'edit', 'forward')))
 	{
 		$space_taken = $files_added = 0;
 		$orphan_rows = array();
 
-		foreach ($data['attachment_data'] as $pos => $attach_row)
+		foreach ($data_ary['attachment_data'] as $pos => $attach_row)
 		{
 			$orphan_rows[(int) $attach_row['attach_id']] = array();
 		}
 
-		if (sizeof($orphan_rows))
+		if (count($orphan_rows))
 		{
 			$sql = 'SELECT attach_id, filesize, physical_filename
 				FROM ' . ATTACHMENTS_TABLE . '
@@ -1735,7 +1867,7 @@ function submit_pm($mode, $subject, &$data, $put_in_outbox = true)
 			$db->sql_freeresult($result);
 		}
 
-		foreach ($data['attachment_data'] as $pos => $attach_row)
+		foreach ($data_ary['attachment_data'] as $pos => $attach_row)
 		{
 			if ($attach_row['is_orphan'] && !isset($orphan_rows[$attach_row['attach_id']]))
 			{
@@ -1763,10 +1895,10 @@ function submit_pm($mode, $subject, &$data, $put_in_outbox = true)
 				$files_added++;
 
 				$attach_sql = array(
-					'post_msg_id'		=> $data['msg_id'],
+					'post_msg_id'		=> $data_ary['msg_id'],
 					'topic_id'			=> 0,
 					'is_orphan'			=> 0,
-					'poster_id'			=> $data['from_user_id'],
+					'poster_id'			=> $data_ary['from_user_id'],
 					'attach_comment'	=> $attach_row['attach_comment'],
 				);
 
@@ -1780,113 +1912,58 @@ function submit_pm($mode, $subject, &$data, $put_in_outbox = true)
 
 		if ($space_taken && $files_added)
 		{
-			set_config_count('upload_dir_size', $space_taken, true);
-			set_config_count('num_files', $files_added, true);
+			$config->increment('upload_dir_size', $space_taken, false);
+			$config->increment('num_files', $files_added, false);
 		}
 	}
 
 	// Delete draft if post was loaded...
-	$draft_id = request_var('draft_loaded', 0);
+	$draft_id = $request->variable('draft_loaded', 0);
 	if ($draft_id)
 	{
 		$sql = 'DELETE FROM ' . DRAFTS_TABLE . "
 			WHERE draft_id = $draft_id
-				AND user_id = " . $data['from_user_id'];
+				AND user_id = " . $data_ary['from_user_id'];
 		$db->sql_query($sql);
 	}
 
 	$db->sql_transaction('commit');
 
 	// Send Notifications
-	if ($mode != 'edit')
+	$pm_data = array_merge($data_ary, array(
+		'message_subject'		=> $subject,
+		'recipients'			=> $recipients,
+	));
+
+	/* @var $phpbb_notifications \phpbb\notification\manager */
+	$phpbb_notifications = $phpbb_container->get('notification_manager');
+
+	if ($mode == 'edit')
 	{
-		pm_notification($mode, $data['from_username'], $recipients, $subject, $data['message'], $data['msg_id']);
+		$phpbb_notifications->update_notifications('notification.type.pm', $pm_data);
+	}
+	else
+	{
+		$phpbb_notifications->add_notifications('notification.type.pm', $pm_data);
 	}
 
-	return $data['msg_id'];
-}
+	$data = $data_ary;
+	/**
+	* Get PM message ID after submission to DB
+	*
+	* @event core.submit_pm_after
+	* @var	string	mode	PM Post mode - post|reply|quote|quotepost|forward|edit
+	* @var	string	subject	Subject of the private message
+	* @var	array	data	The whole row data of the PM.
+	* @var	array	pm_data	The data sent to notification class
+	* @since 3.1.0-b5
+	*/
+	$vars = array('mode', 'subject', 'data', 'pm_data');
+	extract($phpbb_dispatcher->trigger_event('core.submit_pm_after', compact($vars)));
+	$data_ary = $data;
+	unset($data);
 
-/**
-* PM Notification
-*/
-function pm_notification($mode, $author, $recipients, $subject, $message, $msg_id)
-{
-	global $db, $user, $config, $phpbb_root_path, $phpEx, $auth;
-
-	$subject = censor_text($subject);
-
-	// Exclude guests, current user and banned users from notifications
-	unset($recipients[ANONYMOUS], $recipients[$user->data['user_id']]);
-
-	if (!sizeof($recipients))
-	{
-		return;
-	}
-
-	if (!function_exists('phpbb_get_banned_user_ids'))
-	{
-		include($phpbb_root_path . 'includes/functions_user.' . $phpEx);
-	}
-	$banned_users = phpbb_get_banned_user_ids(array_keys($recipients));
-	$recipients = array_diff(array_keys($recipients), $banned_users);
-
-	if (!sizeof($recipients))
-	{
-		return;
-	}
-
-	$sql = 'SELECT user_id, username, user_email, user_lang, user_notify_pm, user_notify_type, user_jabber
-		FROM ' . USERS_TABLE . '
-		WHERE ' . $db->sql_in_set('user_id', $recipients);
-	$result = $db->sql_query($sql);
-
-	$msg_list_ary = array();
-	while ($row = $db->sql_fetchrow($result))
-	{
-		if ($row['user_notify_pm'] == 1 && trim($row['user_email']))
-		{
-			$msg_list_ary[] = array(
-				'method'	=> $row['user_notify_type'],
-				'email'		=> $row['user_email'],
-				'jabber'	=> $row['user_jabber'],
-				'name'		=> $row['username'],
-				'lang'		=> $row['user_lang']
-			);
-		}
-	}
-	$db->sql_freeresult($result);
-
-	if (!sizeof($msg_list_ary))
-	{
-		return;
-	}
-
-	include_once($phpbb_root_path . 'includes/functions_messenger.' . $phpEx);
-	$messenger = new messenger();
-
-	foreach ($msg_list_ary as $pos => $addr)
-	{
-		$messenger->template('privmsg_notify', $addr['lang']);
-
-		$messenger->to($addr['email'], $addr['name']);
-		$messenger->im($addr['jabber'], $addr['name']);
-
-		$messenger->assign_vars(array(
-			'SUBJECT'		=> htmlspecialchars_decode($subject),
-			'AUTHOR_NAME'	=> htmlspecialchars_decode($author),
-			'USERNAME'		=> htmlspecialchars_decode($addr['name']),
-
-			'U_INBOX'			=> generate_board_url() . "/ucp.$phpEx?i=pm&folder=inbox",
-			'U_VIEW_MESSAGE'	=> generate_board_url() . "/ucp.$phpEx?i=pm&mode=view&p=$msg_id",
-		));
-
-		$messenger->send($addr['method']);
-	}
-	unset($msg_list_ary);
-
-	$messenger->save_queue();
-
-	unset($messenger);
+	return $data_ary['msg_id'];
 }
 
 /**
@@ -1894,7 +1971,7 @@ function pm_notification($mode, $author, $recipients, $subject, $message, $msg_i
 */
 function message_history($msg_id, $user_id, $message_row, $folder, $in_post_mode = false)
 {
-	global $db, $user, $config, $template, $phpbb_root_path, $phpEx, $auth, $bbcode;
+	global $db, $user, $template, $phpbb_root_path, $phpEx, $auth, $phpbb_dispatcher;
 
 	// Select all receipts and the author from the pm we currently view, to only display their pm-history
 	$sql = 'SELECT author_id, user_id
@@ -1913,9 +1990,7 @@ function message_history($msg_id, $user_id, $message_row, $folder, $in_post_mode
 	$recipients = array_unique($recipients);
 
 	// Get History Messages (could be newer)
-	$sql = 'SELECT t.*, p.*, u.*
-		FROM ' . PRIVMSGS_TABLE . ' p, ' . PRIVMSGS_TO_TABLE . ' t, ' . USERS_TABLE . ' u
-		WHERE t.msg_id = p.msg_id
+	$sql_where = 't.msg_id = p.msg_id
 			AND p.author_id = u.user_id
 			AND t.folder_id NOT IN (' . PRIVMSGS_NO_BOX . ', ' . PRIVMSGS_HOLD_BOX . ')
 			AND ' . $db->sql_in_set('t.author_id', $recipients, false, true) . "
@@ -1926,13 +2001,37 @@ function message_history($msg_id, $user_id, $message_row, $folder, $in_post_mode
 
 	if (!$message_row['root_level'])
 	{
-		$sql .= " AND (p.root_level = $msg_id OR (p.root_level = 0 AND p.msg_id = $msg_id))";
+		$sql_where .= " AND (p.root_level = $msg_id OR (p.root_level = 0 AND p.msg_id = $msg_id))";
 	}
 	else
 	{
-		$sql .= " AND (p.root_level = " . $message_row['root_level'] . ' OR p.msg_id = ' . $message_row['root_level'] . ')';
+		$sql_where .= " AND (p.root_level = " . $message_row['root_level'] . ' OR p.msg_id = ' . $message_row['root_level'] . ')';
 	}
-	$sql .= ' ORDER BY p.message_time DESC';
+
+	$sql_ary = array(
+		'SELECT'	=> 't.*, p.*, u.*',
+		'FROM'		=> array(
+			PRIVMSGS_TABLE		=> 'p',
+			PRIVMSGS_TO_TABLE	=> 't',
+			USERS_TABLE			=> 'u'
+		),
+		'LEFT_JOIN'	=> array(),
+		'WHERE'		=> $sql_where,
+		'ORDER_BY'	=> 'p.message_time DESC',
+	);
+
+	/**
+	* Event to modify the SQL query before the message history in private message is queried
+	*
+	* @event core.message_history_modify_sql_ary
+	* @var	array	sql_ary		The SQL array to get the data of the message history in private message
+	* @since 3.2.8-RC1
+	*/
+	$vars = array('sql_ary');
+	extract($phpbb_dispatcher->trigger_event('core.message_history_modify_sql_ary', compact($vars)));
+
+	$sql = $db->sql_build_query('SELECT', $sql_ary);
+	unset($sql_ary);
 
 	$result = $db->sql_query($sql);
 	$row = $db->sql_fetchrow($result);
@@ -1946,7 +2045,6 @@ function message_history($msg_id, $user_id, $message_row, $folder, $in_post_mode
 	$title = $row['message_subject'];
 
 	$rowset = array();
-	$bbcode_bitfield = '';
 	$folder_url = append_sid("{$phpbb_root_path}ucp.$phpEx", 'i=pm') . '&amp;folder=';
 
 	do
@@ -1962,25 +2060,14 @@ function message_history($msg_id, $user_id, $message_row, $folder, $in_post_mode
 		else
 		{
 			$rowset[$row['msg_id']] = $row;
-			$bbcode_bitfield = $bbcode_bitfield | base64_decode($row['bbcode_bitfield']);
 		}
 	}
 	while ($row = $db->sql_fetchrow($result));
 	$db->sql_freeresult($result);
 
-	if (sizeof($rowset) == 1 && !$in_post_mode)
+	if (count($rowset) == 1 && !$in_post_mode)
 	{
 		return false;
-	}
-
-	// Instantiate BBCode class
-	if ((empty($bbcode) || $bbcode === false) && $bbcode_bitfield !== '')
-	{
-		if (!class_exists('bbcode'))
-		{
-			include($phpbb_root_path . 'includes/bbcode.' . $phpEx);
-		}
-		$bbcode = new bbcode(base64_encode($bbcode_bitfield));
 	}
 
 	$title = censor_text($title);
@@ -1991,7 +2078,7 @@ function message_history($msg_id, $user_id, $message_row, $folder, $in_post_mode
 	// Re-order rowset to be able to get the next/prev message rows...
 	$rowset = array_values($rowset);
 
-	for ($i = 0, $size = sizeof($rowset); $i < $size; $i++)
+	for ($i = 0, $size = count($rowset); $i < $size; $i++)
 	{
 		$row = &$rowset[$i];
 		$id = (int) $row['msg_id'];
@@ -2014,13 +2101,10 @@ function message_history($msg_id, $user_id, $message_row, $folder, $in_post_mode
 			$decoded_message = bbcode_nl2br($decoded_message);
 		}
 
-		if ($row['bbcode_bitfield'])
-		{
-			$bbcode->bbcode_second_pass($message, $row['bbcode_uid'], $row['bbcode_bitfield']);
-		}
+		$parse_flags = ($row['bbcode_bitfield'] ? OPTION_FLAG_BBCODE : 0);
+		$parse_flags |= ($row['enable_smilies'] ? OPTION_FLAG_SMILIES : 0);
 
-		$message = bbcode_nl2br($message);
-		$message = smiley_text($message, !$row['enable_smilies']);
+		$message = generate_text_for_display($message, $row['bbcode_uid'], $row['bbcode_bitfield'], $parse_flags, false);
 
 		$subject = censor_text($subject);
 
@@ -2030,7 +2114,7 @@ function message_history($msg_id, $user_id, $message_row, $folder, $in_post_mode
 			$previous_history_pm = $prev_id;
 		}
 
-		$template->assign_block_vars('history_row', array(
+		$template_vars = array(
 			'MESSAGE_AUTHOR_QUOTE'		=> (($decoded_message) ? addslashes(get_username_string('username', $author_id, $row['username'], $row['user_colour'], $row['username'])) : ''),
 			'MESSAGE_AUTHOR_FULL'		=> get_username_string('full', $author_id, $row['username'], $row['user_colour'], $row['username']),
 			'MESSAGE_AUTHOR_COLOUR'		=> get_username_string('colour', $author_id, $row['username'], $row['user_colour'], $row['username']),
@@ -2040,7 +2124,7 @@ function message_history($msg_id, $user_id, $message_row, $folder, $in_post_mode
 			'SUBJECT'			=> $subject,
 			'SENT_DATE'			=> $user->format_date($row['message_time']),
 			'MESSAGE'			=> $message,
-			'FOLDER'			=> implode(', ', $row['folder']),
+			'FOLDER'			=> implode($user->lang['COMMA_SEPARATOR'], $row['folder']),
 			'DECODED_MESSAGE'	=> $decoded_message,
 
 			'S_CURRENT_MSG'		=> ($row['msg_id'] == $msg_id),
@@ -2048,18 +2132,35 @@ function message_history($msg_id, $user_id, $message_row, $folder, $in_post_mode
 			'S_IN_POST_MODE'	=> $in_post_mode,
 
 			'MSG_ID'			=> $row['msg_id'],
+			'MESSAGE_TIME'		=> $row['message_time'],
+			'USER_ID'			=> $row['user_id'],
 			'U_VIEW_MESSAGE'	=> "$url&amp;f=$folder_id&amp;p=" . $row['msg_id'],
 			'U_QUOTE'			=> (!$in_post_mode && $auth->acl_get('u_sendpm') && $author_id != ANONYMOUS) ? "$url&amp;mode=compose&amp;action=quote&amp;f=" . $folder_id . "&amp;p=" . $row['msg_id'] : '',
-			'U_POST_REPLY_PM'	=> ($author_id != $user->data['user_id'] && $author_id != ANONYMOUS && $auth->acl_get('u_sendpm')) ? "$url&amp;mode=compose&amp;action=reply&amp;f=$folder_id&amp;p=" . $row['msg_id'] : '')
+			'U_POST_REPLY_PM'	=> ($author_id != $user->data['user_id'] && $author_id != ANONYMOUS && $auth->acl_get('u_sendpm')) ? "$url&amp;mode=compose&amp;action=reply&amp;f=$folder_id&amp;p=" . $row['msg_id'] : ''
 		);
+
+		/**
+		* Modify the template vars for displaying the message history in private message
+		*
+		* @event core.message_history_modify_template_vars
+		* @var array	template_vars		Array containing the query
+		* @var array	row					Array containing the action user row
+		* @since 3.2.8-RC1
+		*/
+		$vars = array(
+			'template_vars',
+			'row',
+		);
+		extract($phpbb_dispatcher->trigger_event('core.message_history_modify_template_vars', compact($vars)));
+
+		$template->assign_block_vars('history_row', $template_vars);
+
 		unset($rowset[$i]);
 		$prev_id = $id;
 	}
 
 	$template->assign_vars(array(
 		'QUOTE_IMG'			=> $user->img('icon_post_quote', $user->lang['REPLY_WITH_QUOTE']),
-		'QQUOTE_IMG'		=> $user->img('icon_post_qquote', $user->lang['REPLY_WITH_QQUOTE']),
-		'QQ_IMG'			=> $user->img('icon_post_qq', $user->lang['REPLY_WITH_QQUOTE']),
 		'HISTORY_TITLE'		=> $title,
 
 		'U_VIEW_NEXT_HISTORY'		=> ($next_history_pm) ? "$url&amp;p=" . $next_history_pm : '',
@@ -2077,17 +2178,41 @@ function set_user_message_limit()
 {
 	global $user, $db, $config;
 
-	// Get maximum about from user memberships - if it is 0, there is no limit set and we use the maximum value within the config.
-	$sql = 'SELECT MAX(g.group_message_limit) as max_message_limit
+	// Get maximum about from user memberships
+	$message_limit = phpbb_get_max_setting_from_group($db, $user->data['user_id'], 'message_limit');
+
+	// If it is 0, there is no limit set and we use the maximum value within the config.
+	$user->data['message_limit'] = (!$message_limit) ? $config['pm_max_msgs'] : $message_limit;
+}
+
+/**
+ * Get the maximum PM setting for the groups of the user
+ *
+ * @param \phpbb\db\driver\driver_interface $db
+ * @param int $user_id
+ * @param string $setting Only 'max_recipients' and 'message_limit' are supported
+ * @return int The maximum setting for all groups of the user, unless one group has '0'
+ * @throws \InvalidArgumentException If selected group setting is not supported
+ */
+function phpbb_get_max_setting_from_group(\phpbb\db\driver\driver_interface $db, $user_id, $setting)
+{
+	if ($setting !== 'max_recipients' && $setting !== 'message_limit')
+	{
+		throw new InvalidArgumentException('Setting "' . $setting . '" is not supported');
+	}
+
+	// Get maximum number of allowed recipients
+	$sql = 'SELECT MAX(g.group_' . $setting . ') as max_setting
 		FROM ' . GROUPS_TABLE . ' g, ' . USER_GROUP_TABLE . ' ug
-		WHERE ug.user_id = ' . $user->data['user_id'] . '
+		WHERE ug.user_id = ' . (int) $user_id . '
 			AND ug.user_pending = 0
 			AND ug.group_id = g.group_id';
 	$result = $db->sql_query($sql);
-	$message_limit = (int) $db->sql_fetchfield('max_message_limit');
+	$row = $db->sql_fetchrow($result);
 	$db->sql_freeresult($result);
+	$max_setting = (int) $row['max_setting'];
 
-	$user->data['message_limit'] = (!$message_limit) ? $config['pm_max_msgs'] : $message_limit;
+	return $max_setting;
 }
 
 /**
@@ -2101,7 +2226,10 @@ function set_user_message_limit()
 */
 function get_recipient_strings($pm_by_id)
 {
-	global $db, $phpbb_root_path, $phpEx, $user;
+	global $db, $phpbb_root_path, $phpEx, $user, $phpbb_container;
+
+	/** @var \phpbb\group\helper $group_helper */
+	$group_helper = $phpbb_container->get('group_helper');
 
 	$address_list = $recipient_list = $address = array();
 
@@ -2113,7 +2241,7 @@ function get_recipient_strings($pm_by_id)
 
 		foreach ($_types as $ug_type)
 		{
-			if (isset($address[$message_id][$ug_type]) && sizeof($address[$message_id][$ug_type]))
+			if (isset($address[$message_id][$ug_type]) && count($address[$message_id][$ug_type]))
 			{
 				foreach ($address[$message_id][$ug_type] as $ug_id => $in_to)
 				{
@@ -2147,7 +2275,7 @@ function get_recipient_strings($pm_by_id)
 			{
 				if ($ug_type == 'g')
 				{
-					$row['name'] = ($row['group_type'] == GROUP_SPECIAL) ? $user->lang['G_' . $row['name']] : $row['name'];
+					$row['name'] = $group_helper->get_name($row['name']);
 				}
 
 				$recipient_list[$ug_type][$row['id']] = array('name' => $row['name'], 'colour' => $row['colour']);
@@ -2178,5 +2306,3 @@ function get_recipient_strings($pm_by_id)
 
 	return $address_list;
 }
-
-?>

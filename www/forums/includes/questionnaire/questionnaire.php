@@ -1,10 +1,13 @@
 <?php
 /**
 *
-* @package phpBB3
-* @version $Id$
-* @copyright (c) 2005 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* This file is part of the phpBB Forum Software package.
+*
+* @copyright (c) phpBB Limited <https://www.phpbb.com>
+* @license GNU General Public License, version 2 (GPL-2.0)
+*
+* For full copyright and license information, please see
+* the docs/CREDITS.txt file.
 *
 */
 
@@ -37,15 +40,15 @@ class phpbb_questionnaire_data_collector
 	*
 	* @param	string
 	*/
-	function phpbb_questionnaire_data_collector($install_id)
+	function __construct($install_id)
 	{
 		$this->install_id = $install_id;
 		$this->providers = array();
 	}
 
-	function add_data_provider(&$provider)
+	function add_data_provider($provider)
 	{
-		$this->providers[] = &$provider;
+		$this->providers[] = $provider;
 	}
 
 	/**
@@ -65,7 +68,7 @@ class phpbb_questionnaire_data_collector
 
 	function get_data_for_form()
 	{
-		return base64_encode(serialize($this->get_data_raw()));
+		return base64_encode(json_encode($this->get_data_raw()));
 	}
 
 	/**
@@ -77,7 +80,7 @@ class phpbb_questionnaire_data_collector
 	{
 		foreach (array_keys($this->providers) as $key)
 		{
-			$provider = &$this->providers[$key];
+			$provider = $this->providers[$key];
 			$this->data[$provider->get_identifier()] = $provider->get_data();
 		}
 		$this->data['install_id'] = $this->install_id;
@@ -88,7 +91,6 @@ class phpbb_questionnaire_data_collector
 
 /**
 * Questionnaire PHP data provider
-* @package phpBB3
 */
 class phpbb_questionnaire_php_data_provider
 {
@@ -108,7 +110,6 @@ class phpbb_questionnaire_php_data_provider
 			'version'						=> PHP_VERSION,
 			'sapi'							=> PHP_SAPI,
 			'int_size'						=> defined('PHP_INT_SIZE') ? PHP_INT_SIZE : '',
-			'safe_mode'						=> (int) @ini_get('safe_mode'),
 			'open_basedir'					=> (int) @ini_get('open_basedir'),
 			'memory_limit'					=> @ini_get('memory_limit'),
 			'allow_url_fopen'				=> (int) @ini_get('allow_url_fopen'),
@@ -119,20 +120,17 @@ class phpbb_questionnaire_php_data_provider
 			'disable_functions'				=> @ini_get('disable_functions'),
 			'disable_classes'				=> @ini_get('disable_classes'),
 			'enable_dl'						=> (int) @ini_get('enable_dl'),
-			'magic_quotes_gpc'				=> (int) @ini_get('magic_quotes_gpc'),
-			'register_globals'				=> (int) @ini_get('register_globals'),
 			'filter.default'				=> @ini_get('filter.default'),
 			'zend.ze1_compatibility_mode'	=> (int) @ini_get('zend.ze1_compatibility_mode'),
 			'unicode.semantics'				=> (int) @ini_get('unicode.semantics'),
 			'zend_thread_safty'				=> (int) function_exists('zend_thread_id'),
-			'extensions'					=> get_loaded_extensions(),
+			'extensions'					=> implode(',', get_loaded_extensions()),
 		);
 	}
 }
 
 /**
 * Questionnaire System data provider
-* @package phpBB3
 */
 class phpbb_questionnaire_system_data_provider
 {
@@ -148,23 +146,15 @@ class phpbb_questionnaire_system_data_provider
 	*/
 	function get_data()
 	{
+		global $request;
+
 		// Start discovering the IPV4 server address, if available
-		$server_address = '0.0.0.0';
-
-		if (!empty($_SERVER['SERVER_ADDR']))
-		{
-			$server_address = $_SERVER['SERVER_ADDR'];
-		}
-
-		// Running on IIS?
-		if (!empty($_SERVER['LOCAL_ADDR']))
-		{
-			$server_address = $_SERVER['LOCAL_ADDR'];
-		}
+		// Try apache, IIS, fall back to 0.0.0.0
+		$server_address = htmlspecialchars_decode($request->server('SERVER_ADDR', $request->server('LOCAL_ADDR', '0.0.0.0')));
 
 		return array(
 			'os'	=> PHP_OS,
-			'httpd'	=> $_SERVER['SERVER_SOFTWARE'],
+			'httpd'	=> htmlspecialchars_decode($request->server('SERVER_SOFTWARE')),
 			// we don't want the real IP address (for privacy policy reasons) but only
 			// a network address to see whether your installation is running on a private or public network.
 			'private_ip'	=> $this->is_private_ip($server_address),
@@ -197,7 +187,6 @@ class phpbb_questionnaire_system_data_provider
 			// - 192.168.0.0/16
 			if ($ip_address_ary[0] == '10' ||
 				($ip_address_ary[0] == '172' && intval($ip_address_ary[1]) > 15 && intval($ip_address_ary[1]) < 32) ||
-				($ip_address_ary[0] == '192' && $ip_address_ary[1] == '168') ||
 				($ip_address_ary[0] == '192' && $ip_address_ary[1] == '168'))
 			{
 				return true;
@@ -220,7 +209,6 @@ class phpbb_questionnaire_system_data_provider
 
 /**
 * Questionnaire phpBB data provider
-* @package phpBB3
 */
 class phpbb_questionnaire_phpbb_data_provider
 {
@@ -232,13 +220,13 @@ class phpbb_questionnaire_phpbb_data_provider
 	*
 	* @param	array	$config
 	*/
-	function phpbb_questionnaire_phpbb_data_provider($config)
+	function __construct($config)
 	{
 		// generate a unique id if necessary
 		if (empty($config['questionnaire_unique_id']))
 		{
 			$this->unique_id = unique_id();
-			set_config('questionnaire_unique_id', $this->unique_id);
+			$config->set('questionnaire_unique_id', $this->unique_id);
 		}
 		else
 		{
@@ -265,9 +253,12 @@ class phpbb_questionnaire_phpbb_data_provider
 	*/
 	function get_data()
 	{
-		global $phpbb_root_path, $phpEx;
-		include("{$phpbb_root_path}config.$phpEx");
+		global $phpbb_config_php_file;
+
+		extract($phpbb_config_php_file->get_all());
 		unset($dbhost, $dbport, $dbname, $dbuser, $dbpasswd); // Just a precaution
+
+		$dbms = $phpbb_config_php_file->convert_30_dbms_to_31($dbms);
 
 		// Only send certain config vars
 		$config_vars = array(
@@ -313,7 +304,6 @@ class phpbb_questionnaire_phpbb_data_provider
 			'avatar_max_width' => true,
 			'avatar_min_height' => true,
 			'avatar_min_width' => true,
-			'board_dst' => true,
 			'board_email_form' => true,
 			'board_hide_emails' => true,
 			'board_timezone' => true,
@@ -344,7 +334,7 @@ class phpbb_questionnaire_phpbb_data_provider
 			'edit_time' => true,
 			'email_check_mx' => true,
 			'email_enable' => true,
-			'email_function_name' => true,
+			'email_force_sender' => true,
 			'email_package_size' => true,
 			'enable_confirm' => true,
 			'enable_pm_icons' => true,
@@ -376,7 +366,6 @@ class phpbb_questionnaire_phpbb_data_provider
 			'hot_threshold' => true,
 			'img_create_thumbnail' => true,
 			'img_display_inlined' => true,
-			'img_imagick' => true,
 			'img_link_height' => true,
 			'img_link_width' => true,
 			'img_max_height' => true,
@@ -413,7 +402,6 @@ class phpbb_questionnaire_phpbb_data_provider
 			'max_login_attempts' => true,
 			'max_name_chars' => true,
 			'max_num_search_keywords' => true,
-			'max_pass_chars' => true,
 			'max_poll_options' => true,
 			'max_post_chars' => true,
 			'max_post_font_size' => true,
@@ -482,17 +470,16 @@ class phpbb_questionnaire_phpbb_data_provider
 			}
 		}
 
-		global $db;
+		global $db, $request;
 
 		$result['dbms'] = $dbms;
 		$result['acm_type'] = $acm_type;
-		$result['load_extensions'] = $load_extensions;
 		$result['user_agent'] = 'Unknown';
 		$result['dbms_version'] = $db->sql_server_info(true);
 
 		// Try to get user agent vendor and version
 		$match = array();
-		$user_agent = (!empty($_SERVER['HTTP_USER_AGENT'])) ? (string) $_SERVER['HTTP_USER_AGENT'] : '';
+		$user_agent = $request->header('User-Agent');
 		$agents = array('firefox', 'msie', 'opera', 'chrome', 'safari', 'mozilla', 'seamonkey', 'konqueror', 'netscape', 'gecko', 'navigator', 'mosaic', 'lynx', 'amaya', 'omniweb', 'avant', 'camino', 'flock', 'aol');
 
 		// We check here 1 by 1 because some strings occur after others (for example Mozilla [...] Firefox/)
@@ -508,5 +495,3 @@ class phpbb_questionnaire_phpbb_data_provider
 		return $result;
 	}
 }
-
-?>

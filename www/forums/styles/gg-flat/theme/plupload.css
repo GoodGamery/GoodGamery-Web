@@ -1,0 +1,106 @@
+.attach-panel-multi {
+	display: none;
+	margin-bottom: 1em;
+}
+
+.attach-row-tpl {
+	display: none;
+}
+
+.file-list td {
+	vertical-align: middle;
+}
+
+.attach-name {
+	width: 50%;
+}
+
+.attach-comment {
+	width: 30%;
+}
+
+.attach-comment .inputbox {
+	resize: vertical;
+	width: 100%;
+}
+
+.attach-filesize {
+	width: 15%;
+}
+
+.attach-status {
+	width: 5%;
+}
+
+.attach-filesize, .attach-status {
+	text-align: center;
+}
+
+.attach-controls {
+	display: inline-block;
+	float: right;
+}
+
+.nojs .file-inline-bbcode {
+	display: none;
+}
+
+.file-total-progress {
+	height: 2px;
+	display: block;
+	position: relative;
+	margin: 4px -10px -6px -10px;
+}
+
+.file-progress {
+	background-color: #CCCCCC;
+	display:inline-block;
+	height: 8px;
+	width: 50px;
+}
+
+.file-progress-bar, .file-total-progress-bar {
+	background-color: green;
+	display: block;
+	height: 100%;
+	width: 0;
+}
+
+.file-status.file-working {
+	animation: fa-spin 1s infinite steps(8);
+}
+
+.file-status.file-working:before {
+	background-image: none;
+	content: "\f110";
+}
+
+.file-status.file-uploaded:before {
+	background-image: none;
+	content: "\f14a";
+}
+
+.file-status.file-error:before {
+	background-image: none;
+	content: "\f071";
+}
+
+.file-status.file-error,
+.file-status.file-uploaded,
+.file-status.file-working {
+	display: inline-block;
+	font-weight: normal;
+	font-style: normal;
+	font-variant: normal;
+	font-family: FontAwesome;
+	font-size: 14px;
+	height: 14px;
+	width: 14px;
+	line-height: 1;
+	text-rendering: auto;
+}
+
+.file-name {
+	max-width: 65%;
+	vertical-align: bottom;
+}

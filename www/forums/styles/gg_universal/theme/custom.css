@@ -1,0 +1,123 @@
+/*
+ *  custom.css
+ *
+ * This file contains css values and hints for style elements that are frequently customised.
+ * Note that this CSS file is loaded last so values defined here will override all others
+ * including responsive.css
+ */
+
+ .profile-joined {
+    display: none;
+ }
+
+/* Changing the header image
+ * With this version of we_universal it is not possible to change the header image using CSS
+ * It is recommended that the header image is changed by renaming your file to dashboard.jpg in 
+ * the styles/we_universal/theme/images/ directory.
+ * Alternatively the link may be changed in styles/we_universal/template/overall_header.html
+ * around line 211.
+
+
+/* link decoration
+ * Uncomment the following lines to have all links underlined 
+ * and visited links re-coloured
+ */
+/*
+a:link,a:visited {
+    text-decoration: underline;
+    color: #3f3f3f; }
+
+a:focus,
+a:hover, a:active {
+    text-decoration: underline; }
+*/
+
+/*
+ * set header background colour (appears as a border around the image)
+ */
+/*
+.inventea-header {
+	background: #424242;   
+}
+*/
+/*
+.inventea-sitename, .inventea-sitename h1{
+	color: #005599;   
+}
+*/
+
+/* Set the maximum forum width on wide screens
+ * To set a maximum width that the forum will not grow beyond, uncomment the following lines
+ * and set a value (1200px is a typical value)
+ *//*
+.inventea-wrapper,
+.inventea-header,
+.inventea-footer {
+	max-width: 1200px;
+}*/
+
+
+/* 
+ * Hide some non-essential menu items if desired 
+ */
+/*
+#menu_faq, #button_faq{
+    display: none;
+}
+*/
+
+/*
+#menu_team, #button_team{
+    display: none;
+}
+*/
+
+/*
+#menu_memberlist, #button_memberlist{
+    display: none;
+}*/
+
+
+/*#topic_watch_button,*/ #forum_watch_button, #topic_bookmark_button, #topic_bump_button{
+    display: none;
+}
+
+/*
+ * Button hide threshold
+ * The max-width here adjusts the screen widths for which the header buttons are replaced by a dropdown menu
+ * set this value higher if the screen buttons start to wrap, or the text becomes ugly in your language.
+ * The valid range of this value is 319px to 699px.
+ * I prefer a value of 319px, but if you have added buttons, or use a language with long button labels,
+ * a higher value may work better for you.
+ */
+@media only screen and (max-width: 459px) {
+    .inventea-menu li > a {
+           display: none; 
+    }
+
+    .inventea-mobile-dropdown-menu {
+	    display: block;
+    }
+    .inventea-dashboard img {
+    padding-top: 4%;
+    padding-bottom: 4%;
+    }
+}
+
+/*
+ * To move the header buttons so that they sit outside the header image, 
+ * (as was the default for a few version of this style), 
+ * comment out the following 2 blocks of code:
+ */
+
+.inventea-posts-menu {
+    position: absolute;
+    right: 0;
+    z-index: 3;
+}
+
+.inventea-forum-menu {
+    position: absolute;
+    bottom: 0;
+    z-index: 3;
+}
