@@ -1,10 +1,13 @@
 <?php
 /**
 *
-* @package mcp
-* @version $Id$
-* @copyright (c) 2005 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* This file is part of the phpBB Forum Software package.
+*
+* @copyright (c) phpBB Limited <https://www.phpbb.com>
+* @license GNU General Public License, version 2 (GPL-2.0)
+*
+* For full copyright and license information, please see
+* the docs/CREDITS.txt file.
 *
 */
 
@@ -19,27 +22,28 @@ if (!defined('IN_PHPBB'))
 /**
 * mcp_reports
 * Handling the reports queue
-* @package mcp
 */
 class mcp_pm_reports
 {
 	var $p_master;
 	var $u_action;
 
-	function mcp_pm_reports(&$p_master)
+	function __construct($p_master)
 	{
-		$this->p_master = &$p_master;
+		$this->p_master = $p_master;
 	}
 
 	function main($id, $mode)
 	{
-		global $auth, $db, $user, $template, $cache;
-		global $config, $phpbb_root_path, $phpEx, $action;
+		global $auth, $db, $user, $template, $request;
+		global $config, $phpbb_root_path, $phpEx, $action, $phpbb_container;
 
 		include_once($phpbb_root_path . 'includes/functions_posting.' . $phpEx);
 		include_once($phpbb_root_path . 'includes/functions_privmsgs.' . $phpEx);
 
-		$start = request_var('start', 0);
+		/* @var $pagination \phpbb\pagination */
+		$pagination = $phpbb_container->get('pagination');
+		$start = $request->variable('start', 0);
 
 		$this->page_title = 'MCP_PM_REPORTS';
 
@@ -49,9 +53,9 @@ class mcp_pm_reports
 			case 'delete':
 				include_once($phpbb_root_path . 'includes/functions_messenger.' . $phpEx);
 
-				$report_id_list = request_var('report_id_list', array(0));
+				$report_id_list = $request->variable('report_id_list', array(0));
 
-				if (!sizeof($report_id_list))
+				if (!count($report_id_list))
 				{
 					trigger_error('NO_REPORT_SELECTED');
 				}
@@ -72,7 +76,7 @@ class mcp_pm_reports
 
 				$user->add_lang(array('posting', 'viewforum', 'viewtopic', 'ucp'));
 
-				$report_id = request_var('r', 0);
+				$report_id = $request->variable('r', 0);
 
 				$sql = 'SELECT r.pm_id, r.user_id, r.report_id, r.report_closed, report_time, r.report_text, rr.reason_title, rr.reason_description, u.username, u.username_clean, u.user_colour
 					FROM ' . REPORTS_TABLE . ' r, ' . REPORTS_REASONS_TABLE . ' rr, ' . USERS_TABLE . ' u
@@ -90,12 +94,17 @@ class mcp_pm_reports
 					trigger_error('NO_REPORT');
 				}
 
+				/* @var $phpbb_notifications \phpbb\notification\manager */
+				$phpbb_notifications = $phpbb_container->get('notification_manager');
+
+				$phpbb_notifications->mark_notifications_by_parent('report_pm', $report_id, $user->data['user_id']);
+
 				$pm_id = $report['pm_id'];
 				$report_id = $report['report_id'];
 
-				$pm_info = get_pm_data(array($pm_id));
+				$pm_info = phpbb_get_pm_data(array($pm_id));
 
-				if (!sizeof($pm_info))
+				if (!count($pm_info))
 				{
 					trigger_error('NO_REPORT_SELECTED');
 				}
@@ -112,17 +121,9 @@ class mcp_pm_reports
 				}
 
 				// Process message, leave it uncensored
-				$message = $pm_info['message_text'];
+				$parse_flags = ($pm_info['bbcode_bitfield'] ? OPTION_FLAG_BBCODE : 0) | OPTION_FLAG_SMILIES;
+				$message = generate_text_for_display($pm_info['message_text'], $pm_info['bbcode_uid'], $pm_info['bbcode_bitfield'], $parse_flags, false);
 
-				if ($pm_info['bbcode_bitfield'])
-				{
-					include_once($phpbb_root_path . 'includes/bbcode.' . $phpEx);
-					$bbcode = new bbcode($pm_info['bbcode_bitfield']);
-					$bbcode->bbcode_second_pass($message, $pm_info['bbcode_uid'], $pm_info['bbcode_bitfield']);
-				}
-
-				$message = bbcode_nl2br($message);
-				$message = smiley_text($message);
 				$report['report_text'] = make_clickable(bbcode_nl2br($report['report_text']));
 
 				if ($pm_info['message_attachment'] && $auth->acl_get('u_pm_download'))
@@ -140,7 +141,7 @@ class mcp_pm_reports
 					}
 					$db->sql_freeresult($result);
 
-					if (sizeof($attachments))
+					if (count($attachments))
 					{
 						$update_count = array();
 						parse_attachments(0, $message, $attachments, $update_count);
@@ -174,7 +175,7 @@ class mcp_pm_reports
 					'U_MCP_USER_NOTES'			=> append_sid("{$phpbb_root_path}mcp.$phpEx", 'i=notes&amp;mode=user_notes&amp;u=' . $pm_info['author_id']),
 					'U_MCP_WARN_REPORTER'		=> ($auth->acl_get('m_warn')) ? append_sid("{$phpbb_root_path}mcp.$phpEx", 'i=warn&amp;mode=warn_user&amp;u=' . $report['user_id']) : '',
 					'U_MCP_WARN_USER'			=> ($auth->acl_get('m_warn')) ? append_sid("{$phpbb_root_path}mcp.$phpEx", 'i=warn&amp;mode=warn_user&amp;u=' . $pm_info['author_id']) : '',
-					
+
 					'EDIT_IMG'				=> $user->img('icon_post_edit', $user->lang['EDIT_POST']),
 					'MINI_POST_IMG'			=> $user->img('icon_post_target', 'POST'),
 
@@ -200,7 +201,7 @@ class mcp_pm_reports
 					'POST_SUBJECT'			=> ($pm_info['message_subject']) ? $pm_info['message_subject'] : $user->lang['NO_SUBJECT'],
 					'POST_DATE'				=> $user->format_date($pm_info['message_time']),
 					'POST_IP'				=> $pm_info['author_ip'],
-					'POST_IPADDR'			=> ($auth->acl_getf_global('m_info') && request_var('lookup', '')) ? @gethostbyaddr($pm_info['author_ip']) : '',
+					'POST_IPADDR'			=> ($auth->acl_getf_global('m_info') && $request->variable('lookup', '')) ? @gethostbyaddr($pm_info['author_ip']) : '',
 					'POST_ID'				=> $pm_info['msg_id'],
 
 					'U_LOOKUP_IP'			=> ($auth->acl_getf_global('m_info')) ? $this->u_action . '&amp;r=' . $report_id . '&amp;pm=' . $pm_id . '&amp;lookup=' . $pm_info['author_ip'] . '#ip' : '',
@@ -217,7 +218,7 @@ class mcp_pm_reports
 				$sort_days = $total = 0;
 				$sort_key = $sort_dir = '';
 				$sort_by_sql = $sort_order_sql = array();
-				mcp_sorting($mode, $sort_days, $sort_key, $sort_dir, $sort_by_sql, $sort_order_sql, $total);
+				phpbb_mcp_sorting($mode, $sort_days, $sort_key, $sort_dir, $sort_by_sql, $sort_order_sql, $total);
 
 				$limit_time_sql = ($sort_days) ? 'AND r.report_time >= ' . (time() - ($sort_days * 86400)) : '';
 
@@ -250,7 +251,7 @@ class mcp_pm_reports
 				}
 				$db->sql_freeresult($result);
 
-				if (sizeof($report_ids))
+				if (count($report_ids))
 				{
 					$sql = 'SELECT p.*, u.username, u.username_clean, u.user_colour, r.user_id as reporter_id, ru.username as reporter_name, ru.user_colour as reporter_colour, r.report_time, r.report_id
 						FROM ' . REPORTS_TABLE . ' r, ' . PRIVMSGS_TABLE . ' p, ' . USERS_TABLE . ' u, ' . USERS_TABLE . ' ru
@@ -269,7 +270,7 @@ class mcp_pm_reports
 					}
 					$db->sql_freeresult($result);
 
-					if (sizeof($pm_list))
+					if (count($pm_list))
 					{
 						$address_list = get_recipient_strings($pm_by_id);
 
@@ -294,25 +295,27 @@ class mcp_pm_reports
 								'REPORT_ID'				=> $row['report_id'],
 								'REPORT_TIME'			=> $user->format_date($row['report_time']),
 
-								'RECIPIENTS'			=> implode(', ', $address_list[$row['msg_id']]),
+								'RECIPIENTS'			=> implode($user->lang['COMMA_SEPARATOR'], $address_list[$row['msg_id']]),
+								'ATTACH_ICON_IMG'		=> ($auth->acl_get('u_download') && $row['message_attachment']) ? $user->img('icon_topic_attach', $user->lang['TOTAL_ATTACHMENTS']) : '',
 							));
 						}
 					}
 				}
 
+				$base_url = $this->u_action . "&amp;st=$sort_days&amp;sk=$sort_key&amp;sd=$sort_dir";
+				$pagination->generate_template_pagination($base_url, 'pagination', 'start', $total, $config['topics_per_page'], $start);
+
 				// Now display the page
 				$template->assign_vars(array(
 					'L_EXPLAIN'				=> ($mode == 'pm_reports') ? $user->lang['MCP_PM_REPORTS_OPEN_EXPLAIN'] : $user->lang['MCP_PM_REPORTS_CLOSED_EXPLAIN'],
 					'L_TITLE'				=> ($mode == 'pm_reports') ? $user->lang['MCP_PM_REPORTS_OPEN'] : $user->lang['MCP_PM_REPORTS_CLOSED'],
-					
+
 					'S_PM'					=> true,
 					'S_MCP_ACTION'			=> $this->u_action,
 					'S_CLOSED'				=> ($mode == 'pm_reports_closed') ? true : false,
 
-					'PAGINATION'			=> generate_pagination($this->u_action . "&amp;st=$sort_days&amp;sk=$sort_key&amp;sd=$sort_dir", $total, $config['topics_per_page'], $start),
-					'PAGE_NUMBER'			=> on_page($total, $config['topics_per_page'], $start),
 					'TOTAL'					=> $total,
-					'TOTAL_REPORTS'			=> ($total == 1) ? $user->lang['LIST_REPORT'] : sprintf($user->lang['LIST_REPORTS'], $total),					
+					'TOTAL_REPORTS'			=> $user->lang('LIST_REPORTS', (int) $total),
 					)
 				);
 
@@ -321,5 +324,3 @@ class mcp_pm_reports
 		}
 	}
 }
-
-?>

@@ -1,0 +1,209 @@
+/* GG logo */
+.logo {
+    padding: 0px 10px 0px 0px;
+}
+
+.logo .site_logo {
+    background-image: url(./images/gg_banner.png);
+    width: 248px;
+    height: 100px;
+}
+
+/* Disabled profile fields */
+.profile-custom-field {
+    display: none;
+}
+
+.profile-joined, .profile-posts, profile-contact {
+    display: none;
+}
+/* even darker: #c3cbd5*/
+/* even darker: #A9B8C2*/
+/* Post colors */
+.post {
+    border: 1px solid #c3cbd5;
+    background-color: #F0F2F5;
+}
+
+/* Post buttons */
+.button .icon, .button-secondary {
+    color: #5db2ff;
+}
+
+.button {
+    color: #5db2ff;
+}
+
+/* Left avatars */
+.post .inner .postprofile {
+    border: 0px;
+    border-right: 1px solid #c3cbd5;
+    margin: 0;
+    margin-right: 8px;
+    display: inline-block;
+    vertical-align: top;
+    float: none;
+    max-width: 198px;
+}
+
+.post .inner .postbody {
+    display: inline-block;
+    vertical-align: top;
+    float: none;
+}
+
+/* Remove profile rank title */
+.profile-rank {
+    font-size: 0px;
+}
+
+/* Compact the posts a bit */
+.post {
+    padding: 4px 10px;
+}
+
+.postprofile dd, .postprofile dt {
+    margin-left: 0px;
+}
+
+/* Username size bigger */
+.postprofile .username, .postprofile .username-coloured {
+    font-size: 14px;
+}
+
+/* Colors */
+
+.navbar {
+    background-color: #e3e8f0;
+    border: 1px solid #A9B8C2;
+}
+
+.headerbar {
+    background-color: white;
+}
+
+.forumbg, .forabg {
+    background-color: #e3e8f0;
+    border: 1px solid #A9B8C2;
+}
+
+.topiclist {
+    background-color: #006699;
+}
+
+form#search {
+    border: 1px solid #c3cbd5;
+}
+
+.stat-block h3, .footerbar {
+    background-color: #cecece;
+}
+
+.forum_unread:before, .forum_unread_subforum:before, .topic_unread:before, .topic_unread_mine:before {
+    background-color: inherit;
+}
+
+/* Shrink the Re: Thread Title thing */
+
+.postbody > div > h3 > a {
+    font-size: 12px;
+    font-weight: normal;
+    color: #c3cbd5;
+}
+
+/* Flexbox Post Area */
+
+.post .inner {
+    display: flex;
+    flex-direction: row;
+}
+
+/* Shrinking profile area */
+
+@media (max-width: 700px) {
+    .post .inner .postprofile {
+        /*border: 0;*/
+        min-width: 80px;
+    }
+
+    .post .inner .postprofile .profile-rank {
+        display: none;
+    }
+
+    .post .postprofile img {
+        max-width: 80px;
+    }
+
+    .postprofile .has-avatar .avatar-container {
+        overflow: auto;
+    }
+}
+
+
+/* ****************************************** */
+/*               YELLOW MODE                  */
+/* ****************************************** */
+
+/* dark yellow: #c3cbd5*/
+/* light yellow: #ffffd7*/
+/* Button color: #cab41e */
+body {
+    background-color: #e0db77;
+}
+
+.headerbar {
+    background-color: #e0db77;
+}
+
+#site-description h1:after {
+    content: " Lemon Mode";
+}
+
+.post {
+    border: 1px solid #d4c586;
+    background-color: #ffffd7;
+}
+
+/* Post buttons */
+.button .icon, .button-secondary {
+    color: #cab41e;
+}
+
+.button {
+    color: #cab41e;
+}
+
+/* Left avatars */
+.post .inner .postprofile {
+    border-right: 1px solid #d4c586;
+}
+
+.navbar {
+    border: 1px solid #d4c586;
+    background-color: #ffffd7;
+}
+
+.headerbar {
+    background-color: white;
+}
+
+.forumbg, .forabg {
+    background-color: #ffffd7;
+    border: 1px solid #d4c586;
+}
+
+.topiclist {
+    background-color: #cab41e;
+}
+
+form#search {
+    border: 1px solid #d4c586;
+}
+
+.stat-block h3, .footerbar {
+    background-color: #cecece;
+}
+
+.postbody > div > h3 > a {
+    color: #d4c586;
+}

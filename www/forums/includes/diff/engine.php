@@ -1,10 +1,13 @@
 <?php
 /**
 *
-* @package diff
-* @version $Id$
-* @copyright (c) 2006 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* This file is part of the phpBB Forum Software package.
+*
+* @copyright (c) phpBB Limited <https://www.phpbb.com>
+* @license GNU General Public License, version 2 (GPL-2.0)
+*
+* For full copyright and license information, please see
+* the docs/CREDITS.txt file.
 *
 */
 
@@ -20,7 +23,7 @@ if (!defined('IN_PHPBB'))
 * Code from pear.php.net, Text_Diff-1.1.0 package
 * http://pear.php.net/package/Text_Diff/ (native engine)
 *
-* Modified by phpBB Group to meet our coding standards
+* Modified by phpBB Limited to meet our coding standards
 * and being able to integrate into phpBB
 *
 * Class used internally by Text_Diff to actually compute the diffs. This
@@ -81,8 +84,8 @@ class diff_engine
 			$to_lines = explode("\n", preg_replace('#[\n\r]+#', "\n", $to_lines));
 		}
 
-		$n_from = sizeof($from_lines);
-		$n_to = sizeof($to_lines);
+		$n_from = count($from_lines);
+		$n_to = count($to_lines);
 
 		$this->xchanged = $this->ychanged = $this->xv = $this->yv = $this->xind = $this->yind = array();
 		unset($this->seq, $this->in_seq, $this->lcs);
@@ -142,7 +145,7 @@ class diff_engine
 		}
 
 		// Find the LCS.
-		$this->_compareseq(0, sizeof($this->xv), 0, sizeof($this->yv));
+		$this->_compareseq(0, count($this->xv), 0, count($this->yv));
 
 		// Merge edits when possible.
 		if ($this->skip_whitespace_changes)
@@ -282,8 +285,9 @@ class diff_engine
 				$matches = $ymatches[$line];
 
 				reset($matches);
-				while (list(, $y) = each($matches))
+				while ($y = current($matches))
 				{
+					next($matches);
 					if (empty($this->in_seq[$y]))
 					{
 						$k = $this->_lcs_pos($y);
@@ -293,8 +297,9 @@ class diff_engine
 				}
 
 				// no reset() here
-				while (list(, $y) = each($matches))
+				while ($y = current($matches))
 				{
+					next($matches);
 					if ($y > $this->seq[$k - 1])
 					{
 						// Optimization: this is a common case: next match is just replacing previous match.
@@ -441,8 +446,8 @@ class diff_engine
 		$i = 0;
 		$j = 0;
 
-		$len = sizeof($lines);
-		$other_len = sizeof($other_changed);
+		$len = count($lines);
+		$other_len = count($other_changed);
 
 		while (1)
 		{
@@ -550,5 +555,3 @@ class diff_engine
 		}
 	}
 }
-
-?>

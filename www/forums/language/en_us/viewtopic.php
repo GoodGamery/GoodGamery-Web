@@ -1,29 +1,15 @@
 <?php
 /**
-* This file is part of U.S. English phpBB Localization.
-* Copyright (C) 2010 phpBB.fr
 *
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; version 2 of the License.
+* This file is part of the American English Language Pack
+* for the phpBB Forum Software.
 *
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
+* @copyright (c) phpBB Limited <https://www.phpbb.com>
+* @license GNU General Public License, version 2 (GPL-2.0)
 *
-* You should have received a copy of the GNU General Public License along
-* with this program; if not, write to the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+* For full copyright and license information, please see
+* the docs/CREDITS.txt file.
 *
-* viewtopic [U.S. English]
-*
-* @package   language
-* @author    Maël Soucaze <maelsoucaze@phpbb.fr> (Maël Soucaze) http://www.phpbb.fr/
-* @author    Seven ALive <N/A> (Robert Baker) http://sevenupdate.com/
-* @copyright 2005 phpBB Group
-* @license   http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License
-* @version   $Id: viewtopic.php 9972 2009-08-14 08:42:46Z Kellanved $
 */
 
 /**
@@ -52,37 +38,35 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 
 $lang = array_merge($lang, array(
+	'APPROVE'								=> 'Approve',
 	'ATTACHMENT'						=> 'Attachment',
 	'ATTACHMENT_FUNCTIONALITY_DISABLED'	=> 'The attachments feature has been disabled.',
 
 	'BOOKMARK_ADDED'		=> 'Bookmarked topic successfully.',
-	'BOOKMARK_ERR'         => 'Bookmarking the topic failed. Please try again.',
+	'BOOKMARK_ERR'			=> 'Bookmarking the topic failed. Please try again.',
 	'BOOKMARK_REMOVED'		=> 'Removed bookmarked topic successfully.',
 	'BOOKMARK_TOPIC'		=> 'Bookmark topic',
 	'BOOKMARK_TOPIC_REMOVE'	=> 'Remove from bookmarks',
 	'BUMPED_BY'				=> 'Last bumped by %1$s on %2$s.',
 	'BUMP_TOPIC'			=> 'Bump topic',
 
-	'IGNORE_ADDED'			=> 'Ignored topic successfully.',
-	'IGNORE_ERR'          	=> 'Ignoring the topic failed. Please try again.',
-	'IGNORE_REMOVED'		=> 'Un-ignored the topic successfully.',
-	'IGNORE_TOPIC'			=> 'Ignore topic',
-	'UNIGNORE_TOPIC'		=> 'Un-ignore topic',
-	
 	'CODE'					=> 'Code',
-	'COLLAPSE_QR'			=> 'Hide Quick Reply',
 
 	'DELETE_TOPIC'			=> 'Delete topic',
+	'DELETED_INFORMATION'	=> 'Deleted by %1$s on %2$s',
+	'DISAPPROVE'					=> 'Disapprove',
 	'DOWNLOAD_NOTICE'		=> 'You do not have the required permissions to view the files attached to this post.',
 
-	'EDITED_TIMES_TOTAL'	=> 'Last edited by %1$s on %2$s, edited %3$d times in total.',
-	'EDITED_TIME_TOTAL'		=> 'Last edited by %1$s on %2$s, edited %3$d time in total.',
-	'EMAIL_TOPIC'			=> 'E-mail friend',
+	'EDITED_TIMES_TOTAL'	=> array(
+		1	=> 'Last edited by %2$s on %3$s, edited %1$d time in total.',
+		2	=> 'Last edited by %2$s on %3$s, edited %1$d times in total.',
+	),
+	'EMAIL_TOPIC'			=> 'Email topic',
 	'ERROR_NO_ATTACHMENT'	=> 'The selected attachment does not exist anymore.',
 
 	'FILE_NOT_FOUND_404'	=> 'The file <strong>%s</strong> does not exist.',
 	'FORK_TOPIC'			=> 'Copy topic',
-	'FULL_EDITOR'			=> 'Full Editor',
+	'FULL_EDITOR'			=> 'Full Editor &amp; Preview',
 
 	'LINKAGE_FORBIDDEN'		=> 'You are not authorized to view, download or link from/to this site.',
 	'LOGIN_NOTIFY_TOPIC'	=> 'You have been notified about this topic, please login to view it.',
@@ -92,8 +76,10 @@ $lang = array_merge($lang, array(
 	'MAKE_GLOBAL'				=> 'Change to “Global”',
 	'MAKE_NORMAL'				=> 'Change to “Standard Topic”',
 	'MAKE_STICKY'				=> 'Change to “Sticky”',
-	'MAX_OPTIONS_SELECT'		=> 'You may select up to <strong>%d</strong> options',
-	'MAX_OPTION_SELECT'			=> 'You may select <strong>1</strong> option',
+	'MAX_OPTIONS_SELECT'		=> array(
+		1	=> 'You may select <strong>%d</strong> option',
+		2	=> 'You may select up to <strong>%d</strong> options',
+	),
 	'MISSING_INLINE_ATTACHMENT'	=> 'The attachment <strong>%s</strong> is no longer available',
 	'MOVE_TOPIC'				=> 'Move topic',
 
@@ -103,10 +89,12 @@ $lang = array_merge($lang, array(
 	'NO_UNREAD_POSTS'		=> 'There are no new unread posts for this topic.',
 	'NO_VOTE_OPTION'		=> 'You must specify an option when voting.',
 	'NO_VOTES'				=> 'No votes',
+	'NO_AUTH_PRINT_TOPIC'	=> 'You are not authorized to print topics.',
 
 	'POLL_ENDED_AT'			=> 'Poll ended at %s',
 	'POLL_RUN_TILL'			=> 'Poll runs till %s',
 	'POLL_VOTED_OPTION'		=> 'You voted for this option',
+	'POST_DELETED_RESTORE'	=> 'This post has been deleted. It can be restored.',
 	'PRINT_TOPIC'			=> 'Print view',
 
 	'QUICK_MOD'				=> 'Quick-mod tools',
@@ -114,11 +102,13 @@ $lang = array_merge($lang, array(
 	'QUOTE'					=> 'Quote',
 
 	'REPLY_TO_TOPIC'		=> 'Reply to topic',
+	'RESTORE'				=> 'Restore',
+	'RESTORE_TOPIC'			=> 'Restore topic',
 	'RETURN_POST'			=> '%sReturn to the post%s',
 
-	'SHOW_QR'				=> 'Quick Reply',
 	'SUBMIT_VOTE'			=> 'Submit vote',
 
+	'TOPIC_TOOLS'			=> 'Topic tools',
 	'TOTAL_VOTES'			=> 'Total votes',
 
 	'UNLOCK_TOPIC'			=> 'Unlock topic',
@@ -127,13 +117,12 @@ $lang = array_merge($lang, array(
 	'VIEW_NEXT_TOPIC'		=> 'Next topic',
 	'VIEW_PREVIOUS_TOPIC'	=> 'Previous topic',
 	'VIEW_RESULTS'			=> 'View results',
-	'VIEW_TOPIC_POST'		=> '1 post',
-	'VIEW_TOPIC_POSTS'		=> '%d posts',
+	'VIEW_TOPIC_POSTS'		=> array(
+		1	=> '%d post',
+		2	=> '%d posts',
+	),
 	'VIEW_UNREAD_POST'		=> 'First unread post',
-	'VISIT_WEBSITE'			=> 'WWW',
 	'VOTE_SUBMITTED'		=> 'Your vote has been cast.',
 	'VOTE_CONVERTED'		=> 'Changing votes is not supported for converted polls.',
 
 ));
-
-?>

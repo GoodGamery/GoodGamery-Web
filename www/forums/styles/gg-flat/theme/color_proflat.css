@@ -1,0 +1,235 @@
+/*  phpBB3 proflat Style Sheet - blue ----------------------------- */
+
+/**  base.css  --------------------------------------------------  **/
+a:hover,
+a:focus,
+a:active {
+  color: #1e91fc; }
+
+/**  colours.css  -----------------------------------------------  **/
+/* 31 - Colours and backgrounds for links.css */
+a:hover {
+  color: #1e91fc; }
+
+/* 51 - Post body links */
+.postlink:hover {
+  border-bottom-color: #1e91fc;
+  color: #1e91fc; }
+
+/* 76 - Arrow links */
+.arrow-left:hover, .arrow-right:hover {
+  color: #1e91fc; }
+
+/* 81 - Round cornered boxes and backgrounds */
+.headerbar {
+  background-color: #5db2ff; }
+
+.forumbg {
+  background-color: #5db2ff; }
+
+.forabg {
+  background-color: #5db2ff; }
+
+/* 195 - Misc layout styles */
+.sep {
+  color: #1e91fc; }
+
+/* 209 - Icon styles */
+a:hover .icon.icon-blue,
+a:hover .icon.icon-green,
+a:hover .icon.icon-lightgray,
+a:hover .icon.icon-orange,
+a:hover .icon.icon-red {
+  color: #1e91fc; }
+.icon.icon-red, a:hover .icon.icon-red{
+	color: #1e91fc;
+}
+/* 247 - Jumpbox */
+.jumpbox-cat-link {
+  background-color: #5db2ff;
+  border-top-color: #5db2ff; }
+
+.jumpbox-cat-link:hover {
+  background-color: #4889c5;
+  border-top-color: #4889c5; }
+
+/* 318 - Colours and backgrounds for content.css */
+li.row a:hover strong {
+  color: #1e91fc; }
+
+/* 373 - Content container styles */
+.posthilit {
+  background-color: #5db2ff; }
+
+/* 596 - Colours and backgrounds for buttons.css */
+/*.button {
+  border-color: #5db2ff;
+  background-color: #5db2ff; }*/
+
+.button:hover,
+.button:focus {
+  border-color: #4889c5;
+  background-color: #4889c5; }
+
+.button-search:hover,
+.button-search-end:hover {
+  border-color: #4889c5; }
+
+/* 643 - Pagination */
+.pagination li a {
+  color: #5db2ff;
+}
+
+.pagination li.active span {
+  background-color: #4889c5;
+  border-color: #4889c5; }
+
+.pagination li a:hover,
+.pagination li a:hover .icon,
+.pagination .dropdown-visible a.dropdown-trigger,
+.nojs .pagination .dropdown-container:hover a.dropdown-trigger {
+  background-color: #4889c5;
+  border-color: #4889c5; }
+
+/* 795 - CP tabbed menu */
+.tabs .tab > a {
+  background-color: #5db2ff; }
+
+.tabs .tab > a:hover {
+  background: #4889c5; }
+
+.tabs .activetab > a,
+.tabs .activetab > a:hover {
+  background: #4889c5;
+  border-color: #4889c5; }
+
+/* 822 - Mini tabbed menu used in MCP */
+.minitabs .tab > a {
+  background-color: #5db2ff; }
+
+.minitabs .tab > a:hover,
+.minitabs .activetab > a,
+.minitabs .activetab > a:hover {
+  background-color: #4889c5; }
+
+/* 844 - UCP navigation menu */
+/* 847 - Link styles for the sub-section links */
+.navigation a,
+.rtl .navigation a {
+  background: #5db2ff; }
+
+.navigation a:hover,
+.navigation .active-subsection a,
+.navigation .active-subsection a:hover {
+  background-color: #4889c5; }
+
+@media (max-width: 900px) {
+  #navigation a, .rtl #navigation a {
+    background: #5db2ff; }
+
+  #navigation a:hover,
+  #navigation .active-subsection a,
+  #navigation .active-subsection a:hover {
+    background-color: #4889c5; } }
+/* 950 - Colours and backgrounds for forms.css */
+/* 1008 - Input field styles */
+.inputbox:hover {
+  border-color: #1e91fc; }
+
+.inputbox:focus {
+  border-color: #1e91fc; }
+
+/* 1041 - Form button styles */
+a.button1, input.button1, input.button3, a.button2, input.button2 {
+  border-color: #5db2ff;
+  background-color: #5db2ff; }
+
+a.button1, input.button1 {
+  border-color: #5db2ff; }
+
+/* 1060 - Alternative button */
+a.button2, input.button2, input.button3 {
+  border-color: #5db2ff; }
+
+/* 1070 - Hover states */
+a.button1:hover, input.button1:hover, a.button2:hover, input.button2:hover, input.button3:hover {
+  border-color: #4889c5;
+  background-color: #4889c5; }
+
+/* 1080 - Focus states */
+input.button1:focus, input.button2:focus, input.button3:focus {
+  border-color: #4889c5; }
+
+/* 1161 - Notifications */
+.badge {
+  background-color: #5db2ff; }
+
+/**  proflat.css  -----------------------------------------------  **/
+/* Forum icons & Topic icons */
+.global_unread:before,
+.global_unread_mine:before,
+.announce_unread:before,
+.announce_unread_mine:before,
+.sticky_unread:before,
+.sticky_unread_mine:before {
+  /*background-color: #5db2ff;*/
+}
+
+.global_unread_locked:before,
+.global_unread_locked_mine:before,
+.announce_unread_locked:before,
+.announce_unread_locked_mine:before,
+.forum_unread_locked:before,
+.topic_unread_locked:before,
+.topic_unread_locked_mine:before {
+  /*background-color: #5db2ff;*/
+}
+
+.forum_unread:before,
+.forum_unread_subforum:before,
+.topic_unread:before,
+.topic_unread_mine:before {
+  background-color: #5db2ff; }
+
+.sticky_unread_locked:before,
+.sticky_unread_locked_mine:before {
+  background-color: #5db2ff; }
+
+.topic_unread_hot:before,
+.topic_unread_hot_mine:before {
+  background-color: #5db2ff; }
+
+.pm_unread:before {
+  background-color: #5db2ff; }
+
+/* Icon image */
+.icon.fa-file-o.icon-red {
+  color: #5db2ff; }
+
+/* Miscellaneous styles */
+a.unread, i.icon-unread {
+  color: #1e91fc; }
+
+.footerbar {
+  background-color: #5db2ff; }
+
+/* Notifications */
+a:hover .badge,
+.badge:hover {
+  background-color: #4889c5; }
+
+/* Poster profile block */
+.online-text {
+  color: #1e91fc; }
+
+/* Post control buttons */
+.format-buttons .bbcode-size {
+	border-color: #5db2ff; }
+.format-buttons .bbcode-size:hover {
+	border-color: #4889c5; }
+
+/* stat-block */
+.stat-block h3 {
+  background-color: #5db2ff; }
+
+/*# sourceMappingURL=color_proflat.css.map */

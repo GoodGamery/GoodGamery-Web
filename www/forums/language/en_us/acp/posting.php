@@ -1,29 +1,15 @@
 <?php
 /**
-* This file is part of U.S. English phpBB Localization.
-* Copyright (C) 2010 phpBB.fr
 *
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; version 2 of the License.
+* This file is part of the American English Language Pack
+* for the phpBB Forum Software.
 *
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
+* @copyright (c) phpBB Limited <https://www.phpbb.com>
+* @license GNU General Public License, version 2 (GPL-2.0)
 *
-* You should have received a copy of the GNU General Public License along
-* with this program; if not, write to the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+* For full copyright and license information, please see
+* the docs/CREDITS.txt file.
 *
-* acp_posting [U.S. English]
-*
-* @package   language
-* @author    Maël Soucaze <maelsoucaze@phpbb.fr> (Maël Soucaze) http://www.phpbb.fr/
-* @author    Seven ALive <N/A> (Robert Baker) http://sevenupdate.com/
-* @copyright 2005 phpBB Group
-* @license   http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License
-* @version   $Id: posting.php 10516 2010-02-21 11:33:29Z Kellanved $
 */
 
 /**
@@ -57,20 +43,21 @@ $lang = array_merge($lang, array(
 	'ACP_BBCODES_EXPLAIN'		=> 'BBCode is a special implementation of HTML offering greater control over what and how something is displayed. From this page you can add, remove and edit custom BBCodes.',
 	'ADD_BBCODE'				=> 'Add a new BBCode',
 
-	'BBCODE_DANGER'				=> 'The BBCode you are trying to add seems to use a {TEXT} token inside a HTML attribute. This is a possible XSS security issue. Try using the more restrictive {SIMPLETEXT} or {INTTEXT} types instead. Only proceed if you understand the risks involved and you consider the use of {TEXT} absolutely unavoidable.',
+	'BBCODE_DANGER'				=> 'The BBCode you are trying to add seems unsafe. If the BBCode uses a {TEXT} token in a sensitive context, try using a more restrictive type instead. Only proceed if you understand the risks involved.',
 	'BBCODE_DANGER_PROCEED'		=> 'Proceed', //'I understand the risk',
 
 	'BBCODE_ADDED'				=> 'BBCode added successfully.',
 	'BBCODE_EDITED'				=> 'BBCode edited successfully.',
+	'BBCODE_DELETED'			=> 'The BBCode has been removed successfully.',
 	'BBCODE_NOT_EXIST'			=> 'The BBCode you selected does not exist.',
 	'BBCODE_HELPLINE'			=> 'Help line',
 	'BBCODE_HELPLINE_EXPLAIN'	=> 'This field contains the mouse over text of the BBCode.',
 	'BBCODE_HELPLINE_TEXT'		=> 'Help line text',
-	'BBCODE_HELPLINE_TOO_LONG'   => 'The help line you entered is too long.',
+	'BBCODE_HELPLINE_TOO_LONG'	=> 'The help line you entered is too long.',
 
 	'BBCODE_INVALID_TAG_NAME'	=> 'The BBCode tag name that you selected already exists.',
 	'BBCODE_INVALID'			=> 'Your BBCode is constructed in an invalid form.',
-	'BBCODE_OPEN_ENDED_TAG'		=> 'Your custom BBCode must contain both an opening and a closing tag.',
+	'BBCODE_INVALID_TEMPLATE'	=> 'Your BBCode’s template is invalid.',
 	'BBCODE_TAG'				=> 'Tag',
 	'BBCODE_TAG_TOO_LONG'		=> 'The tag name you selected is too long.',
 	'BBCODE_TAG_DEF_TOO_LONG'	=> 'The tag definition that you have entered is too long, please shorten your tag definition.',
@@ -92,16 +79,17 @@ $lang = array_merge($lang, array(
 	'TOO_MANY_BBCODES'		=> 'You cannot create any more BBCodes. Please remove one or more BBCodes then try again.',
 
 	'tokens'	=>	array(
-		'TEXT'			=> 'Any text, including foreign characters, numbers, etc… You should not use this token in HTML tags. Instead try to use IDENTIFIER, INTTEXT or SIMPLETEXT.',
+		'TEXT'			=> 'Any text, including foreign characters, numbers, etc…',
 		'SIMPLETEXT'	=> 'Characters from the latin alphabet (A-Z), numbers, spaces, commas, dots, minus, plus, hyphen and underscore',
 		'INTTEXT'		=> 'Unicode letter characters, numbers, spaces, commas, dots, minus, plus, hyphen, underscore and whitespaces.',
 		'IDENTIFIER'	=> 'Characters from the latin alphabet (A-Z), numbers, hyphen and underscore',
 		'NUMBER'		=> 'Any series of digits',
-		'EMAIL'			=> 'A valid e-mail address',
-		'URL'			=> 'A valid URL using any protocol (http, ftp, etc… cannot be used for javascript exploits). If none is given, “http://” is prefixed to the string.',
-		'LOCAL_URL'		=> 'A local URL. The URL must be relative to the topic page and cannot contain a server name or protocol.',
-		'COLOR'			=> 'A HTML color, can be either in the numeric form <samp>#FF1234</samp> or a <a href="http://www.w3.org/TR/CSS21/syndata.html#value-def-color">CSS color keyword</a> such as <samp>fuchsia</samp> or <samp>InactiveBorder</samp>'
-	)
+		'EMAIL'			=> 'A valid email address',
+		'URL'			=> 'A valid URL using any allowed protocol (http, ftp, etc… cannot be used for javascript exploits). If none is given, “http://” is prefixed to the string.',
+		'LOCAL_URL'		=> 'A local URL. The URL must be relative to the topic page and cannot contain a server name or protocol, as links are prefixed with “%s”',
+		'RELATIVE_URL'	=> 'A relative URL. You can use this to match parts of a URL, but be careful: a full URL is a valid relative URL. When you want to use relative URLs of your board, use the LOCAL_URL token.',
+		'COLOR'			=> 'A HTML color, can be either in the numeric form <samp>#FF1234</samp> or a <a href="http://www.w3.org/TR/CSS21/syndata.html#value-def-color">CSS color keyword</a> such as <samp>fuchsia</samp> or <samp>InactiveBorder</samp>',
+	),
 ));
 
 // Smilies and topic icons
@@ -124,8 +112,6 @@ $lang = array_merge($lang, array(
 	'DISPLAY_POSTING'			=> 'On posting page',
 	'DISPLAY_POSTING_NO'		=> 'Not on posting page',
 
-
-
 	'EDIT_ICONS'				=> 'Edit icons',
 	'EDIT_SMILIES'				=> 'Edit smilies',
 	'EMOTION'					=> 'Emotion',
@@ -137,15 +123,19 @@ $lang = array_merge($lang, array(
 	'FIRST'			=> 'First',
 
 	'ICONS_ADD'				=> 'Add a new icon',
-	'ICONS_NONE_ADDED'		=> 'No icons were added.',
-	'ICONS_ONE_ADDED'		=> 'The icon has been added successfully.',
-	'ICONS_ADDED'			=> 'The icons have been added successfully.',
+	'ICONS_ADDED'			=> array(
+		0	=> 'No icons were added.',
+		1	=> 'The icon has been added successfully.',
+		2	=> 'The icons have been added successfully.',
+	),
 	'ICONS_CONFIG'			=> 'Icon configuration',
 	'ICONS_DELETED'			=> 'The icon has been removed successfully.',
 	'ICONS_EDIT'			=> 'Edit icon',
-	'ICONS_ONE_EDITED'		=> 'The icon has been updated successfully.',
-	'ICONS_NONE_EDITED'		=> 'No icons were updated.',
-	'ICONS_EDITED'			=> 'The icons have been updated successfully.',
+	'ICONS_EDITED'			=> array(
+		0	=> 'No icons were updated.',
+		1	=> 'The icon has been updated successfully.',
+		2	=> 'The icons have been updated successfully.',
+	),
 	'ICONS_HEIGHT'			=> 'Icon height',
 	'ICONS_IMAGE'			=> 'Icon image',
 	'ICONS_IMPORTED'		=> 'The icons pack has been installed successfully.',
@@ -177,18 +167,23 @@ $lang = array_merge($lang, array(
 
 	'SELECT_PACKAGE'			=> 'Select a package file',
 	'SMILIES_ADD'				=> 'Add a new smiley',
-	'SMILIES_NONE_ADDED'		=> 'No smilies were added.',
-	'SMILIES_ONE_ADDED'			=> 'The smiley has been added successfully.',
-	'SMILIES_ADDED'				=> 'The smilies have been added successfully.',
+	'SMILIES_ADDED'				=> array(
+		0	=> 'No smilies were added.',
+		1	=> 'The smiley has been added successfully.',
+		2	=> 'The smilies have been added successfully.',
+	),
 	'SMILIES_CODE'				=> 'Smiley code',
 	'SMILIES_CONFIG'			=> 'Smiley configuration',
 	'SMILIES_DELETED'			=> 'The smiley has been removed successfully.',
 	'SMILIES_EDIT'				=> 'Edit smiley',
-	'SMILIE_NO_CODE'			=> 'The smilie “%s”  was ignored, as there was no code entered.',
-	'SMILIE_NO_EMOTION'			=> 'The smilie “%s” was ignored, as there was no emotion entered.',
-	'SMILIES_NONE_EDITED'		=> 'No smilies were updated.',
-	'SMILIES_ONE_EDITED'		=> 'The smiley has been updated successfully.',
-	'SMILIES_EDITED'			=> 'The smilies have been updated successfully.',
+	'SMILIE_NO_CODE'			=> 'The smiley “%s” was ignored, as there was no code entered.',
+	'SMILIE_NO_EMOTION'			=> 'The smiley “%s” was ignored, as there was no emotion entered.',
+	'SMILIE_NO_FILE'			=> 'The smiley “%s” was ignored, as the file is missing.',
+	'SMILIES_EDITED'			=> array(
+		0	=> 'No smilies were updated.',
+		1	=> 'The smiley has been updated successfully.',
+		2	=> 'The smilies have been updated successfully.',
+	),
 	'SMILIES_EMOTION'			=> 'Emotion',
 	'SMILIES_HEIGHT'			=> 'Smiley height',
 	'SMILIES_IMAGE'				=> 'Smiley image',
@@ -200,7 +195,10 @@ $lang = array_merge($lang, array(
 	'SMILIES_URL'				=> 'Smiley image file',
 	'SMILIES_WIDTH'				=> 'Smiley width',
 
-	'TOO_MANY_SMILIES'			=> 'Limit of %d smilies reached.',
+	'TOO_MANY_SMILIES'			=> array(
+		1	=> 'Limit of %d smiley reached.',
+		2	=> 'Limit of %d smilies reached.',
+	),
 
 	'WRONG_PAK_TYPE'	=> 'The specified package does not contain the appropriate data.',
 ));
@@ -249,13 +247,13 @@ $lang = array_merge($lang, array(
 
 // Disallow Usernames
 $lang = array_merge($lang, array(
-	'ACP_DISALLOW_EXPLAIN'	=> 'Here you can control usernames which will not be allowed to be used. Disallowed usernames are allowed to contain a wildcard character of *. Please note that you will not be allowed to specify any username that has already been registered, you must first delete that name then disallow it.',
+	'ACP_DISALLOW_EXPLAIN'	=> 'Here you can control usernames which will not be allowed to be used. Disallowed usernames are allowed to contain a wildcard character of *.',
 	'ADD_DISALLOW_EXPLAIN'	=> 'You can disallow a username using the wildcard character * to match any character.',
 	'ADD_DISALLOW_TITLE'	=> 'Add a disallowed username',
 
 	'DELETE_DISALLOW_EXPLAIN'	=> 'You can remove a disallowed username by selecting the username from this list and clicking submit.',
 	'DELETE_DISALLOW_TITLE'		=> 'Remove a disallowed username',
-	'DISALLOWED_ALREADY'		=> 'The name you entered could not be disallowed. It either already exists in the list, exists in the word censor list, or a matching username is present.',
+	'DISALLOWED_ALREADY'		=> 'The name you entered is already disallowed.',
 	'DISALLOWED_DELETED'		=> 'The disallowed username has been successfully removed.',
 	'DISALLOW_SUCCESSFUL'		=> 'The disallowed username has been successfully added.',
 
@@ -292,5 +290,3 @@ $lang = array_merge($lang, array(
 
 	'USED_IN_REPORTS'		=> 'Used in reports',
 ));
-
-?>
