@@ -139,3 +139,33 @@ form#search {
     }
 }
 
+/* Censor tags */
+
+span.censored {
+    background-color: black;
+    color: black;
+}
+
+span.censored:hover {
+    background-color: black;
+    color: white;
+}
+
+/* Card tags */
+
+a.jTip {
+    cursor: pointer;
+    color: #428bca;
+    text-decoration: underline;
+}
+
+/***begin GG-31 IGNORE-TOPIC */
+.topic-title {
+    display: inline-block;
+}
+.topic-ignore-link {
+    display: inline-block;
+    margin-left: 2em;
+    text-decoration: underline;
+}
+/***end GG-31 IGNORE-TOPIC */

@@ -302,6 +302,7 @@ define('TOPICS_TABLE',				$table_prefix . 'topics');
 define('TOPICS_POSTED_TABLE',		$table_prefix . 'topics_posted');
 define('TOPICS_TRACK_TABLE',		$table_prefix . 'topics_track');
 define('TOPICS_WATCH_TABLE',		$table_prefix . 'topics_watch');
+define('TOPICS_IGNORE_TABLE',       $table_prefix . 'topics_ignore');       // GG-31 IGNORE-TOPIC
 define('USER_GROUP_TABLE',			$table_prefix . 'user_group');
 define('USER_NOTIFICATIONS_TABLE',	$table_prefix . 'user_notifications');
 define('USERS_TABLE',				$table_prefix . 'users');
