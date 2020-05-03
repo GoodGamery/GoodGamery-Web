@@ -392,8 +392,9 @@ if ($keywords || $author || $author_id || $search_id || $submit)
 						$last_post_time_sql
 						AND " . $m_approve_topics_fid_sql . '
 						' . ((count($ex_fid_ary)) ? ' AND ' . $db->sql_in_set('t.forum_id', $ex_fid_ary, true) : '') . '
-						' . ' AND ' . $sql_ignore_topics . '	// GG-31 IGNORE-TOPIC
+						' . ' AND ' . $sql_ignore_topics . '
 					ORDER BY t.topic_last_post_time DESC';
+					// GG-31 IGNORE-TOPIC
 				$field = 'topic_id';
 			break;
 
@@ -504,8 +505,9 @@ if ($keywords || $author || $author_id || $search_id || $submit)
 						WHERE p.post_time > ' . $user->data['user_lastvisit'] . '
 							AND ' . $m_approve_posts_fid_sql . '
 							' . ((count($ex_fid_ary)) ? ' AND ' . $db->sql_in_set('p.forum_id', $ex_fid_ary, true) : '') . '
-							' . ' AND ' . $sql_ignore_topics . "	// GG-31 IGNORE-TOPIC
+							' . ' AND ' . $sql_ignore_topics . "
 						$sql_sort";
+						// GG-31 IGNORE-TOPIC
 					$field = 'post_id';
 				}
 				else
@@ -516,8 +518,9 @@ if ($keywords || $author || $author_id || $search_id || $submit)
 							AND t.topic_moved_id = 0
 							AND ' . $m_approve_topics_fid_sql . '
 							' . ((count($ex_fid_ary)) ? 'AND ' . $db->sql_in_set('t.forum_id', $ex_fid_ary, true) : '') . '
-							' . ' AND ' . $sql_ignore_topics . "	// GG-31 IGNORE-TOPIC
+							' . ' AND ' . $sql_ignore_topics . "
 						$sql_sort";
+						// GG-31 IGNORE-TOPIC
 /*
 		[Fix] queued replies missing from "view new posts" (Bug #42705 - Patch by Paul)
 		- Creates temporary table, query is far from optimized
