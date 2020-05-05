@@ -606,9 +606,9 @@ extract($phpbb_dispatcher->trigger_event('core.viewtopic_highlight_modify', comp
 
 //***begin GG-31 IGNORE-TOPIC
 // Ignored Threads
-if ( $user->data['is_registered'] && request_var('ignore', 0))
+if ($user->data['is_registered'] && $request->variable('ignore', 0))
 {
-	if (check_link_hash(request_var('hash', ''), "topic_$topic_id"))
+	if (check_link_hash($request->variable('hash', ''), "topic_$topic_id"))
 	{
 		if (!$topic_data['ignored'])
 		{
@@ -622,14 +622,24 @@ if ( $user->data['is_registered'] && request_var('ignore', 0))
 		{
 			$sql = 'DELETE FROM ' . TOPICS_IGNORE_TABLE . "
 				WHERE user_id = {$user->data['user_id']}
-				AND topic_id = $topic_id";
+					AND topic_id = $topic_id";
 			$db->sql_query($sql);
 		}
-		$message = (($topic_data['ignored']) ? $user->lang['IGNORE_REMOVED'] : $user->lang['IGNORE_ADDED']) . '<br /><br />' . sprintf($user->lang['RETURN_TOPIC'], '<a href="' . $viewtopic_url . '">', '</a>');
+		$message = (($topic_data['ignored']) ? $user->lang['IGNORE_REMOVED'] : $user->lang['IGNORE_ADDED']);
+
+		if (!$request->is_ajax())
+		{
+			$message .= '<br /><br />' . $user->lang('RETURN_TOPIC', '<a href="' . $viewtopic_url . '">', '</a>');
+		}
 	}
 	else
 	{
-		$message = $user->lang['IGNORE_ERR'] . '<br /><br />' . sprintf($user->lang['RETURN_TOPIC'], '<a href="' . $viewtopic_url . '">', '</a>');
+		$message = $user->lang['IGNORE_ERR'];
+
+		if (!$request->is_ajax())
+		{
+			$message .= '<br /><br />' . $user->lang('RETURN_TOPIC', '<a href="' . $viewtopic_url . '">', '</a>');
+		}
 	}
 	meta_refresh(3, $viewtopic_url);
 
