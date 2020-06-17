@@ -162,7 +162,7 @@ class ucp_zebra
 							if (count($user_id_ary))
 							{
 								// Remove users from foe list if they are admins or moderators
-								if ($mode == 'foes')
+								if (false) // originally $mode == 'foes'
 								{
 									$perms = array();
 									foreach ($auth->acl_get_list($user_id_ary, array('a_', 'm_')) as $forum_id => $forum_ary)
