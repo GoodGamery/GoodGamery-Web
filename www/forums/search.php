@@ -368,6 +368,8 @@ if ($keywords || $author || $author_id || $search_id || $submit)
 	$sql = $field = $l_search_title = '';
 	if ($search_id)
 	{
+
+		$sql_ignore_topics = 'NOT EXISTS ( SELECT 1 FROM `'.TOPICS_IGNORE_TABLE.'` i WHERE t.topic_id = i.topic_id AND i.user_id = ' . $user->data['user_id'] . ' )';
 		switch ($search_id)
 		{
 			// Oh holy Bob, bring us some activity...
@@ -390,7 +392,9 @@ if ($keywords || $author || $author_id || $search_id || $submit)
 						$last_post_time_sql
 						AND " . $m_approve_topics_fid_sql . '
 						' . ((count($ex_fid_ary)) ? ' AND ' . $db->sql_in_set('t.forum_id', $ex_fid_ary, true) : '') . '
+						' . ' AND ' . $sql_ignore_topics . '
 					ORDER BY t.topic_last_post_time DESC';
+					// GG-31 IGNORE-TOPIC
 				$field = 'topic_id';
 			break;
 
@@ -456,13 +460,31 @@ if ($keywords || $author || $author_id || $search_id || $submit)
 
 				$sql_where = 'AND t.topic_moved_id = 0
 					AND ' . $m_approve_topics_fid_sql . '
-					' . ((count($ex_fid_ary)) ? 'AND ' . $db->sql_in_set('t.forum_id', $ex_fid_ary, true) : '');
+					' . ((count($ex_fid_ary)) ? 'AND ' . $db->sql_in_set('t.forum_id', $ex_fid_ary, true) : '') . '
+					' . ' AND ' . $sql_ignore_topics;	// GG-31 IGNORE-TOPIC
 
 				gen_sort_selects($limit_days, $sort_by_text, $sort_days, $sort_key, $sort_dir, $s_limit_days, $s_sort_key, $s_sort_dir, $u_sort_param);
 				$s_sort_key = $s_sort_dir = $u_sort_param = $s_limit_days = '';
 
 				$template->assign_var('U_MARK_ALL_READ', ($user->data['is_registered'] || $config['load_anon_lastread']) ? append_sid("{$phpbb_root_path}index.$phpEx", 'hash=' . generate_link_hash('global') . '&amp;mark=forums&amp;mark_time=' . time()) : '');
 			break;
+
+			//***begin GG-31 IGNORE-TOPIC
+			case 'ignored':
+				$l_search_title = $user->lang['SEARCH_IGNORED'];
+				// force sorting
+				$show_results = 'topics';
+				$sort_key = 't';
+				$sort_by_sql['t'] = 't.topic_last_post_time';
+				$sql_sort = 'ORDER BY ' . $sort_by_sql[$sort_key] . (($sort_dir == 'a') ? ' ASC' : ' DESC');
+
+				$sql = 'SELECT `topic_id` FROM ' . TOPICS_IGNORE_TABLE . ' WHERE user_id = ' . $user->data['user_id'];
+				$field = "topic_id";
+
+				gen_sort_selects($limit_days, $sort_by_text, $sort_days, $sort_key, $sort_dir, $s_limit_days, $s_sort_key, $s_sort_dir, $u_sort_param);
+				$s_sort_key = $s_sort_dir = $u_sort_param = $s_limit_days = '';
+			break;
+			//***end GG-31 IGNORE-TOPIC
 
 			case 'newposts':
 				$l_search_title = $user->lang['SEARCH_NEW'];
@@ -482,8 +504,10 @@ if ($keywords || $author || $author_id || $search_id || $submit)
 						FROM ' . POSTS_TABLE . ' p
 						WHERE p.post_time > ' . $user->data['user_lastvisit'] . '
 							AND ' . $m_approve_posts_fid_sql . '
-							' . ((count($ex_fid_ary)) ? ' AND ' . $db->sql_in_set('p.forum_id', $ex_fid_ary, true) : '') . "
+							' . ((count($ex_fid_ary)) ? ' AND ' . $db->sql_in_set('p.forum_id', $ex_fid_ary, true) : '') . '
+							' . ' AND ' . $sql_ignore_topics . "
 						$sql_sort";
+						// GG-31 IGNORE-TOPIC
 					$field = 'post_id';
 				}
 				else
@@ -493,8 +517,10 @@ if ($keywords || $author || $author_id || $search_id || $submit)
 						WHERE t.topic_last_post_time > ' . $user->data['user_lastvisit'] . '
 							AND t.topic_moved_id = 0
 							AND ' . $m_approve_topics_fid_sql . '
-							' . ((count($ex_fid_ary)) ? 'AND ' . $db->sql_in_set('t.forum_id', $ex_fid_ary, true) : '') . "
+							' . ((count($ex_fid_ary)) ? 'AND ' . $db->sql_in_set('t.forum_id', $ex_fid_ary, true) : '') . '
+							' . ' AND ' . $sql_ignore_topics . "
 						$sql_sort";
+						// GG-31 IGNORE-TOPIC
 /*
 		[Fix] queued replies missing from "view new posts" (Bug #42705 - Patch by Paul)
 		- Creates temporary table, query is far from optimized

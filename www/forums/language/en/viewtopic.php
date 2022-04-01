@@ -49,6 +49,14 @@ $lang = array_merge($lang, array(
 	'BUMPED_BY'				=> 'Last bumped by %1$s on %2$s.',
 	'BUMP_TOPIC'			=> 'Bump topic',
 
+	//***begin GG-31 IGNORE-TOPIC
+	'IGNORE_ADDED'			=> 'Ignored topic successfully.',
+	'IGNORE_ERR'          	=> 'Ignoring the topic failed. Please try again.',
+	'IGNORE_REMOVED'		=> 'Un-ignored the topic successfully.',
+	'IGNORE_TOPIC'			=> 'Ignore topic',
+	'UNIGNORE_TOPIC'		=> 'Un-ignore topic',
+	//***end GG-31 IGNORE-TOPIC
+
 	'CODE'					=> 'Code',
 
 	'DELETE_TOPIC'			=> 'Delete topic',

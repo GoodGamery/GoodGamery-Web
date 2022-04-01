@@ -7,6 +7,13 @@
 <!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
 <!-- IF FORUM_DESC --><div style="display: none !important;">{FORUM_DESC}<br /></div><!-- ENDIF -->
 
+<!-- IF 0 -->
+Feat. GG-31 IGNORE-TOPIC
+<!-- ENDIF -->
+<!-- IF U_IGNORE_TOPIC -->
+<div class="topic-ignore-link"><a href="{U_IGNORE_TOPIC}">{L_IGNORE_TOPIC}</a></div>
+<!-- ENDIF -->
+
 <!-- IF MODERATORS -->
 <p>
 	<strong><!-- IF S_SINGLE_MODERATOR -->{L_MODERATOR}<!-- ELSE -->{L_MODERATORS}<!-- ENDIF -->{L_COLON}</strong> {MODERATORS}

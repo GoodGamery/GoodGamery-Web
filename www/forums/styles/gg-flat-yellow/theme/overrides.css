@@ -207,3 +207,14 @@ form#search {
 .postbody > div > h3 > a {
     color: #d4c586;
 }
+
+/***begin GG-31 IGNORE-TOPIC */
+.topic-title {
+    display: inline-block;
+}
+.topic-ignore-link {
+    display: inline-block;
+    margin-left: 2em;
+    text-decoration: underline;
+}
+/***end GG-31 IGNORE-TOPIC */

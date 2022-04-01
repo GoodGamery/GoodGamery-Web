@@ -249,6 +249,33 @@ $result = $db->sql_query($sql);
 $topic_data = $db->sql_fetchrow($result);
 $db->sql_freeresult($result);
 
+//***begin GG-31 IGNORE-TOPIC
+// Mark topic as ignored/unignored
+if($topic_data)
+{
+	$topic_data['ignored'] = false;
+	
+	// Topic ignore mode
+	$sql_ignore = 'SELECT `topic_id` FROM ' . TOPICS_IGNORE_TABLE . ' WHERE user_id = ' . $user->data['user_id'];
+	if( $sql_ignore )
+	{
+		$ignore_result = $db->sql_query($sql_ignore);
+		while ( $row = $db->sql_fetchrow($ignore_result) )
+		{
+			$ignore_array[] = (int) $row['topic_id'];
+		}
+		$db->sql_freeresult($ignore_result);
+		
+		// Is it in there?
+		if( $ignore_array && in_array($topic_id, $ignore_array) )
+		{
+			$topic_data['ignored'] = true;
+		}
+	}
+}
+//***end GG-31 IGNORE-TOPIC
+
+
 // link to unapproved post or incorrect link
 if (!$topic_data)
 {
@@ -576,6 +603,50 @@ $vars = array(
 );
 extract($phpbb_dispatcher->trigger_event('core.viewtopic_highlight_modify', compact($vars)));
 
+
+//***begin GG-31 IGNORE-TOPIC
+// Ignored Threads
+if ($user->data['is_registered'] && $request->variable('ignore', 0))
+{
+	if (check_link_hash($request->variable('hash', ''), "topic_$topic_id"))
+	{
+		if (!$topic_data['ignored'])
+		{
+			$sql = 'INSERT INTO ' . TOPICS_IGNORE_TABLE . ' ' . $db->sql_build_array('INSERT', array(
+				'user_id'	=> $user->data['user_id'],
+				'topic_id'	=> $topic_id,
+			));
+			$db->sql_query($sql);
+		}
+		else
+		{
+			$sql = 'DELETE FROM ' . TOPICS_IGNORE_TABLE . "
+				WHERE user_id = {$user->data['user_id']}
+					AND topic_id = $topic_id";
+			$db->sql_query($sql);
+		}
+		$message = (($topic_data['ignored']) ? $user->lang['IGNORE_REMOVED'] : $user->lang['IGNORE_ADDED']);
+
+		if (!$request->is_ajax())
+		{
+			$message .= '<br /><br />' . $user->lang('RETURN_TOPIC', '<a href="' . $viewtopic_url . '">', '</a>');
+		}
+	}
+	else
+	{
+		$message = $user->lang['IGNORE_ERR'];
+
+		if (!$request->is_ajax())
+		{
+			$message .= '<br /><br />' . $user->lang('RETURN_TOPIC', '<a href="' . $viewtopic_url . '">', '</a>');
+		}
+	}
+	meta_refresh(3, $viewtopic_url);
+
+	trigger_error($message);
+}
+//***end GG-31 IGNORE-TOPIC
+
 // Bookmarks
 if ($config['allow_bookmarks'] && $user->data['is_registered'] && $request->variable('bookmark', 0))
 {
@@ -850,6 +921,12 @@ $template->assign_vars(array(
 	'S_BOOKMARK_TOPIC'		=> ($user->data['is_registered'] && $config['allow_bookmarks'] && $topic_data['bookmarked']) ? $user->lang['BOOKMARK_TOPIC_REMOVE'] : $user->lang['BOOKMARK_TOPIC'],
 	'S_BOOKMARK_TOGGLE'		=> (!$user->data['is_registered'] || !$config['allow_bookmarks'] || !$topic_data['bookmarked']) ? $user->lang['BOOKMARK_TOPIC_REMOVE'] : $user->lang['BOOKMARK_TOPIC'],
 	'S_BOOKMARKED_TOPIC'	=> ($user->data['is_registered'] && $config['allow_bookmarks'] && $topic_data['bookmarked']) ? true : false,
+
+
+	//***begin GG-31 IGNORE-TOPIC
+	'U_IGNORE_TOPIC'		=> ($user->data['is_registered']) ? $viewtopic_url . '&amp;ignore=1&amp;hash=' . generate_link_hash("topic_$topic_id") : '',
+	'L_IGNORE_TOPIC'		=> ($user->data['is_registered'] && $topic_data['ignored'] == 1) ? $user->lang['UNIGNORE_TOPIC'] : $user->lang['IGNORE_TOPIC'],
+	//***end // GG-31 IGNORE-TOPIC
 
 	'U_POST_NEW_TOPIC' 		=> ($auth->acl_get('f_post', $forum_id) || $user->data['user_id'] == ANONYMOUS) ? append_sid("{$phpbb_root_path}posting.$phpEx", "mode=post&amp;f=$forum_id") : '',
 	'U_POST_REPLY_TOPIC' 	=> ($auth->acl_get('f_reply', $forum_id) || $user->data['user_id'] == ANONYMOUS) ? append_sid("{$phpbb_root_path}posting.$phpEx", "mode=reply&amp;f=$forum_id&amp;t=$topic_id") : '',

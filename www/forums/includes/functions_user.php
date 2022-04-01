@@ -677,6 +677,7 @@ function user_delete($mode, $user_ids, $retain_username = true)
 		USERS_TABLE,
 		USER_GROUP_TABLE,
 		TOPICS_WATCH_TABLE,
+		TOPICS_IGNORE_TABLE,	// GG-31 IGNORE-TOPIC
 		FORUMS_WATCH_TABLE,
 		ACL_USERS_TABLE,
 		TOPICS_TRACK_TABLE,
